@@ -1,6 +1,5 @@
 # MoMorph — FAQ & Troubleshooting Guide
 
-> Compiled from: Slack `#con_momorph-support_all` history (Mar–May 2026) & MoMorph User Guide (docs/user-guide). Last updated: 2026/05/27.
 
 ## Bugs & Issues
 
@@ -270,21 +269,3 @@ Many users confuse "connecting a GitHub account" with "connecting a repository".
 ### Q41. When syncing with Excel, are columns that MoMorph doesn't have lost? (Web)
 
 Currently, fields that don't exist in MM must be entered manually in Excel. The request is for MoMorph not to filter the displayed fields, allowing all fields to be kept — including fields MM doesn't yet manage — to reduce manual entry.
-
----
-
-## Key dates
-
-- 2026/03/27: Start of auto migration id_ → mms_
-- 2026/05/29: End of the auto migration period id_ → mms_
-- 2026/05/30: System stops recognizing the id_ prefix
-
-## Contacts
-
-| Role | Owner |
-| --- | --- |
-| PM / Release Manager | Sara Tanei, Yuto Furukawa, Thanh, nguyen.hien |
-| Tech Lead / Engineering | le.minh.hoang |
-| Project issue support | Thanh, tran.quoc.luc |
-
-Main support channel: **#con_momorph-support_all**
