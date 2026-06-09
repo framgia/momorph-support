@@ -38,6 +38,7 @@ plugins:
             General User Guide: ユーザーガイド
             MCP Tools Reference: MCPサーバーツール詳細
             FAQ: よくある質問 (FAQ)
+            Release Notes: リリースノート
         - locale: vi
           name: Tiếng Việt
           build: true
@@ -54,6 +55,7 @@ plugins:
             FAQ: FAQs
 
 markdown_extensions:
+  - attr_list # cho phép gán id tường minh {#id} cho heading (anchor ổn định cho JA)
   - toc:
       toc_depth: 3
 
@@ -63,3 +65,4 @@ nav:
   - General User Guide: general-user-guide.md
   - MCP Tools Reference: mcp-tools-reference.md
   - FAQ: faq.md
+  - Release Notes: release-notes.md

@@ -8,14 +8,14 @@ Tài liệu tham khảo đầy đủ cho **31 tools** mà MoMorph MCP server cun
 
 ## Mục lục
 
-1. [Khái niệm chung](#khái-niệm-chung)
-2. [Bảng tra cứu nhanh](#bảng-tra-cứu-nhanh)
+1. [Khái niệm chung](#khai-niem-chung)
+2. [Bảng tra cứu nhanh](#bang-tra-cuu-nhanh)
 3. Tham khảo Tools theo nhóm:
    - [3.1 Specs](#31-specs)
    - [3.2 Test Cases](#32-test-cases)
    - [3.3 Media](#33-media)
    - [3.4 Figma Design](#34-figma-design)
-4. [Bảng thuật ngữ định danh](#bảng-thuật-ngữ-định-danh)
+4. [Bảng thuật ngữ định danh](#bang-thuat-ngu-dinh-danh)
 
 ---
 
@@ -853,7 +853,7 @@ Lấy các bản dịch đa ngôn ngữ tương ứng với các chuỗi text ng
 
 **Response (JSON):** `{ localizations: [...] }`.
 
-## Bảng thuật ngữ định danh
+## Bảng thuật ngữ định danh {#bang-thuat-ngu-dinh-danh}
 
 | Định danh        | Kiểu   | Mô tả                                                          | Ví dụ         |
 | ---------------- | ------ | -------------------------------------------------------------- | ------------- |

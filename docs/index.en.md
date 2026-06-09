@@ -7,3 +7,4 @@ Documentation for using MoMorph. Switch language from the menu in the top-right.
 - [General User Guide](general-user-guide.md)
 - [MCP Tools Reference](mcp-tools-reference.md)
 - [FAQ](faq.md)
+- [Release Notes](release-notes.md)

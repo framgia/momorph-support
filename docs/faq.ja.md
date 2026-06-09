@@ -1,271 +1,152 @@
 # MoMorph — FAQ・トラブルシューティングガイド
 
+## ライセンス・運用
+
+### <u>Essential と Pro の違い</u>
+**❓ Q:** Essential と Pro のユーザープランはどのように異なりますか？
+
+**💡 A:** ユーザーガイドによると、2 つのプランは機能の範囲が異なります。
+
+- **Essential**: Plugin のみ利用できます — screen の管理、spec の手動入力、GitHub issue へのエクスポートが可能です。このプランでは Web App、Syncer、CLI、MCP、VSCode Extension、Claude Desktop Extension にはアクセスできません。
+- **Pro**: エコシステム全体を利用できます — Plugin（フル機能）、Web、Syncer、CLI、MCP、VSCode Extension、Claude Desktop Extension。
+
+Sun* 社のドメインのメールアドレスを持つユーザーは、デフォルトで Pro アカウントになります。それ以外のメールアドレスの場合は、Pro アカウントの付与について MoMorph チームにお問い合わせください。
+
+### <u>問い合わせ・サポート窓口</u>
+**❓ Q:** MoMorph への質問やフィードバックは、どの窓口から送ればよいですか？
+
+**💡 A:** 以下の窓口からお問い合わせいただけます。
+
+- Slack: **#con_momorph-support_all**
+- Email: **momorph-admin@sun-asterisk.com**
+
+ご注意: 送信前に、プロジェクトの機密・秘密情報を含む画像は削除またはマスキングしてください。
 
 ## 不具合・障害
 
-### Q1. Figma と MoMorph で番号が違って見えるのはなぜ？ (Plugin)
+### <u>CLI で 'user not found' と表示される</u>
+**❓ Q:** CLI で GitHub にログインした際に 'user not found' というメッセージが表示された場合はどうすればよいですか？
 
-- Figma 上の番号は**最初の検出（detect）時のみ**使用されます。
-- その後 MM 上で番号を変更する場合は、**MM の「No」列で直接編集**する必要があり、Figma からの逆同期はできません。
+**💡 A:**
 
-これは仕様であり、偶発的な不具合ではありません。
+- `momorph login` で CLI に再ログインし、その後 `momorph whoami` で確認してください。
+- あわせて、firewall／VPN が `github.com/login/device` をブロックしていないことを確認してください。
 
-### Q2. 手動で番号を付けたのに一部の項目が表示・リンクされない？ (Plugin)
+### <u>アカウントが GitHub プロジェクトに追加されていない</u>
+**❓ Q:** GitHub に接続できず、アカウントがプロジェクトに追加されていないというメッセージが表示されます。どう対処すればよいですか？
 
-ユーザーガイドによると、よくある原因は **layer 名が `mms_` プレフィックス規則に従っていない**ことです（旧規則 `A_`・`1_` も可）。対処:
+**💡 A:** MoMorph Web 上で GitHub 連携を行ってください（Settings → GitHub → Connect repo）。
 
-- Figma の layer 名を `mms_<名前>` 形式に修正（大文字小文字は区別しない）。
-- Plugin の Preview ツールバーの **更新（Refresh）**ボタンで再読み込み。
-- 非表示（visible=false）の layer や親 frame の opacity=0 は読み込まれません。
+### <u>Item が表示されない、または順序が正しくない</u>
+**❓ Q:** Figma のレイヤー名に番号を付けたのに、MoMorph で item が読み込まれない、または item の順序が正しくありません。どう対処すればよいですか？
 
-プレフィックスが正しいのに表示されない場合は不具合報告フォームへ（Q34 参照）。
+**💡 A:** よくある原因は次のとおりです。
 
-### Q3. AI のコンテンツ生成が途中で止まり完了しない？ (AI生成)
+- レイヤー名の prefix `mms_` が正しくありません。Figma 上でレイヤー名を `mms_<名前>` の形式に変更してください。
+- MoMorph 上のデータが Figma のレイヤーツリーの順序と同期しておらず、item の欠落や順序の誤りが生じています。
 
-AI 生成は **item の多い screen で 30〜60 秒かかる**ことがあります。エラーと判断する前に少し待ってください。それでも完了しない場合:
+以下の方法で解消できます。
 
-- `mcp.momorph.ai` へのネットワーク接続を確認。
-- 再試行する（採番方法の変更も有効な場合あり）。
-- 複数回失敗する場合は `momorph login` でトークンを更新。
+- MoMorph Plugin の Preview バーにある**更新（Refresh）**ボタンを押して、item を再読み込み・再同期してください。
+- **「Find on Figma」**ボタンを使って、開いている item／screen が目的の Figma フレームと一致しているか確認してください。
+- なお、非表示になっているレイヤーや最も外側の親フレームは読み込まれない点にご注意ください。
 
-繰り返す場合は不具合報告フォームへ（Q34 参照）。
+### <u>MoMorph 上の No の値が正しくない</u>
+**❓ Q:** MoMorph 上の No の値が、Figma のレイヤー名に付けた prefix と一致しないのはなぜですか？
 
-### Q4. CSV ファイルが文字化けして表示される？ (Plugin)
+**💡 A:** これは MoMorph の設計上の動作です。
 
-CSV ファイルを開くプレビューツールを確認してください。プレビューツールに問題がないのに表示がおかしい場合は、Slack `#con_momorph-support_all` から MoMorph チームにお問い合わせください。
+- Figma のレイヤー名に付けた番号は、MoMorph サーバーへの**初回のデータ同期時**にのみ Item No として使用されます。
+- それ以降に「No」の値を変更したい場合は、MoMorph の「No」列で直接編集してください。システムは Figma へ逆同期しません。これにより、Web 上で編集した「No」の値が Figma のレイヤー名の番号と異なる場合のデータ不整合を防ぎます。
 
-### Q5. 項目の番号が間違っている・順番が乱れている？ (Plugin)
+### <u>Figma フレーム差し替え後に spec が消える</u>
+**❓ Q:** Figma でデザインを修正した後、MoMorph に入力した spec のデータが消えてしまいました。原因と対処方法を教えてください。
 
-多くは **MoMorph データと Figma ツリーの不整合**が原因です。対処:
+**💡 A:** この状況は、Figma の Paste to Replace 機能を使って元のフレームをより新しいデザインのフレームに差し替えた場合によく発生します。このとき、MoMorph 上の元のフレームは削除されます。元のフレームに対して作成した spec は保持されますが No UI（デザインなし）の状態に切り替わり、同時に新しいフレームが spec のない screen の一覧に表示されます。
 
-- Figma で design を修正後、Preview ツールバーの **更新（Refresh）**ボタンで再同期。
-- **「Find on Figma」**ボタンで item が正しい対象 frame を指しているか確認。
+原因は、Figma が差し替えたフレームに完全に新しい ID を割り当てるため、現時点では MoMorph が元のフレームを自動認識して spec データを新しいフレームへ移すことができないためです。
 
-それでも誤る場合は MM チームに情報を提供して調査を依頼してください。
+対処方法: MoMorph 上の元の screen（No UI 状態）の Preview エリアで、link frame 機能を使ってこの spec を新しいデザインフレームと紐付けてください。item の一覧では、UI Part 列も新しいフレームの対応するレイヤーと再度紐付ける必要があります。
 
-### Q6. Figma を更新したら MoMorph で入力したデータが消えた？ (Plugin)
+### <u>AI 生成が途中で止まる</u>
+**❓ Q:** AI によるコンテンツ生成が途中で止まったり、サーバーエラーが表示されたりした場合はどうすればよいですか？
 
-Figma で design を修正・更新した後は、Plugin の Preview ツールバーの **更新（Refresh）**ボタンで再同期してください。それでも消える場合:
+**💡 A:**
 
-- 該当する **ScreenID** を MoMorph チームに提供。
-- MM チームが影響を受けた screen のデータを再更新します。
+- item が多い screen では、AI のコンテンツ生成に**30〜60 秒**ほどかかる場合があります。エラーと判断する前に、もう少しお待ちください。
+- サーバーエラーが表示される場合は、MCP server が過負荷状態か、一時的な障害が発生している可能性があります。少し待ってから再度お試しください。
 
-### Q7. spec を GitHub に送るとエラーになる？ (サーバー)
+### <u>Google Sheets の同期エラー</u>
+**❓ Q:** MoMorph と Google Sheets の間で spec を同期する際にエラーが発生した場合、どう対処すればよいですか？
 
-複数のユーザーから報告されている問題です（日本語・ベトナム語の両方）。開発チームが対応中です。GitHub Issues 上の spec 表示の制約を解消するため、**「Github Flex」**という解決策が紹介されています。
+**💡 A:** これは **MoMorph Syncer**（Google Add-on）の機能です。よくあるエラーは次のとおりです。
 
-### Q8. CLI で GitHub にログインすると「user not found」が出る？ (MCP・CLI)
+- **"Cannot access spreadsheet"**: ファイルは Sun* 社の Google Workspace に属している必要があり、あなたのアカウントがそのファイルに対して **Editor** 権限を持っている必要があります（Viewer 権限では逆同期できません）。
+- **"Missing authentication token"**: Google のログインセッションの有効期限が切れています。Sun* 社のドメインのメールアドレスで再ログインし、Sheets のタブを再読み込みしてください。
+- **"Failed to sync data"**: ネットワークまたはシステムの中断が原因の可能性があります。数分待ってから再度お試しください。
 
-- CLI に再ログイン: `momorph login` → `momorph whoami` で確認。
-- firewall/VPN が `github.com/login/device` をブロックしていないか確認（同ページで code を直接入力も可）。
-- **GitHub アカウント**接続と **repository** 接続の違いに注意（Q40 参照）。
+### <u>GitHub への spec エクスポート時のエラー</u>
+**❓ Q:** spec を GitHub へ送る際にエラーが表示された場合、どう対処すればよいですか？
 
-### Q9. GitHub を連携できず、アカウントが未追加と表示される？ (Web)
+**💡 A:** GitHub 連携の設定画面を再度ご確認のうえ、GitHub アカウントとリポジトリの接続を一度切断し、再接続してみてください。
 
-CLI/MCP/VSCode を使うには **Pro ユーザー**が必要です:
+### <u>CSV ファイルの文字化け</u>
+**❓ Q:** CSV ファイルを開いたときに文字化けする場合、何を確認すればよいですか？
 
-- `@sun-asterisk.com` のメールは自動的に Pro。
-- それ以外は Slack `#con_momorph-support_all` で Pro whitelist 追加を依頼。
+**💡 A:** CSV ファイルを開くために使用しているツール（プレビューツール）を再度ご確認ください。ツールが正常に動作しているのに内容が引き続き正しく表示されない場合は、MoMorph チームにお問い合わせください。
 
-また MoMorph Web で GitHub 連携が必要（file → Settings → GitHub → Connect repo）。
+## 設定・利用
 
-### Q10. AI 連携（MCP）がサーバーエラーで使えない？ (MCP・CLI)
+### <u>AI 向けの Figma デザインのベストプラクティス</u>
+**❓ Q:** デザイナーは AI と最も効果的に連携するために、Figma をどのように設計すればよいですか？
 
-MCP サーバーの過負荷または一時的なエラーが原因の可能性があります。しばらく待ってから再度お試しください。それでも復旧しない場合は、Slack `#con_momorph-support_all` からチームにご連絡ください。
+**💡 A:** 以下のヒントを参考にしてください。
 
-### Q11. MoMorph と Google Sheets の spec 同期が失敗する？ (Web)
+- **構造・整理:** Pages を活用する。screen/item の名前を明確かつ一意に付ける（item 名の重複は、AI で item 一覧や spec を生成する際にエラーの原因となることがあります）。component を標準化する。不要な非表示のフレーム/レイヤーを削除する。screen が長くなりすぎないようにする。
+- **設計テクニック:** Auto Layout を一貫して使う。edge case を含むすべての状態（states）を漏れなく設計する。Component Instance を規律をもって使用する。
+- **Figma の構造:** 各 Frame は 1 つの screen に対応させる。Section の階層数は最大 7 階層程度に抑える（7 階層を超えると、MoMorph は 8 階層目以降の深い位置にある Frame を認識できない場合があります）。最初から階層構造を意識する。
 
-これは **MoMorph Syncer**（Google Add-on）の機能です。よくあるエラー:
+### <u>item の命名規則（mms_ / id_）</u>
+**❓ Q:** MoMorph に認識させるための item の命名方法はどのようなもので、また旧形式の 'id_' はいつサポートされなくなりますか？
 
-- **「Cannot access spreadsheet」**: file が Sun* Workspace 内にあり、account が **Editor** 権限を持つ必要（Viewer は逆同期不可）。
-- **「Missing authentication token」**: Google セッション切れ → `@sun-asterisk.com` で再ログインし Sheets タブを更新。
-- **「Failed to sync data」**: backend/ネットワーク中断 → 数分待って再試行。
+**💡 A:**
 
-詳細なデバッグには Figma/Sheets の editor 権限を求める場合があります。
+- **新しい規則:** レイヤー名に prefix `mms_` を付けます。番号付けの内容は MoMorph 上で直接確認・編集できます。
+- **旧規則:** prefix `id_` は 30/05/2026 以降は認識されなくなります。
 
-## 設定・接続
+### <u>spec 作成時のデータソース</u>
+**❓ Q:** MoMorph は spec.md をデザインに基づいて作成しますか、それとも旧 spec に基づいて作成しますか？
 
-### Q12. Web 設定が完了。AI が spec を取得するには次に何をする？ (MCP・CLI)
+**💡 A:** MoMorph は Figma 上のデザインから直接 spec を生成します。ただし、旧 spec も参照することで、変更点についてより詳細な分析を行うことができます。
 
-手順:
+### <u>Google Sheets の同期範囲</u>
+**❓ Q:** Google Sheets で spec を編集した場合、その内容は Plugin/Web や spec.md（コード生成時に作成されるファイル）へ自動で更新されますか？
 
-- CLI をインストール: `brew install momorph/tap/momorph-cli`。
-- `momorph login` → `momorph init . --ai <agent>`（claude/copilot/cursor…）で MCP server と slash command を自動設定。
-- その後 AI agent が MCP tools を自動呼び出し（slash command または自然言語）して spec を取得 — 例 `/downloadspecs` や screenId 付きプロンプト。
+**💡 A:**
 
-ユーザーが MCP を直接呼ぶことはありません。
+- Spreadsheet 上で変更した内容は、MoMorph Syncer の同期メニューを通じてのみ MoMorph サーバーに反映されます。
+- この内容は spec.md ファイルへは自動で同期され**ません**。
 
-### Q13. GitHub 連携後もメンバーが Figma ファイルを開けない？ (Web)
+### <u>AI に MoMorph から spec を取得させる</u>
+**❓ Q:** Web 上での設定が完了した後、AI に MoMorph から spec を取得させるにはどうすればよいですか？
 
-- **admin** が GitHub を接続すると、repository のメンバーは Figma ファイルにアクセスできます。
-- GitHub webhook がメンバー追加イベント（member-added event）の処理に失敗することがあります。
-- **解決策:** GitHub を一時的に disconnect し、reconnect してください。
+**💡 A:** 以下の手順で実施できます。
 
-### Q14. Figma ファイルと GitHub リポジトリは何対何で連携できる？ (Web)
+- CLI をインストールします: `brew install momorph/tap/momorph-cli`。
+- `momorph login` を実行し、その後 `momorph init . --ai <agent>`（claude/copilot/cursor…）を実行して、MCP server と slash command を自動設定します。
+- その後、AI agent が（slash command または通常のプロンプトを通じて）MCP tools を自動的に呼び出して spec を取得します — 例: `/downloadspecs` や screenId を含むプロンプトなど。
 
-- 1 つの GitHub repository は複数の Figma ファイルに接続**できます**。
-- 1 つの Figma ファイルを複数の repository に接続することは**できません**（逆方向は未対応、将来開発予定）。
+MCP を直接呼び出す必要はありません。
 
-### Q15. 顧客が MoMorph を使い始めるには何が必要？ (Web)
+### <u>コード生成のワークフロー: MoMorph vs Takumi kit</u>
+**❓ Q:** MoMorph と Takumi kit による AI でのコード生成の手順はどのように異なりますか？
 
-エコシステムをフル活用するには **Pro ユーザー**が必要です:
+**💡 A:**
 
-- `@sun-asterisk.com` は自動的に Pro。
-- それ以外（顧客）は Slack `#con_momorph-support_all` で Pro whitelist 追加を依頼。
+- **MoMorph slash command（現行）:** `/specify` で spec.md、design-style.md、assets を生成することから始め、その後順に `/plan` → `/tasks` → `/implement` を実行します。これは MoMorph の公式ワークフローであり、引き続き完全にサポートされています。
+- **Takumi kit（追加ツールキット）:** MoMorph をベースに統合されており、より柔軟です。`/create-plan` → `/takumi` を使うか、`/takumi` を直接呼び出します。利用するには Takumi kit を別途インストールする必要があります。
 
-追加後、顧客にアカウント作成・ログインを案内してください。（Essential は Plugin のみ利用可。）
+### <u>新しいバージョンが出たときの更新</u>
+**❓ Q:** MoMorph の新しいバージョンが出ました。更新するには何をすればよいですか？
 
-## リリース・採番
-
-### Q16. MoMorph の新バージョン後、更新するには何をする？ (Plugin)
-
-reload の順序（重要）: **1. Figma → 2. Plugin → 3. Web**。すでに plugin を開いている場合は、起動時に詳細画面（detail screen）を開いて同期（sync）することを推奨します。
-
-### Q17. リリース履歴はどこで確認できる？ (サーバー)
-
-リリース履歴の詳細は Slack `#con_momorph-support_all` の **Release Notes** を参照してください。**Figma Plugin** については MoMorph の Figma Community ページでバージョンを追跡できます: [figma.com/community/plugin/…/momorph](https://www.figma.com/community/plugin/1406117276934709483/momorph)。
-
-### Q18. VSCode Extension v0.12.4 の新機能は？ (VSCode拡張)
-
-- extension の起動（activation）メカニズムの改善。
-- Figma Tree View 機能の追加。
-- 検索・フィルター（search/filter）の改善。
-- UI/UX の向上。
-
-### Q19. 項目の命名ルールは？旧 'id_' はいつまで使える？ (Figma)
-
-- **新ルール:** layer 名に prefix **mms_** を付与。採番内容は MoMorph 上で直接表示・編集できます。
-- **旧ルール:** prefix **id_** — 2026/05/30 以降は認識されません。
-- **自動マイグレーション期間:** 2026/03/27 〜 2026/05/29。
-
-> ⚠️ 2026/05/29 以降、システムは id_ から mms_ への自動変換を行いません。期限までにマイグレーションを完了してください。
-
-### Q20. 番号を変えたいとき、MoMorph と Figma どちらで直す？ (Plugin)
-
-最初の detect 後に番号を変更したい場合は、Figma ではなく **MM の「No」列を編集**します。Figma 上の番号は最初の検出（initial detection）のためだけに使われます。
-
-## 仕様・ワークフロー・Figma
-
-### Q21. Google Sheets で spec を編集すると spec ファイルにも反映される？ (Web)
-
-- Spreadsheet の内容は MoMorph DB にのみ保存されます。
-- **spec.md ファイルへは自動同期されません。**
-- BrSE が Spreadsheet で編集した情報は、処理の過程で AI が取り込み、markdown ファイルとして保存します。
-
-### Q22. spec の「Note」と「Description」には何を書く？ (Web)
-
-- **Description:** item の概要と、その item に対するユーザー操作（user interactions）を記述します。
-- **Note:** spec 内の各 section の補足説明に使います。
-
-button 型の item では、クリック時の DB 変更を「Description」に記載してください。
-
-### Q23. MoMorph と Takumi kit の AI コード生成フローの違いは？ (MCP・CLI)
-
-- **MoMorph slash commands（現行）:** `/specify` → spec.md + design-style.md + assets 生成 → `/plan` → `/tasks` → `/implement` の順に進む。MoMorph 公式ワークフローで、引き続きフルサポート。
-- **Takumi kit（追加ツール）:** MoMorph の上に統合された補完ツール。`/create-plan` → `/takumi`、または直接 `/takumi` を実行。MoMorph slash command ではなく、Takumi kit の別途インストールが必要。
-
-### Q24. AI と相性よく進めるため Designer は Figma をどう作る？ (Figma)
-
-**構成・整理:** Pages を活用する; screen/item 名を正確で意味のあるものにする; component を標準化する; 不要な非表示 frame/layer を削除する; screen を長くしすぎない。
-
-**設計技術:** Auto Layout を一貫して使う; edge case を含むすべての states を設計する; Component Instance を規律をもって使う。
-
-**Figma 構造:** 1 Frame = 1 画面; Section の入れ子（nesting）には制限がある; 設計初期から階層構造を意識する。
-
-### Q25. Figma で項目名が重複するとどうなる？ (Figma)
-
-item 名の重複は MoMorph 上でエラーを引き起こす可能性があります。報告済みで、チームが対策を検討中です。ベストプラクティス: 同一スコープ内で **常に item 名を一意にする**こと。
-
-### Q26. MoMorph は spec をデザインから作る？既存 spec を参照する？ (AI生成)
-
-MoMorph チームの説明: MM は **Figma design から直接、妥当な spec を生成**します。既存の spec.md を参照しなくても生成可能ですが、参照しない場合は詳細な分析が難しくなります。設計上の目的は design 自体から妥当な spec を作ることです。(spec 同期は Q21 参照)
-
-### Q27. MoMorph 向け Figma 設計で気をつける制限は？ (Figma)
-
-- **Frame = 1 画面:** MoMorph は各 Frame を独立した screen として読み取ります。
-- **Section の入れ子制限:** 深さ（nesting）に制限があり、深くしすぎないこと。
-- 推奨（必須ではない）: 不要な layer を作らない。
-- 設計開始時から階層構造を意識すること。
-
-Figma 有料プランの契約は、デザイン変更の頻度に応じて判断すべきで、チーム全員が契約する必要はありません。
-
-## ライセンス・運用
-
-### Q28. プロジェクト情報を共通サポートチャンネルに投稿してよい？ (共通)
-
-プロジェクト情報漏洩を防ぐため: 共通チャンネルでは PJ 情報を含む内容の投稿を控える; 詳細なやり取りが必要な場合は専用の DM グループを使う（必要に応じて MoMorph チームの担当者を追加）。
-
-### Q29. Essential と Pro プランの違いは？ (ライセンス)
-
-ユーザーガイドより:
-
-- **Essential**: **Plugin のみ** — screen 管理、spec 手動入力、GitHub issue export。Web App・Syncer・CLI・MCP・VSCode Extension・Claude Desktop Extension は利用不可。
-- **Pro**: **エコシステム全体** — Plugin（フル）+ Web + Syncer + CLI + MCP + VSCode Extension + Claude Desktop Extension。
-
-`@sun-asterisk.com` は自動 Pro。それ以外は Slack で whitelist 追加を依頼。
-
-### Q30. MoMorph の AI（Copilot・Claude Code）の利用と料金は？ (ライセンス)
-
-- spec・test case 生成: MoMorph BE または Copilot を利用可能。
-- コード生成: Claude Code を推奨。フェーズに応じて Claude Code Premium Seat を申請可能。
-- Copilot にはライセンスプランごとの利用制限があります。
-
-### Q31. AI（MCP）利用時に認証エラー、よくある原因は？ (MCP・CLI)
-
-多くは **GitHub PAT の revoke/期限切れ**です（`x-github-token invalid / 401` エラー）。対処:
-
-- scope `user` の新しい PAT を作成し MCP config（例 `~/.claude.json`）を更新。
-- `momorph init` 利用時は `momorph login` でトークンが自動マージされます。
-
-### Q32. MoMorph への質問・フィードバックはどのチャンネル？ (共通)
-
-フィードバック受付チャンネルは **#con_momorph-support_all** に統合されました。旧チャンネル #temp_archived_moved-to-con_mormorph-support_all は archive 済みです。
-
-### Q33. MoMorph の利用マニュアルはある？ (共通)
-
-あります。MoMorph チームが公式資料を提供しています:
-
-- **MoMorph — ユーザーガイド**（Plugin・Web・Syncer・CLI・MCP・VSCode Extension・Claude Desktop Extension）— EN/JP/VI 版。
-- **MoMorph MCP Server — Tools Reference**（31 tools の詳細）。
-- Release Notes・Testplay・Q&A List。
-
-ファイルは Slack `#con_momorph-support_all` で直接依頼してください。
-
-### Q34. 不具合に遭遇したとき、どう報告すればよい？ (共通)
-
-上記いずれかの不具合に遭遇した場合:
-
-- MoMorph チームの要請に従い、**詳細な不具合報告フォーム**を記入する。
-- 送信前に、**機密・秘密情報を含む画像を削除またはマスク**する。
-
-特定の screen データに関係する場合は、ScreenID を提供すると対応が速くなります。
-
-## 機能要望
-
-### Q35. spec に概要説明の欄を追加できる？ (Web)
-
-正式な要望: AIDD のプロセスでは概要を記述する「overview description」フィールドが必要ですが、現在 MoMorph では未提供です。この要望は MoMorph チームへ送付済みです。
-
-### Q36. List Item に複数行をまとめて貼り付けできる？ (Web)
-
-現在、List Item への複数行入力は不便です。外部ソース（Excel、テキスト）から List Item へ複数行をコピー＆ペーストする機能の要望があります。
-
-### Q37. 項目名が重複したとき MoMorph 側で対応してくれる？ (Figma)
-
-item 名の重複によるエラーについて、MoMorph チームに解決策の検討を要望しています。現状は「一意の名前を付ける」という推奨のみで、重複時に MoMorph 側がより柔軟に処理することが望まれています。
-
-### Q38. MoMorph への機能要望はどこから送る？ (共通)
-
-機能要望を送るための公式フォーム/チャンネルがあるか質問が出ています — 構造化された機能要望の受付の仕組みが望まれています。
-
-### Q39. MoMorph は新機能リリース前に意見を聞いてくれる？ (共通)
-
-要望: 新機能リリース前にフィードバックを収集する仕組みと、ユーザーが準備できるよう release notes の事前通知（advance notification）が望まれています。
-
-### Q40. GitHub アカウントとリポジトリ接続が紛らわしい、改善予定は？ (Web)
-
-多くのユーザーが「GitHub アカウントの接続」と「repository の接続」を混同しています。2 つの概念が明確に区別され、誤解を生まないよう UI の改善が提案されています。
-
-### Q41. Excel 同期時、MoMorph にない列は失われる？ (Web)
-
-現在、MM に存在しない field は Excel に手入力する必要があります。MoMorph が表示 field をフィルタリングせず、MM が未管理の field も含めすべての field を保持/表示できるようにし、手入力の手間を減らす要望です。
+**💡 A:** Figma のキャッシュの仕組みにより、変更を反映するには次の順序どおりにリロードしてください: **1. Figma → 2. Plugin → 3. Web**。
