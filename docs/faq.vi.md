@@ -1,6 +1,5 @@
 # MoMorph — FAQ & Hướng dẫn xử lý sự cố
 
-> Nguồn tổng hợp: lịch sử trao đổi Slack `#con_momorph-support_all` (03–05/2026) & Hướng dẫn sử dụng MoMorph (docs/user-guide). Cập nhật lần cuối: 27/05/2026.
 
 ## Lỗi & Sự cố
 
@@ -270,21 +269,3 @@ Nhiều người dùng nhầm giữa "kết nối tài khoản GitHub" và "kế
 ### Q41. Khi đồng bộ với Excel, các cột MoMorph chưa có thì có bị mất không? (Web)
 
 Hiện các field không tồn tại trên MM phải nhập tay vào Excel. Đề xuất MoMorph không filter các field hiển thị, cho phép giữ lại tất cả field — kể cả field MM chưa quản lý — để giảm công nhập tay.
-
----
-
-## Mốc thời gian quan trọng
-
-- 27/03/2026: Bắt đầu auto migration id_ → mms_
-- 29/05/2026: Kết thúc giai đoạn auto migration id_ → mms_
-- 30/05/2026: Hệ thống ngừng nhận diện prefix id_
-
-## Đầu mối liên hệ
-
-| Vai trò | Người phụ trách |
-| --- | --- |
-| PM / Release Manager | Sara Tanei, Yuto Furukawa, Thanh, nguyen.hien |
-| Tech Lead / Engineering | le.minh.hoang |
-| Hỗ trợ vấn đề dự án | Thanh, tran.quoc.luc |
-
-Kênh hỗ trợ chính: **#con_momorph-support_all**
