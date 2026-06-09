@@ -1,271 +1,152 @@
 # MoMorph — FAQ & Hướng dẫn xử lý sự cố
 
+## License & Vận hành
+
+### <u>Phân biệt Essential và Pro</u>
+**❓ Q:** Gói người dùng Essential và Pro khác nhau như thế nào?
+
+**💡 A:** Theo Hướng dẫn sử dụng, hai gói khác nhau ở phạm vi tính năng:
+
+- **Essential**: chỉ sử dụng được Plugin — quản lý screens, nhập spec thủ công và export GitHub issue. Gói này không truy cập được Web App, Syncer, CLI, MCP, VSCode Extension hay Claude Desktop Extension.
+- **Pro**: sử dụng được toàn bộ hệ sinh thái — Plugin (đầy đủ), Web, Syncer, CLI, MCP, VSCode Extension và Claude Desktop Extension.
+
+Người dùng có email thuộc domain công ty Sun* sẽ mặc định là tài khoản Pro. Với các email khác, bạn vui lòng liên hệ team MoMorph để được cấp tài khoản Pro.
+
+### <u>Kênh liên hệ & hỗ trợ</u>
+**❓ Q:** Tôi có thể gửi câu hỏi hoặc phản hồi cho MoMorph qua kênh nào?
+
+**💡 A:** Bạn có thể liên hệ với chúng tôi qua:
+
+- Slack: **#con_momorph-support_all**
+- Email: **momorph-admin@sun-asterisk.com**
+
+Lưu ý: bạn vui lòng xóa hoặc che các hình ảnh có chứa thông tin nhạy cảm/bảo mật của dự án trước khi gửi.
 
 ## Lỗi & Sự cố
 
-### Q1. Số thứ tự trên Figma và trên MoMorph không giống nhau? (Plugin)
+### <u>CLI báo 'user not found'</u>
+**❓ Q:** Khi đăng nhập GitHub trong CLI mà nhận thông báo 'user not found' thì tôi nên làm gì?
 
-- Số trên Figma **chỉ dùng cho lần phát hiện (detect) đầu tiên**.
-- Sau đó, muốn đổi số trên MM phải **sửa trực tiếp ở cột "No" trên MM**, không đồng bộ ngược từ Figma.
+**💡 A:**
 
-Đây là hành vi thiết kế, không phải sự cố ngẫu nhiên.
+- Bạn hãy đăng nhập lại CLI bằng `momorph login`, sau đó kiểm tra bằng `momorph whoami`.
+- Đồng thời, hãy đảm bảo firewall/VPN không chặn `github.com/login/device`.
 
-### Q2. Tự đánh số nhưng có item không hiện ra / không liên kết được? (Plugin)
+### <u>Tài khoản chưa được thêm vào dự án GitHub</u>
+**❓ Q:** Tôi không kết nối được GitHub và nhận thông báo tài khoản chưa được thêm vào dự án. Tôi nên xử lý thế nào?
 
-Theo Hướng dẫn sử dụng: nguyên nhân thường gặp là **tên layer chưa đúng prefix `mms_`** (hoặc convention cũ như `A_`, `1_`). Cách xử lý:
+**💡 A:** Bạn vui lòng thực hiện liên kết GitHub trên MoMorph Web (Settings → GitHub → Connect repo).
 
-- Sửa tên layer trên Figma theo dạng `mms_<tên>` (không phân biệt hoa-thường).
-- Bấm nút **Làm mới (Refresh)** trên Preview toolbar của Plugin để load lại item.
-- Layer bị ẩn (visible=false) hoặc parent frame opacity=0 sẽ không được load.
+### <u>Item không xuất hiện hoặc sai thứ tự</u>
+**❓ Q:** Tôi đã gán số vào tên layer Figma nhưng MoMorph không load được item, hoặc thứ tự item bị sai. Tôi nên xử lý thế nào?
 
-Nếu đã đúng prefix mà item vẫn thiếu → gửi form báo bug (xem Q34).
+**💡 A:** Một số nguyên nhân thường gặp:
 
-### Q3. AI tạo nội dung bị dừng giữa chừng, không xong? (AI Generation)
+- Tên layer chưa đúng prefix `mms_`. Bạn hãy đổi tên layer trên Figma theo dạng `mms_<tên>`.
+- Dữ liệu trên MoMorph chưa đồng bộ với thứ tự của Figma layer tree, dẫn đến thiếu item hoặc sai thứ tự.
 
-AI sinh nội dung có thể **mất 30–60s với screen nhiều item** — hãy đợi thêm trước khi coi là lỗi. Nếu vẫn không hoàn tất:
+Bạn có thể khắc phục như sau:
 
-- Kiểm tra kết nối mạng tới `mcp.momorph.ai`.
-- Thử lại; có thể đổi phương thức đánh số (numbering method).
-- Fail nhiều lần → chạy `momorph login` để refresh token.
+- Bấm nút **Làm mới (Refresh)** trên thanh Preview của MoMorph Plugin để load/đồng bộ lại item.
+- Dùng nút **"Find on Figma"** để kiểm tra item/màn hình đang mở có khớp với frame Figma mong muốn không.
+- Lưu ý rằng các layer đang bị ẩn hoặc là frame cha ngoài cùng sẽ không được load.
 
-Nếu lặp lại → gửi form báo bug (xem Q34).
+### <u>Giá trị No trên MoMorph không đúng</u>
+**❓ Q:** Vì sao giá trị No trên MoMorph không trùng khớp với prefix đã gán vào tên layer Figma?
 
-### Q4. File CSV mở ra bị lỗi font / hiển thị sai? (Plugin)
+**💡 A:** Đây là hành vi theo thiết kế của MoMorph:
 
-Kiểm tra lại tool preview đang dùng để mở file CSV. Nếu tool preview hoạt động bình thường mà vẫn còn lỗi hiển thị, liên hệ team MoMorph qua Slack `#con_momorph-support_all` để được hỗ trợ.
+- Số trên tên layer Figma chỉ được dùng làm Item No cho **lần đồng bộ dữ liệu đầu tiên** lên MoMorph server.
+- Sau lần đó, nếu muốn thay đổi giá trị "No", bạn hãy chỉnh trực tiếp tại cột "No" trên MoMorph; hệ thống không đồng bộ ngược về Figma. Cách này giúp tránh mâu thuẫn dữ liệu khi giá trị "No" bạn chỉnh trên Web khác với số trên tên layer Figma.
 
-### Q5. Số thứ tự các item bị sai hoặc lộn xộn? (Plugin)
+### <u>Mất spec sau khi thay frame Figma</u>
+**❓ Q:** Sau khi sửa thiết kế trên Figma, dữ liệu spec đã nhập trên MoMorph bị mất. Vì sao và làm thế nào để khắc phục?
 
-Thường do **dữ liệu MoMorph chưa đồng bộ với cây Figma**. Cách xử lý:
+**💡 A:** Tình huống này thường xảy ra khi bạn dùng chức năng Paste to Replace của Figma để thay frame gốc bằng một frame có thiết kế mới hơn. Khi đó, frame gốc trên MoMorph sẽ bị xóa; phần spec đã tạo cho frame gốc vẫn được giữ lại nhưng chuyển sang trạng thái No UI (chưa có design), đồng thời frame mới sẽ xuất hiện trong danh sách màn hình chưa có spec.
 
-- Sau khi sửa design trên Figma, bấm nút **Làm mới (Refresh)** trên Preview toolbar để đồng bộ lại.
-- Dùng nút **"Find on Figma"** để xác minh item đang trỏ đúng frame mục tiêu.
+Nguyên nhân là Figma gán một ID hoàn toàn mới cho frame thay thế, nên hiện tại MoMorph chưa thể tự nhận ra frame gốc để chuyển dữ liệu spec sang frame mới.
 
-Nếu vẫn sai → cung cấp thông tin cho đội MM để điều tra.
+Cách khắc phục: tại khu vực Preview của màn hình gốc (đang ở trạng thái No UI) trên MoMorph, bạn hãy dùng chức năng link frame để liên kết spec này với frame design mới. Trong danh sách item, cột UI Part cũng cần được liên kết lại với các layer tương ứng của frame mới.
 
-### Q6. Sửa thiết kế trên Figma xong thì dữ liệu đã nhập trên MoMorph bị mất? (Plugin)
+### <u>AI generation bị dừng giữa chừng</u>
+**❓ Q:** Khi AI tạo nội dung bị dừng giữa chừng hoặc báo lỗi máy chủ thì tôi nên làm gì?
 
-Sau khi sửa/cập nhật design trên Figma, hãy bấm nút **Làm mới (Refresh)** trên Preview toolbar của Plugin để đồng bộ lại. Nếu data link vẫn mất:
+**💡 A:**
 
-- Cung cấp **ScreenID** liên quan cho đội MoMorph.
-- Đội MM sẽ cập nhật lại dữ liệu cho các screen bị ảnh hưởng.
+- Với màn hình có nhiều item, quá trình AI sinh nội dung có thể mất khoảng **30–60 giây**. Bạn vui lòng đợi thêm một chút trước khi xem đây là lỗi.
+- Nếu hệ thống báo lỗi máy chủ, nguyên nhân có thể do MCP server đang quá tải hoặc gặp sự cố tạm thời. Bạn hãy đợi một lát rồi thử lại.
 
-### Q7. Gửi spec sang GitHub bị báo lỗi? (Server)
+### <u>Lỗi đồng bộ Google Sheets</u>
+**❓ Q:** Khi đồng bộ spec giữa MoMorph và Google Sheets bị lỗi thì tôi nên xử lý thế nào?
 
-Vấn đề đã được nhiều người dùng báo cáo (cả tiếng Việt và tiếng Nhật). Đội phát triển đang xử lý. Một giải pháp tên **"Github Flex"** đã được giới thiệu để khắc phục giới hạn hiển thị spec trên GitHub Issues.
+**💡 A:** Đây là chức năng của **MoMorph Syncer** (Google Add-on). Một số lỗi thường gặp:
 
-### Q8. Đăng nhập GitHub trong công cụ dòng lệnh báo 'user not found'? (MCP & CLI)
+- **"Cannot access spreadsheet"**: file cần thuộc Google Workspace của công ty Sun* và tài khoản của bạn phải có quyền **Editor** với file đó (quyền Viewer không đồng bộ ngược được).
+- **"Missing authentication token"**: phiên đăng nhập Google đã hết hạn. Bạn hãy đăng nhập lại bằng email thuộc domain công ty Sun* và tải lại tab Sheets.
+- **"Failed to sync data"**: có thể do mạng hoặc hệ thống bị gián đoạn. Bạn vui lòng đợi vài phút rồi thử lại.
 
-- Đăng nhập lại CLI: `momorph login` → kiểm tra bằng `momorph whoami`.
-- Đảm bảo firewall/VPN không chặn `github.com/login/device` (có thể nhập code trực tiếp tại trang này).
-- Phân biệt kết nối **tài khoản GitHub** vs **repository** (xem Q40).
+### <u>Lỗi khi export spec sang GitHub</u>
+**❓ Q:** Khi gửi spec sang GitHub bị báo lỗi thì tôi nên xử lý thế nào?
 
-### Q9. Không kết nối được GitHub, báo tài khoản chưa được thêm vào dự án? (Web)
+**💡 A:** Bạn vui lòng kiểm tra lại màn hình cài đặt liên kết GitHub, sau đó thử ngắt kết nối và kết nối lại tài khoản GitHub cùng repository.
 
-Tài khoản cần là **Pro user** mới dùng được CLI/MCP/VSCode:
+### <u>File CSV bị lỗi font</u>
+**❓ Q:** Khi mở file CSV bị lỗi font thì tôi cần kiểm tra gì?
 
-- Email `@sun-asterisk.com` tự động là Pro.
-- Email khác → liên hệ Slack `#con_momorph-support_all` để được add whitelist Pro.
+**💡 A:** Bạn vui lòng kiểm tra lại công cụ (tool preview) đang dùng để mở file CSV. Nếu công cụ vẫn hoạt động bình thường mà nội dung tiếp tục hiển thị sai, bạn hãy liên hệ team MoMorph để được hỗ trợ.
 
-Ngoài ra cần đã liên kết GitHub trên MoMorph Web (file → Settings → GitHub → Connect repo).
+## Cài đặt & Sử dụng
 
-### Q10. Kết nối AI (MCP) báo lỗi máy chủ, không dùng được? (MCP & CLI)
+### <u>Best practice thiết kế Figma cho AI</u>
+**❓ Q:** Designer nên thiết kế Figma như thế nào để phối hợp với AI hiệu quả nhất?
 
-Nguyên nhân có thể do MCP server đang quá tải hoặc xảy ra lỗi tạm thời. Vui lòng đợi một lúc rồi thử lại. Nếu MCP vẫn chưa được khôi phục, liên hệ team qua Slack `#con_momorph-support_all` để được xử lý.
+**💡 A:** Bạn có thể tham khảo một số gợi ý sau:
 
-### Q11. Đồng bộ spec giữa MoMorph và Google Sheets bị lỗi? (Web)
+- **Cấu trúc & tổ chức:** tận dụng Pages; đặt tên screen/item rõ ràng và duy nhất (việc trùng tên item có thể gây lỗi khi dùng AI để generate danh sách item hoặc spec); chuẩn hóa component; xóa các frame/layer ẩn không cần thiết; và tránh để screen quá dài.
+- **Kỹ thuật thiết kế:** dùng Auto Layout một cách nhất quán; thiết kế đầy đủ các trạng thái (states), bao gồm cả edge case; và sử dụng Component Instance một cách có kỷ luật.
+- **Cấu trúc Figma:** mỗi Frame tương ứng với một màn hình; số cấp Section nên giữ trong khoảng tối đa 7 cấp (nếu vượt quá 7 cấp, MoMorph có thể không nhận diện được các Frame nằm sâu từ tầng thứ 8 trở đi); và nên ý thức về cấu trúc phân cấp ngay từ đầu.
 
-Đây là chức năng **MoMorph Syncer** (Google Add-on). Lỗi thường gặp:
+### <u>Quy tắc đặt tên item (mms_ / id_)</u>
+**❓ Q:** Cách đặt tên item để MoMorph nhận diện là gì, và khi nào thì tên cũ 'id_' ngừng được hỗ trợ?
 
-- **"Cannot access spreadsheet"**: file phải nằm trong Sun* Workspace và account có quyền **Editor** (Viewer không sync ngược).
-- **"Missing authentication token"**: session Google hết hạn → re-login bằng email `@sun-asterisk.com`, refresh tab Sheets.
-- **"Failed to sync data"**: backend/mạng gián đoạn → đợi vài phút thử lại.
+**💡 A:**
 
-Cần debug sâu, đội MoMorph có thể yêu cầu quyền editor file Figma/Sheets.
+- **Quy tắc mới:** thêm prefix `mms_` vào tên layer. Nội dung đánh số có thể xem và chỉnh trực tiếp trên MoMorph.
+- **Quy tắc cũ:** prefix `id_` sẽ không còn được nhận diện sau ngày 30/05/2026.
 
-## Cài đặt & Kết nối
+### <u>Nguồn dữ liệu khi tạo spec</u>
+**❓ Q:** MoMorph tạo spec.md dựa trên thiết kế hay dựa trên spec cũ?
 
-### Q12. Đã setup xong trên Web, làm sao để AI lấy được spec? (MCP & CLI)
+**💡 A:** MoMorph sinh spec trực tiếp từ thiết kế trên Figma. Tuy nhiên, việc tham chiếu thêm spec cũ sẽ giúp đưa ra các phân tích chi tiết hơn về thay đổi.
 
-Các bước:
+### <u>Phạm vi đồng bộ Google Sheets</u>
+**❓ Q:** Khi sửa spec trên Google Sheets, nội dung có tự cập nhật sang Plugin/Web và file spec.md (được tạo khi generate code) không?
 
-- Cài CLI: `brew install momorph/tap/momorph-cli`.
-- `momorph login` → `momorph init . --ai <agent>` (claude/copilot/cursor…) để tự cấu hình MCP server + slash commands.
-- Sau đó AI agent tự gọi MCP tools (slash command hoặc prompt tự nhiên) để lấy spec — vd `/downloadspecs` hoặc prompt kèm screenId.
+**💡 A:**
 
-Người dùng không gọi MCP trực tiếp.
+- Nội dung thay đổi trên Spreadsheet chỉ được cập nhật lên MoMorph server thông qua menu đồng bộ của MoMorph Syncer.
+- Nội dung này **không** tự động đồng bộ sang file spec.md.
 
-### Q13. Đã kết nối GitHub mà thành viên vẫn không mở được file Figma? (Web)
+### <u>Để AI lấy spec từ MoMorph</u>
+**❓ Q:** Sau khi đã thiết lập xong trên Web, làm thế nào để AI lấy được spec từ MoMorph?
 
-- Khi **admin** kết nối GitHub, thành viên trong repository sẽ truy cập được file Figma.
-- Đôi khi GitHub webhook xử lý sự kiện thêm thành viên gặp trục trặc.
-- **Giải pháp:** tạm thời disconnect và reconnect GitHub.
+**💡 A:** Bạn có thể thực hiện theo các bước sau:
 
-### Q14. Một file Figma và repo GitHub liên kết với nhau theo tỉ lệ nào? (Web)
+- Cài đặt CLI: `brew install momorph/tap/momorph-cli`.
+- Chạy `momorph login`, sau đó `momorph init . --ai <agent>` (claude/copilot/cursor…) để tự động cấu hình MCP server và slash commands.
+- Sau đó, AI agent sẽ tự gọi các MCP tools (qua slash command hoặc prompt thông thường) để lấy spec — ví dụ `/downloadspecs` hoặc một prompt kèm screenId.
 
-- Một GitHub repository **CÓ THỂ** kết nối tới NHIỀU file Figma.
-- Một file Figma **KHÔNG THỂ** kết nối tới nhiều repository (chiều ngược lại chưa hỗ trợ, sẽ phát triển trong tương lai).
+Bạn không cần gọi MCP trực tiếp.
 
-### Q15. Khách hàng cần gì để bắt đầu dùng MoMorph? (Web)
+### <u>Workflow tạo code: MoMorph vs Takumi kit</u>
+**❓ Q:** Quy trình tạo code bằng AI với MoMorph và Takumi kit khác nhau như thế nào?
 
-Tài khoản cần là **Pro user** để dùng đầy đủ hệ sinh thái:
+**💡 A:**
 
-- Email `@sun-asterisk.com` tự động có Pro.
-- Email khác (khách hàng) → liên hệ Slack `#con_momorph-support_all` để được add whitelist Pro.
+- **MoMorph slash command (hiện hành):** bắt đầu với `/specify` để sinh spec.md, design-style.md và assets, sau đó lần lượt `/plan` → `/tasks` → `/implement`. Đây là workflow chính thức của MoMorph và vẫn đang được hỗ trợ đầy đủ.
+- **Takumi kit (bộ công cụ bổ sung):** được tích hợp trên nền MoMorph và linh hoạt hơn, dùng `/create-plan` → `/takumi` hoặc gọi trực tiếp `/takumi`. Bạn cần cài đặt Takumi kit riêng để sử dụng.
 
-Sau khi được thêm, thông báo lại cho khách để tạo tài khoản và đăng nhập. (Essential chỉ dùng được Plugin.)
+### <u>Cập nhật khi có bản mới</u>
+**❓ Q:** MoMorph vừa ra bản mới, tôi cần làm gì để cập nhật?
 
-## Release & Numbering
-
-### Q16. MoMorph vừa ra bản mới, cần làm gì để cập nhật? (Plugin)
-
-Quy trình reload (đúng thứ tự): **1. Figma → 2. Plugin → 3. Web**. Với người đã mở plugin, khi khởi động khuyến nghị mở màn hình chi tiết (detail screen) và đồng bộ (sync).
-
-### Q17. Xem lịch sử cập nhật (release) ở đâu? (Server)
-
-Xem lịch sử release đầy đủ tại **Release Notes** trên Slack `#con_momorph-support_all`. Riêng **Figma Plugin** có thể theo dõi version trên trang Figma Community của MoMorph: [figma.com/community/plugin/…/momorph](https://www.figma.com/community/plugin/1406117276934709483/momorph).
-
-### Q18. Bản VSCode Extension v0.12.4 có gì mới? (VSCode Ext)
-
-- Cải thiện cơ chế kích hoạt extension.
-- Bổ sung tính năng Figma Tree View.
-- Cải tiến tìm kiếm và lọc (search/filter).
-- Nâng cấp UI/UX.
-
-### Q19. Cách đặt tên item để MoMorph nhận diện là gì? Khi nào tên cũ 'id_' ngừng dùng được? (Figma)
-
-- **Quy tắc mới:** gán prefix **mms_** vào tên layer. Nội dung đánh số xem/sửa trực tiếp trên MoMorph.
-- **Quy tắc cũ:** prefix **id_** — không còn được nhận diện sau 30/05/2026.
-- **Auto migration:** 27/03/2026 – 29/05/2026.
-
-> ⚠️ Sau 29/05/2026, hệ thống không còn tự chuyển id_ sang mms_. Đảm bảo migration hoàn tất trước thời hạn này.
-
-### Q20. Muốn đổi số thứ tự thì sửa ở MoMorph hay ở Figma? (Plugin)
-
-Khi muốn thay đổi số thứ tự sau lần detect đầu, **sửa cột "No" trên MM** chứ không phải trên Figma. Số trên Figma chỉ phục vụ lần phát hiện đầu tiên.
-
-## Spec, Workflow & Figma
-
-### Q21. Sửa spec trên Google Sheets có tự cập nhật vào file spec không? (Web)
-
-- Nội dung từ Spreadsheet chỉ lưu trong MoMorph DB.
-- **Không tự động đồng bộ sang file spec.md.**
-- Thông tin BrSE chỉnh trên Spreadsheet sẽ được AI tiếp nhận và lưu dưới dạng markdown trong quá trình xử lý.
-
-### Q22. Nên ghi gì vào ô 'Note' và ô 'Description' trong spec? (Web)
-
-- **Description:** mô tả tổng quan của item và các tương tác người dùng với item đó.
-- **Note:** bổ sung giải thích cho từng section trong spec.
-
-Với item dạng button, thay đổi DB khi click cần được ghi trong "Description".
-
-### Q23. Quy trình tạo code bằng AI với MoMorph và Takumi kit khác nhau ra sao? (MCP & CLI)
-
-- **MoMorph slash commands (hiện hành):** bắt đầu bằng `/specify` → sinh spec.md + design-style.md + assets → `/plan` → `/tasks` → `/implement`. Đây là workflow chính thức của MoMorph, vẫn đang được hỗ trợ đầy đủ.
-- **Takumi kit (bộ công cụ bổ sung):** tích hợp trên nền MoMorph, linh hoạt hơn: `/create-plan` → `/takumi`, hoặc gọi trực tiếp `/takumi`. Không phải MoMorph slash command — cần cài Takumi kit riêng.
-
-### Q24. Designer nên thiết kế Figma thế nào để phối hợp với AI tốt nhất? (Figma)
-
-**Cấu trúc tổ chức:** tận dụng Pages; đặt tên screen/item chính xác; chuẩn hóa component; xóa frame/layer ẩn không cần thiết; tránh screen quá dài.
-
-**Kỹ thuật thiết kế:** dùng Auto Layout nhất quán; thiết kế đầy đủ các states (gồm edge case); kỷ luật khi dùng Component Instance.
-
-**Cấu trúc Figma:** 1 Frame = 1 màn hình; có giới hạn cấp lồng (nesting) Section; ý thức cấu trúc phân cấp ngay từ đầu.
-
-### Q25. Đặt trùng tên item trên Figma có sao không? (Figma)
-
-Đặt tên item trùng lặp có thể gây lỗi trên MoMorph. Vấn đề đã được báo cáo, đội đang xem xét khắc phục. Best practice: **luôn đặt tên item duy nhất** trong cùng phạm vi.
-
-### Q26. MoMorph tạo spec dựa trên thiết kế hay dựa trên spec cũ? (AI Generation)
-
-Theo đội MoMorph: MM **sinh spec hợp lý trực tiếp từ Figma design**, không bắt buộc tham chiếu spec.md cũ. Nếu không tham chiếu spec cũ thì khó tạo phân tích chi tiết hơn — nhưng mục tiêu thiết kế là tạo spec hợp lý từ chính design. (Liên quan Q21 về đồng bộ spec.)
-
-### Q27. Thiết kế Figma cho MoMorph có giới hạn gì cần lưu ý? (Figma)
-
-- **Frame = 1 màn hình:** MoMorph đọc mỗi Frame như một screen độc lập.
-- **Giới hạn nesting Section:** có giới hạn độ sâu, không lồng quá sâu.
-- Khuyến nghị (không bắt buộc) không tạo layer dư thừa.
-- Ý thức cấu trúc phân cấp ngay khi bắt đầu thiết kế.
-
-Việc đăng ký gói Figma trả phí nên dựa trên tần suất thay đổi thiết kế — không bắt buộc toàn đội.
-
-## License & Vận hành
-
-### Q28. Có được đăng thông tin dự án lên kênh hỗ trợ chung không? (Chung)
-
-Để tránh rò rỉ thông tin dự án: hạn chế đăng nội dung chứa thông tin PJ trên kênh chung; khi cần trao đổi chi tiết, dùng DM group riêng (thêm đại diện đội MoMorph khi cần).
-
-### Q29. Gói Essential và Pro khác nhau thế nào? (License)
-
-Theo Hướng dẫn sử dụng:
-
-- **Essential**: **chỉ dùng Plugin** — quản lý screens, nhập spec thủ công, export GitHub issue. Không truy cập Web App, Syncer, CLI, MCP, VSCode Extension, Claude Desktop Extension.
-- **Pro**: **toàn bộ hệ sinh thái** — Plugin (full) + Web + Syncer + CLI + MCP + VSCode Extension + Claude Desktop Extension.
-
-Email `@sun-asterisk.com` tự động là Pro; email khác liên hệ Slack để add whitelist.
-
-### Q30. Dùng AI (Copilot, Claude Code) trong MoMorph tính phí thế nào? (License)
-
-- Sinh spec & test case: có thể dùng MoMorph BE hoặc Copilot.
-- Sinh code: Claude Code được khuyến nghị; có thể request Claude Code Premium Seat tùy phase.
-- Copilot có một số giới hạn sử dụng theo gói license.
-
-### Q31. Dùng AI (MCP) báo lỗi xác thực, thường do đâu? (MCP & CLI)
-
-Thường do **GitHub PAT bị revoke/hết hạn** (lỗi `x-github-token invalid / 401`). Cách xử lý:
-
-- Tạo PAT mới scope `user`, cập nhật vào MCP config (vd `~/.claude.json`).
-- Nếu dùng `momorph init`: chạy `momorph login` để token tự merge vào config.
-
-### Q32. Gửi câu hỏi / phản hồi cho MoMorph ở kênh nào? (Chung)
-
-Kênh nhận feedback đã hợp nhất vào **#con_momorph-support_all**. Kênh cũ #temp_archived_moved-to-con_mormorph-support_all đã được archive.
-
-### Q33. Có tài liệu hướng dẫn sử dụng MoMorph không? (Chung)
-
-Có. Đội MoMorph cung cấp bộ tài liệu chính thức:
-
-- **MoMorph — Hướng dẫn sử dụng** (Plugin, Web, Syncer, CLI, MCP, VSCode Extension, Claude Desktop Extension) — bản EN/JP/VI.
-- **MoMorph MCP Server — Tools Reference** (mô tả 31 tools).
-- Release Notes, Testplay, Q&A List.
-
-Yêu cầu file trực tiếp tại Slack `#con_momorph-support_all`.
-
-### Q34. Khi gặp lỗi, cần báo cho đội MoMorph thế nào? (Chung)
-
-Khi gặp bất kỳ lỗi nào ở trên, thực hiện:
-
-- Điền **form báo cáo bug chi tiết** theo yêu cầu của đội MoMorph.
-- **Xóa hoặc che các hình ảnh chứa thông tin nhạy cảm/bảo mật** trước khi gửi.
-
-Nếu liên quan dữ liệu screen cụ thể, cung cấp ScreenID để đội xử lý nhanh hơn.
-
-## Đề xuất tính năng
-
-### Q35. Có thể thêm ô mô tả tổng quan cho spec không? (Web)
-
-Đề xuất chính thức: trong quy trình AIDD cần một trường "overview description" để mô tả tổng quan, hiện MoMorph chưa cung cấp. Đề xuất đã gửi đến đội MoMorph.
-
-### Q36. Có thể dán nhiều dòng cùng lúc vào List Item không? (Web)
-
-Hiện việc nhập nhiều dòng vào List Item đang bất tiện. Người dùng muốn có chức năng copy & paste nhiều dòng từ nguồn ngoài (Excel, text) vào List Item.
-
-### Q37. Designer lỡ đặt trùng tên item, MoMorph có tự xử lý được không? (Figma)
-
-Người dùng yêu cầu đội MoMorph nghiên cứu giải pháp khắc phục cho tình huống tên item trùng nhau. Hiện chỉ có khuyến nghị "đặt tên duy nhất" — đề xuất MoMorph xử lý linh hoạt hơn khi gặp tên trùng.
-
-### Q38. Gửi đề xuất tính năng cho MoMorph qua đâu? (Chung)
-
-Người dùng đặt câu hỏi về form/kênh chính thức để gửi feature request — mong muốn có cơ chế tiếp nhận đề xuất tính năng có cấu trúc.
-
-### Q39. MoMorph có hỏi ý kiến người dùng trước khi ra tính năng mới không? (Chung)
-
-Đề xuất: nên có cơ chế thu thập feedback trước khi release tính năng mới, và thông báo release notes trước (advance notification) để người dùng có thời gian chuẩn bị.
-
-### Q40. Kết nối tài khoản GitHub và repo dễ gây nhầm, có cải thiện không? (Web)
-
-Nhiều người dùng nhầm giữa "kết nối tài khoản GitHub" và "kết nối repository". Đề xuất cải thiện UI để hai khái niệm này rõ ràng, tách biệt, không gây hiểu lầm.
-
-### Q41. Khi đồng bộ với Excel, các cột MoMorph chưa có thì có bị mất không? (Web)
-
-Hiện các field không tồn tại trên MM phải nhập tay vào Excel. Đề xuất MoMorph không filter các field hiển thị, cho phép giữ lại tất cả field — kể cả field MM chưa quản lý — để giảm công nhập tay.
+**💡 A:** Do cơ chế cache của Figma, bạn vui lòng reload theo đúng thứ tự sau để nhận thay đổi: **1. Figma → 2. Plugin → 3. Web**.

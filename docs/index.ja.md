@@ -7,3 +7,4 @@ MoMorph の利用方法に関するドキュメントです。右上のメニュ
 - [総合ユーザーガイド](general-user-guide.md)
 - [MCP ツールリファレンス](mcp-tools-reference.md)
 - [よくある質問 (FAQ)](faq.md)
+- [リリースノート](release-notes.md)

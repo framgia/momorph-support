@@ -1,6 +1,9 @@
 # MoMorph — User Guide
 
-> **Intended audience:** Designers, BrSEs, Devs, QAs, and PMs who use MoMorph's AI-Driven Development workflow
+
+> 📩 **Contact & support — MoMorph team**
+> - Slack: `#con_momorph-support_all`
+> - Email: `momorph-admin@sun-asterisk.com`
 
 ---
 
@@ -10,7 +13,7 @@
 <summary><strong>1. <a href="#1-overview">Overview</a></strong></summary>
 
 - [1.1 Ecosystem (7 products)](#11-ecosystem-7-products)
-- [1.2 Data Flow Diagram](#12-data-flow-diagram)
+- [1.2 Data flow diagram](#12-data-flow-diagram)
 - [1.3 Prerequisites](#13-prerequisites)
   - [Accounts](#accounts)
   - [Software / OS](#software--os)
@@ -21,11 +24,11 @@
 <summary><strong>2. <a href="#2-momorph-figma-plugin">MoMorph Figma Plugin</a></strong></summary>
 
 - [2.1 Installation](#21-installation)
-- [2.2 Login](#22-login)
+- [2.2 Sign in](#22-sign-in)
   - [Pro user](#pro-user)
   - [Essential user](#essential-user)
-- [2.3 Syncing Design Data](#23-syncing-design-data)
-- [2.4 Loading UI Elements into the Spec Screen](#24-loading-ui-elements-into-the-spec-screen)
+- [2.3 Sync Design Data](#23-sync-design-data)
+- [2.4 Loading design items into the Spec screen](#24-loading-design-items-into-the-spec-screen)
 
 </details>
 
@@ -33,16 +36,16 @@
 <summary><strong>3. <a href="#3-momorph-web-app">MoMorph Web App</a></strong></summary>
 
 - [3.1 Access](#31-access)
-- [3.2 Login](#32-login)
+- [3.2 Sign in](#32-sign-in)
 - [3.3 Core Features](#33-core-features)
 - [3.4 Screen Status Workflow](#34-screen-status-workflow)
 
 </details>
 
 <details>
-<summary><strong>4. <a href="#4-momorph-syncer-google-add-on--sun-employees-only">MoMorph Syncer (Google Add-on)</a></strong></summary>
+<summary><strong>4. <a href="#4-momorph-syncer-google-add-on">MoMorph Syncer (Google Add-on)</a></strong></summary>
 
-- [4.1 Usage Requirements](#41-usage-requirements)
+- [4.1 Usage requirements](#41-usage-requirements)
 - [4.2 Installation / Access](#42-installation--access)
 - [4.3 Features](#43-features)
 
@@ -52,7 +55,7 @@
 <summary><strong>5. <a href="#5-momorph-cli">MoMorph CLI</a></strong></summary>
 
 - [5.1 Installation](#51-installation)
-- [5.2 Authentication and Initialization](#52-authentication-and-initialization)
+- [5.2 Authentication & Initialization](#52-authentication--initialization)
 - [5.3 Command Reference](#53-command-reference)
 
 </details>
@@ -61,9 +64,9 @@
 <summary><strong>6. <a href="#6-mcp-server--ai-tools">MCP Server — AI Tools</a></strong></summary>
 
 - [Prerequisites](#prerequisites)
-- [Method 1 — Quick setup via CLI](#method-1--quick-setup-via-cli)
-- [Method 2 — Manual configuration](#method-2--manual-configuration)
-- [Tools List](#tools-list)
+- [Option 1 — Quick setup via CLI](#option-1--quick-setup-via-cli)
+- [Option 2 — Manual configuration](#option-2--manual-configuration)
+- [Tools list](#tools-list)
 
 </details>
 
@@ -94,7 +97,7 @@
 
 ## 1. Overview
 
-**MoMorph** is the AI-Driven Development ecosystem provided by Sun\* Asterisk. It takes Figma designs / Specs as the starting point for the entire software development lifecycle.
+**MoMorph** is Sun\* Asterisk's AI-Driven Development ecosystem, taking Figma design / Specs as the starting point for the entire software lifecycle:
 
 ```
 Figma Design & Specs → Test Cases → Code
@@ -102,17 +105,17 @@ Figma Design & Specs → Test Cases → Code
 
 ### 1.1 Ecosystem (7 products)
 
-| #   | Component                    | Role                                                                                                                              | Platform                  |
-| --- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
-| 1   | **Figma Plugin**             | Syncs Figma design data into MoMorph. Manages design data, generates specs documents, and more — all completed within Figma       | Figma                     |
-| 2   | **Web App**                  | Manages projects; stores screens / specs / test cases                                                                             | Browser                   |
-| 3   | **Syncer (Google Add-on)**   | Edit spec / testcase in Google Sheets and sync bidirectionally with MoMorph                                                       | Google Sheets             |
-| 4   | **CLI**                      | Project initialization, MCP configuration, uploading CSV specs / testcases                                                        | Terminal                  |
-| 5   | **VSCode Extension**         | Displays designs / specs, integrates the MCP server, and provides the Figma Tree and slash commands for Copilot Chat             | VS Code                   |
-| 6   | **MCP Server**               | Provides 31 AI tools for AI agents to read and write MoMorph / Figma data                                                         | Automatic via AI agent    |
-| 7   | **Claude Desktop Extension** | `.mcpb` bundle — use MoMorph MCP from Claude Desktop                                                                              | Claude Desktop            |
+| #   | Component                    | Purpose                                                                                       | Platform               |
+| --- | ---------------------------- | --------------------------------------------------------------------------------------------- | ---------------------- |
+| 1   | **Figma Plugin**             | Sync design data from Figma into MoMorph, manage design data, create spec documents, etc.     | Figma                  |
+| 2   | **Web App**                  | Manage projects, store screens/specs/test cases                                               | Browser                |
+| 3   | **Syncer (Google Add-on)**   | Edit specs/test cases in Google Sheets and sync them two-way with MoMorph                      | Google Sheets          |
+| 4   | **CLI**                      | Initialize projects, configure MCP, upload CSV specs/test cases                               | Terminal               |
+| 5   | **VSCode Extension**         | Display design/spec, integrate the MCP server, Figma Tree and slash commands for Copilot Chat | VS Code                |
+| 6   | **MCP Server**               | Provide AI tools for agents to read/write MoMorph & Figma data                                | Automatic via AI agent |
+| 7   | **Claude Desktop Extension** | `.mcpb` bundle — use MoMorph MCP from Claude Desktop                                           | Claude Desktop         |
 
-### 1.2 Data Flow Diagram
+### 1.2 Data flow diagram
 
 ```
 ┌─────────────┐     design data      ┌──────────────────┐
@@ -154,228 +157,217 @@ Figma Design & Specs → Test Cases → Code
 
 #### Accounts
 
-**MoMorph user plans (Essential vs Pro)** — these determine the scope of access across the entire ecosystem:
+**MoMorph user plans (Essential vs Pro)** — determine access scope across the entire ecosystem:
 
-| Plan          | Scope of Access                                                                                                                                                                                                  |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Essential** | **Plugin only** — screens management, manual spec entry, and GitHub issue export are available. Other products (Web App, Syncer, CLI, MCP Server, VSCode Extension, Claude Desktop Extension) are **not available** |
-| **Pro**       | **The entire ecosystem** — Plugin (full features) + Web App + Syncer + CLI + MCP Server + VSCode Extension + Claude Desktop Extension                                                                            |
+| Plan          | Access scope                                                                                                                                                                                                                            |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Essential** | **Plugin only** — Can use the following features: manage screens, enter specs manually, export GitHub issues. The other sub-products (Web App, Syncer, CLI, MCP Server, VSCode Extension, Claude Desktop Extension) **are not accessible** |
+| **Pro**       | **Entire ecosystem** — Plugin (full features) + Web App + Syncer + CLI + MCP Server + VSCode Extension + Claude Desktop Extension                                                                                                       |
 
 **How to become a Pro user:**
 
-- The `sun-asterisk.com` domain is registered in the Pro whitelist by default → any Sun\* account is automatically granted Pro
-- If using an email from another domain: contact Slack `#con_momorph-support_all` to request being added to the whitelist
+- Users whose email belongs to the Sun\* company domain are Pro accounts by default.
+- Other emails: contact the MoMorph team to be granted a Pro account.
 
-**Platform accounts required per product:**
+**Platform accounts required for each product:**
 
-| Product                  | Account | Requirement                                                                                                                                            |
-| ------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Figma Plugin             | Figma   | Complies with [Figma's plugin usage requirements](https://help.figma.com/hc/en-us/articles/360039958474) (a Viewer seat can launch the plugin as long as it is within its own Drafts files) |
-| Web App                  | Figma   | Any seat type                                                                                                                                           |
-| Syncer (Google Add-on)   | Google  | **Sun\* Asterisk Google Workspace** account (`@sun-asterisk.com`)                                                                                       |
-| CLI                      | GitHub  | Run `momorph login`                                                                                                                                     |
-| MCP Server               | GitHub  | PAT (scope: `user`)                                                                                                                                     |
-| VSCode Extension         | GitHub  | Same account as the CLI, plus **Copilot Business** (the Free version is not eligible)                                                                   |
-| Claude Desktop Extension | GitHub  | PAT (scope: `user`)                                                                                                                                     |
+| Product                  | Account | Requirement                                                                                                                                                          |
+| ------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Figma Plugin             | Figma   | Follow [Figma's plugin usage requirements](https://help.figma.com/hc/en-us/articles/360039958474) (a Viewer seat can still run the plugin in personal Drafts files) |
+| Web App                  | Figma   | Any seat                                                                                                                                                             |
+| Syncer (Google Add-on)   | Google  | A **Sun\* company Google Workspace** account                                                                                                                         |
+| CLI                      | GitHub  | `momorph login`                                                                                                                                                      |
+| MCP Server               | GitHub  | PAT scope `user`                                                                                                                                                     |
+| VSCode Extension         | GitHub  | Same account as the CLI + **Copilot Business** (Free is not enough)                                                                                                  |
+| Claude Desktop Extension | GitHub  | PAT scope `user`                                                                                                                                                     |
 
 #### Software / OS
 
-| Product                  | Required Environment                                                                            |
-| ------------------------ | ----------------------------------------------------------------------------------------------- |
-| Figma Plugin             | Figma Desktop or figma.com                                                                      |
-| Web App                  | Latest version of Chrome / Firefox / Safari / Edge                                              |
-| Syncer (Google Add-on)   | Google Sheets in the browser (Sun\* Workspace)                                                  |
-| CLI                      | macOS / Linux / Windows (install via Homebrew / Chocolatey / scripts — see §5.1)                |
-| VSCode Extension         | VS Code v1.105 or later · WSL on Windows                                                         |
-| Claude Desktop Extension | Claude Desktop with MCP v1.x support · Node.js 18 or later · macOS / Windows / Linux             |
+| Product                  | Requirement                                                                      |
+| ------------------------ | -------------------------------------------------------------------------------- |
+| Figma Plugin             | Figma Desktop or figma.com                                                       |
+| Web App                  | Latest Chrome / Firefox / Safari / Edge                                          |
+| Syncer (Google Add-on)   | Google Sheets in the browser (Sun\* Workspace)                                   |
+| CLI                      | macOS / Linux / Windows (install via Homebrew / Chocolatey / scripts — see §5.1) |
+| VSCode Extension         | VS Code ≥ v1.105 · Windows: WSL                                                  |
+| Claude Desktop Extension | Claude Desktop supporting MCP v1.x · Node.js ≥ 18 · macOS/Windows/Linux          |
 
 ---
 
 ## 2. MoMorph Figma Plugin
 
-A Plugin that runs within Figma (Desktop / Browser). In addition to features equivalent to the Web App (§3), it syncs design data (screens, items, styles, variables, media) into the MoMorph DB.
+The plugin runs inside Figma (Desktop/Browser) and provides the same features as the Web App (§3) + syncing design data (screens, items, styles, variables, media) into the MoMorph DB.
 
 ### 2.1 Installation
 
-1. In Figma, open **Plugins → Manage plugins** and search for "MoMorph"
-2. Click **Install**, then Run
+1. Open Figma → **Plugins → Manage plugins** → search for "MoMorph"
+2. Click **Install** → Run
 
-Production Plugin ID: `1406117276934709483`.
+### 2.2 Sign in
 
-### 2.2 Login
-
-On the first launch of the Plugin (or when the session expires), the **Welcome** screen appears with two login buttons. Choose one of the two depending on your account type.
+Opening the Plugin for the first time (or when the session has expired) brings up the **Welcome** screen with 2 sign-in buttons corresponding to 2 flows — the user picks one of the two depending on their account type:
 
 #### Pro user
 
-Click the **"Login with Pro account"** button
+Click the **"Sign in with Pro account"** button
 
-1. The Plugin opens a browser tab → click **Authorize** on the Figma OAuth page to authenticate
-2. Once authentication completes, you return to the Plugin and proceed to the **"Connect Figma file"** step → paste the Figma URL of the file currently open in the Plugin → click **"Next"**
-3. If the file has multiple pages, you proceed to the **"Select pages to load"** step → select the pages from which you want to load screens data from the Figma canvas → complete the initial setup
-4. You are taken to the Plugin's main screen
+1. The Plugin opens a browser tab → click **Authorize** on the Figma OAuth page to authenticate the account.
+2. After successful authentication, return to the Plugin, which moves to the **"Connect Figma File"** step — paste the Figma URL of the file the plugin is open in → click **"Continue"**.
+3. If the file has multiple pages, the Plugin moves to the **"Select pages to load"** step — choose the pages whose screen data you want to load from the Figma canvas → finish setup.
+4. Enter the Plugin's main screen.
 
-> Your Figma account must be registered in the Pro whitelist (see §1.3). If it is not registered, the browser will display an error after you authorize.
+> The Figma account must be a Pro account (see §1.3). If it is not, the browser will show an error after authorization.
 
 #### Essential user
 
 Click the **"Start for free"** button
 
-1. The Plugin does not open a browser, and Figma OAuth is **not required**
-2. You go straight to the Plugin's main screen, where Essential features (browsing screens, manual spec entry, GitHub issue export) are available
-3. The Web App, CLI, MCP Server, VSCode Extension, and Claude Desktop Extension are **not available** — see §1.3
+1. The Plugin does **not** open a browser and does **not** require Figma OAuth.
+2. Go straight to the Plugin's main screen with Essential features (browse screens, enter specs manually, export GitHub issues).
+3. The Web App, CLI, MCP Server, VSCode Extension, and Claude Desktop Extension are **not** accessible — see §1.3.
 
-> **Accidentally chose Essential despite having a Pro account?** The Plugin remembers this choice, so from the next time onward it takes you straight to the Essential screen without going through the Welcome screen. To return to the Welcome screen, you need to **delete the plan information stored in Figma's clientStorage**. After deleting it, close and reopen the Plugin; the Welcome screen will appear, so click **"Login with Pro account"**.
+### 2.3 Sync Design Data
 
-### 2.3 Syncing Design Data
-
-The Web App, CLI, MCP, and VSCode Extension can only see data that has been synced via the Plugin.
+The Web App, CLI, MCP, and VSCode Extension can only see design data after it has been synced through the Plugin.
 
 **How to sync:**
 
-1. **Launch the Plugin in the Figma file you are working on** → the Plugin automatically syncs the screens list in the background (no action required)
-2. **Click a screen to open its detail view** → that screen's image and UI elements are synced
-3. **Click the Refresh icon (🔄) on the Preview toolbar** (tooltip _"Sync / update image"_) in cases such as:
-   - Right after modifying a design in Figma, when you want it reflected in MoMorph immediately
-   - The Web App shows _"The design image has not been synced from the Figma Plugin"_
-   - An item was changed / renamed / added but the Plugin has not recognized it
+1. **Open the Plugin in the Figma file you want to work on** → the Plugin automatically syncs the list of screens in the background, with no action needed.
+2. **Click a screen to enter its detail view** → that screen's image and design items are synced.
+3. **Click the Refresh icon** (🔄) on the **Preview toolbar** when:
+   - You have just edited a design in Figma and want to update it to MoMorph immediately.
+   - The Web App shows _"The design image has not been synced from the Figma Plugin"_.
+   - An item was changed/renamed/added and the Plugin has not recognized it yet.
 
-### 2.4 Loading UI Elements into the Spec Screen
+### 2.4 Loading design items into the Spec screen
 
-When you open a screen's detail (Spec) screen, the Plugin loads **only the layers that match the prefix convention**. Layers that do not match the prefix are ignored and do not appear in the UI elements list.
+When you open the detail (Spec) view of a screen, the Plugin **only loads layers with the correct prefix convention** in the Figma layer name. Layers that do not match the prefix are skipped and do not appear in the items list.
 
-**Layer naming convention:**
+**Layer naming rules:**
 
-| Type                    | Prefix                          | Example                                               | Display in Spec                                              |
-| ----------------------- | ------------------------------- | ----------------------------------------------------- | ----------------------------------------------------------- |
-| **Item** (current convention) | `mms_<name>`              | `mms_button`, `mms_submit_form`                       | ✅ Displayed as an independent UI element                   |
-| **Item** (legacy convention)  | `<alphanumeric>_<name>`   | `A_button`, `A1_submit`, `1_label`, `1.1_email_field` | ✅ Displayed; automatically renamed to `mms_*` when added to the spec |
-| **Media** (image / icon) | name contains `mm_media`       | `mm_media`, `mm_media_logo`                           | ✅ Displayed in the Media section                           |
-| **Normal layer**        | (no prefix)                     | `Rectangle 1`, `Frame 23`, `Button`                   | ❌ Not displayed                                            |
+| Type                          | Prefix                     | Example                                               | Shown in Spec                                                 |
+| ----------------------------- | -------------------------- | ----------------------------------------------------- | ------------------------------------------------------------- |
+| **Item** (current convention) | `mms_<name>`               | `mms_button`, `mms_submit_form`                       | ✅ Shown as a standalone item                                 |
+| **Item** (legacy convention)  | `<letter/digit>_<name>`    | `A_button`, `A1_submit`, `1_label`, `1.1_email_field` | ✅ Shown; automatically renamed to `mms_*` when added to spec |
+| **Media** (image/icon)        | name containing `mm_media` | `mm_media`, `mm_media_logo`                           | ✅ Shown in the Media section                                 |
+| **Regular layer**             | (no prefix)                | `Rectangle 1`, `Frame 23`, `Button`                   | ❌ Not shown                                                  |
 
 **Notes:**
 
-- Prefixes are **case-insensitive** (`A_button` ≡ `a_button`, `MMS_action` ≡ `mms_action`).
-- The name after the prefix **must not use** `<`, `>`, `'`, or `"` (to avoid HTML / SVG errors).
-- `mms_*` is the current standard convention. This format is recommended for new layers. The legacy convention (`1_button`, `A_button`) is also compatible; the Plugin automatically renames them to `mms_*` when linking them to the spec.
-- Layers with visibility off (`visible = false`) are not loaded. Also, if a parent frame has `opacity = 0`, the layers under it are skipped as well.
+- The prefix is **case-insensitive** (`A_button` ≡ `a_button`, `MMS_action` ≡ `mms_action`).
+- The name after the prefix **must not contain the characters** `<`, `>`, `'`, `"` (to avoid HTML/SVG errors).
+- The `mms_*` convention is the current standard — using it for new layer names is recommended. Layers with legacy prefixes (`1_button`, `A_button`) remain compatible; the Plugin will automatically rename them to `mms_*` when linking them into a spec.
+- Layers with visibility turned off (`visible = false`) will not be loaded. Additionally, if the parent frame has `opacity = 0`, its child layers are also skipped.
+
+**Automatically generating the list with AI Generate:**
+
+Besides setting prefixes manually, on the Spec screen the user can use the **AI Generate** feature to have AI analyze the Figma design and create the design items list automatically. After the AI finishes, the user should review and edit/add items as needed.
 
 **Recommended workflow for Designers:**
 
-1. Name layers using the `mms_*` convention from the design stage (e.g., `mms_login_button`, `mms_username_field`).
-2. Open the screen detail in the Plugin and check the item list on the Spec screen.
-3. Item not showing? → Fix the layer name in Figma → click **Refresh** (🔄) on the Preview toolbar to reload (see §2.3).
+1. Name layers in Figma with the `mms_*` prefix while designing (e.g. `mms_login_button`, `mms_username_field`).
+2. Open the Plugin → enter the detail view → check the item list on the Spec screen.
+3. Missing an item? Fix the layer name in Figma → click **Refresh** (🔄) on the Preview toolbar (see §2.3) to reload.
 
-> If an item still does not appear even with the correct prefix set, see §8.3.
+> See §8.3 if you set the prefix correctly but the item still does not appear.
 
 ---
 
 ## 3. MoMorph Web App
 
-The screen for centrally managing projects / files / screens / specs. Design data is synced from Figma via the Plugin. Note that if you do not perform a sync in the Plugin, you may be unable to access the data in the Web App or other products.
+The hub for managing projects/files/screens/specs. Design data is synced from Figma through the Plugin first. If the user does not sync from the Plugin, they may run into issues accessing data on the Web and in other products.
 
 ### 3.1 Access
 
-URL: **`https://momorph.ai`** · Supports EN / JP / VI (switchable from Settings).
+URL: **`https://momorph.ai`** · Supports EN/JP/VI (change in Settings).
 
-### 3.2 Login
+### 3.2 Sign in
 
-1. Open `momorph.ai` in your browser
+1. Open `momorph.ai`
 2. Click **"Login with Figma"**
-3. Authorize in the Figma popup
-4. On the first time, enter the `fileKey` to link the file
+3. Authorize Figma
 
-To link a **GitHub repo** for the VSCode Extension / CLI: file → **Settings → GitHub → Connect** → select the repo.
 
 ### 3.3 Core Features
 
-Navigate via the sidebar / breadcrumb. The list below is a route reference for checking URLs — after logging in, you can open them at `momorph.ai/<route>`.
+Navigate via the sidebar/breadcrumb after signing in at `momorph.ai`.
 
 **Files & Screens**
 
-| Feature          | Route                                      | Purpose                                                                  |
-| ---------------- | ------------------------------------------ | ------------------------------------------------------------------------ |
-| File list        | `/`                                        | List of linked Figma files                                               |
-| Screen list      | `/files/{fileKey}/screens`                 | List of screens in the file (filter by status / tag / page)             |
-| Screen detail    | `/files/{fileKey}/screens/{screenId}`      | Image preview + design items                                             |
-| Item spec editor | `…/screens/{screenId}/items/{itemId}/spec` | Edit validation / navigation / DB mapping (supports **AI Generate Spec**) |
-| Spec revisions   | `…/items/{itemId}/revs` · `…/revs/{revId}` | View change history and roll back                                        |
-| View all specs   | `…/screens/{screenId}/items/all-specs`     | Browse all specs in the screen in a read-only table                      |
-| Screen tags      | `…/screens/{screenId}/tags`                | Add tags to a screen (functional, bug, etc.)                             |
-| Global tags      | `/tags`                                    | System-wide tag management                                               |
+| Feature          | Purpose                                                         |
+| ---------------- | --------------------------------------------------------------- |
+| File list        | List of linked Figma files                                      |
+| Screen list      | Screens in a file (filter by status, tag, page)                 |
+| Screen detail    | Image preview + design items                                    |
+| Item spec editor | Edit validation/navigation/DB mapping; has **AI Generate Spec** |
+| Spec revisions   | Version history + rollback                                      |
+| View all specs   | Read-only table viewing all specs in a screen                   |
+| Screen tags      | Tag a screen (functional, bug…)                                 |
+| Global tags      | Manage system-wide tags                                         |
 
-**Screen Sets** (grouping screens)
+**Screen Sets** (group screens into sets)
 
-| Feature          | Route                                          | Purpose                              |
-| ---------------- | ---------------------------------------------- | ------------------------------------ |
-| Screen Sets list | `/files/{fileKey}/screen-sets`                 | List of screen sets                  |
-| Create / Edit    | `…/screen-sets/create` · `…/{frameSetId}/edit` | Create / edit a screen set           |
-| Set detail       | `…/{frameSetId}/list`                          | Display the screens within one set   |
-| Screen in set    | `…/{frameSetId}/screens/{screenId}`            | Open a screen from the set's context |
+| Feature          | Purpose                              |
+| ---------------- | ------------------------------------ |
+| Screen Sets list | List of screen sets                  |
+| Create / Edit    | Create / edit a screen set           |
+| Set detail       | View screens within a set            |
+| Screen in set    | Open a screen from the set's context |
 
-**File-level Settings** (`/files/{fileKey}/settings`)
+**File-level Settings**
 
-| Feature                | Route                             | Purpose                                       |
-| ---------------------- | --------------------------------- | --------------------------------------------- |
-| Project Overview       | `…/settings/overview`             | Project overview (markdown)                   |
-| GitHub                 | `…/settings/github`               | OAuth + repo linking (for VSCode Ext / CLI)   |
-| Google                 | `…/settings/google`               | Google OAuth (for the Syncer Google Sheets)   |
-| Screen Translation     | `…/settings/screen-translation`   | Localization hub                              |
-| Translation Languages  | `…/screen-translation/languages`  | Enable / disable languages per file           |
-| Translation Dictionary | `…/screen-translation/dictionary` | en ↔ jp ↔ vi translation dictionary          |
+| Feature                | Purpose                                     |
+| ---------------------- | ------------------------------------------- |
+| Project Overview       | Project description (markdown)              |
+| GitHub                 | OAuth + link repo (for VSCode Ext / CLI)    |
+| Google                 | Google OAuth (for the Syncer Google Sheets) |
+| Screen Translation     | Multilingual hub                            |
+| Translation Languages  | Enable/disable languages for the file       |
+| Translation Dictionary | Translation table en↔jp↔vi                |
 
 ### 3.4 Screen Status Workflow
 
-Each screen has 4 independent status fields (`design_status`, `spec_status`, `dev_status`, `review_status`), each managing progress in 3 stages: `Not Started` / `In Progress` / `Done`. The recommended order of progression:
+Each screen has 4 independent status fields (`design_status`, `spec_status`, `dev_status`, `review_status`), each with 3 values (`Not Started` / `In Progress` / `Done`). Recommended sequence:
 
 ```
 Design → Spec → Dev → Review → Done
 ```
 
-**Which role updates which field** (recommended workflow):
-
-| Field           | Responsible Role | When to switch to `Done`                                    |
-| --------------- | ---------------- | ----------------------------------------------------------- |
-| `design_status` | Designer         | The screen's Figma design is complete                       |
-| `spec_status`   | BrSE / PM        | The spec of each item in the screen has been approved       |
-| `dev_status`    | Developer        | Implementation of the feature related to the screen is done |
-| `review_status` | QA / Reviewer    | Review / testing is complete and there are no blocking issues |
-
-The status fields are operated directly from the Screen detail. The VSCode Extension filters by `spec_status = Done` by default, so Devs only see screens that are ready to be implemented.
+The status fields are edited directly in the Screen detail. The VSCode Extension filters by `spec_status = Done` by default, so Dev only sees screens that are ready to implement.
 
 ---
 
-## 4. MoMorph Syncer (Google Add-on — Sun\* employees only)
+## 4. MoMorph Syncer (Google Add-on)
 
-A Google Sheets Add-on that syncs bidirectionally between Sheets ↔ MoMorph. It is suited for editing specs / test cases in Sheets — leveraging multi-person collaboration, comments, and formulas — and reflecting them in MoMorph, or conversely exporting MoMorph specs to Sheets for team review.
+An add-on for Google Sheets that syncs two-way between Sheets ↔ MoMorph. Suitable when you need to edit specs / test cases in Sheets (multi-person collaboration, comments, formulas) and push them back to MoMorph, or conversely push specs from MoMorph to Sheets for the team to review.
 
-### 4.1 Usage Requirements
+### 4.1 Usage requirements
 
-- A **Sun\* Asterisk Google Workspace** account (`@sun-asterisk.com`). A personal Google account cannot use the add-on.
-- The MoMorph **Pro** plan (see §1.3) — Essential users cannot use the Syncer.
-- A Google Sheets file with the MoMorph Syncer add-on installed.
+- A **Sun\* company Google Workspace** account. Personal Google accounts **cannot** access the add-on.
+- A **Pro** plan on MoMorph (see §1.3) — Essential users cannot use the Syncer.
+- A Google Sheets file that has the MoMorph Syncer add-on installed.
 
 ### 4.2 Installation / Access
 
-- Open a Google Sheets under the Sun\* Workspace → menu **Extensions → search for and install MoMorph Syncer**. On the first time, an authorize popup for the Google account appears, granting access to the Sheets file and permission to call the MoMorph backend.
-- If MoMorph Syncer does not appear in the **Extensions** menu, contact Slack `#con_momorph-support_all`.
+- Open a Google Sheets within the Sun\* Workspace → menu **Extensions → search for and install MoMorph Syncer**. The first time, a popup will request authorization of your Google account so the add-on can access the Sheets file and call the MoMorph backend.
+- If the MoMorph Syncer menu does not appear under **Extensions**, contact the MoMorph team.
 
 ### 4.3 Features
 
-| Action                  | Description                                                              |
-| ----------------------- | ------------------------------------------------------------------------ |
-| **Sync Specifications** | Bidirectionally sync UI element definitions between Sheets ↔ MoMorph     |
-| **Sync Testcases**      | Bidirectionally sync test cases between Sheets ↔ MoMorph                  |
-| **Sync Image**          | Fetch the latest Figma design images into Sheets as in-cell native images |
-| **Sync i18n**           | Sync multilingual content (en / jp / vi)                                 |
+| Action                  | Description                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| **Sync Specifications** | Sync design item definitions two-way between Sheets ↔ MoMorph                  |
+| **Sync Testcases**      | Sync test cases two-way between Sheets ↔ MoMorph                               |
+| **Sync Image**          | Pull the latest design images from Figma into Sheets as in-cell native images   |
+| **Sync i18n**           | Sync multilingual content (en / jp / vi)                                        |
 
-> See §8.5 if you encounter authorization errors, sheet sync failures, missing menu actions, or similar.
+> See §8.5 if you hit authorization errors, the sheet fails to sync, or the menu is missing an action.
 
 ---
 
 ## 5. MoMorph CLI
 
-Responsible for project initialization / post-initialization setup, uploading CSV specs / testcases, and MCP configuration for AI agents. The CLI **does not support download**, so if you want to download specs / testcases as CSV, use the MCP tools via an AI agent (see §6).
+Install/init a project, upload CSV specs/test cases, configure MCP for an AI agent. Note: the CLI does **not** support download — to download specs/test cases as CSV, use an AI agent through the MCP tools (see §6).
 
 ### 5.1 Installation
 
@@ -397,7 +389,7 @@ choco install momorph-cli
 irm https://raw.githubusercontent.com/momorph/cli/refs/heads/main/scripts/install.ps1 | iex
 ```
 
-**Linux / macOS (Bash):**
+**Linux/macOS (Bash):**
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/momorph/cli/refs/heads/main/scripts/install.sh | bash
@@ -409,23 +401,23 @@ curl -fsSL https://raw.githubusercontent.com/momorph/cli/refs/heads/main/scripts
 go install github.com/momorph/cli@latest
 ```
 
-**Check version and update:**
+**Check / Update:**
 
 ```bash
 momorph version
 momorph update
 ```
 
-### 5.2 Authentication and Initialization
+### 5.2 Authentication & Initialization
 
-**Step 1 — Login:**
+**Step 1 — Sign in:**
 
 ```bash
-momorph login          # The CLI displays a code and a link. Press Enter to launch the browser
-momorph whoami         # Check account information
+momorph login          # CLI shows a code + link; press Enter to open the browser
+momorph whoami         # check the account
 ```
 
-**Step 2 — Project initialization:**
+**Step 2 — Init project:**
 
 ```bash
 momorph init . --ai claude        # Claude Code
@@ -435,57 +427,57 @@ momorph init . --ai windsurf      # Windsurf
 momorph init . --ai gemini        # Gemini
 ```
 
-> **Important:** When initializing at the root of a repo, specify `.`. With `momorph init my-project`, a new subfolder is created.
+> **Important:** Use `.` to init in the repo root. `momorph init my-project` will create a subfolder.
 
-What `init` does automatically: downloads the latest template, creates `.claude/` (or `.github/`, `.cursor/`, etc.), configures the MCP server, and installs slash commands.
+`init` automatically: downloads the latest template, creates `.claude/` (or `.github/`, `.cursor/`…), configures the MCP server, and installs slash commands.
 
 ### 5.3 Command Reference
 
-| Command                                         | Description                                  |
-| ----------------------------------------------- | -------------------------------------------- |
-| `momorph login`                                 | Authenticate via GitHub OAuth Device Flow    |
-| `momorph logout [--force]`                      | Log out and delete credentials               |
-| `momorph whoami`                                | Account information + subscription           |
-| `momorph init <dir> --ai <agent>`               | Initialize project + configure agent         |
-| `momorph upload specs <file.csv>`               | Upload spec CSV                              |
-| `momorph upload specs <file.csv> --dry-run`     | Preview only (does not upload)               |
-| `momorph upload testcases <file.csv>`           | Upload test cases                            |
-| `momorph upload testcases <file.csv> --dry-run` | Preview only                                 |
-| `momorph version`                               | CLI version                                  |
-| `momorph update [--check]`                      | Update the CLI (`--check`: check only)       |
-| `momorph completion <shell>`                    | Shell completion (bash / zsh / fish / powershell) |
-| `momorph help [command]`                        | Help                                         |
+| Command                                         | Description                                 |
+| ----------------------------------------------- | ------------------------------------------- |
+| `momorph login`                                 | Auth GitHub OAuth Device Flow               |
+| `momorph logout [--force]`                      | Log out, delete credentials                 |
+| `momorph whoami`                                | Account + subscription                      |
+| `momorph init <dir> --ai <agent>`               | Init project + configure agent              |
+| `momorph upload specs <file.csv>`               | Upload spec CSV                             |
+| `momorph upload specs <file.csv> --dry-run`     | Preview, no upload                          |
+| `momorph upload testcases <file.csv>`           | Upload test cases                           |
+| `momorph upload testcases <file.csv> --dry-run` | Preview                                     |
+| `momorph version`                               | CLI version                                 |
+| `momorph update [--check]`                      | Update the CLI (`--check`: check only)      |
+| `momorph completion <shell>`                    | Shell completion (bash/zsh/fish/powershell) |
+| `momorph help [command]`                        | Help                                        |
 
-> **How to specify the screen when uploading** (choose one):
+> **How to specify the screen when uploading** (pick one):
 >
-> 1. **A filename that follows the convention** — in the format `.momorph/{specs|testcases}/{fileKey}/{figmaFrameId}-{name}.csv` (`{figmaFrameId}` is the frame's Figma node ID. Example: `9276:19907-TOP_Channel.csv`). This is the format automatically generated by slash commands such as `/specs`, `/createtestcases`, and `/updatetestcases`.
-> 2. **The `--screen-id <screenId>` flag** — the alphanumeric MoMorph screenId obtained from the Web URL `/screens/{screenId}/...`. For files outside the convention path, also specify `--file-key`.
+> 1. **Correct file-name convention** — `.momorph/{specs|testcases}/{fileKey}/{figmaFrameId}-{name}.csv`, where `{figmaFrameId}` is the Figma node ID of the frame (e.g. `9276:19907-TOP_Channel.csv`). This is the format that slash commands such as `/specs`, `/createtestcases`, `/updatetestcases` generate automatically.
+> 2. **Flag `--screen-id <screenId>`** — the alphanumeric MoMorph screenId, taken from the Web URL (`/screens/{screenId}/...`); add `--file-key` if the file is outside the convention path.
 
 ---
 
 ## 6. MCP Server — AI Tools
 
-Hosted at `https://mcp.momorph.ai/mcp`, it provides **31 tools** for AI agents to read and write MoMorph / Figma data. Users do not call it directly; AI agents use it automatically (via the slash commands in §7.2, or via natural-language prompts in Claude Desktop in §7.5). For details of each tool, see the separate document **MoMorph MCP Server — Tools Reference (English)** (filename: `momorph-mcp-tools-reference-en.pdf`).
+Hosted at `https://mcp.momorph.ai/mcp`, providing tools for AI agents to read/write MoMorph & Figma data. Users **do not call it directly** — the AI agent uses it on its own (via slash commands in §7.2 or via natural-language prompts in Claude Desktop §7.5). A detailed description of each tool is provided in the detailed MCP Tools usage guide.
 
-Important tools that do not have a corresponding slash command — ones the AI can only call via MCP:
+Some important tools have **no corresponding slash command** — only the AI calls them via MCP:
 
-- `upload_specs` / `download_specs` — upload / download spec CSV to / from MoMorph; supports two kinds of status management: **spec completion** (`spec_progress`: `draft`/`completed`) and **lifecycle** (`active_status`: `active`/`archived`/`deleted`). Download always returns the `spec_progress` column; the `active_status` column is included only when `include_deleted=true`. Upload accepts both fields — if unspecified, the status is automatically determined from the content. Items with `active_status=archived` are rejected if there are content changes.
-- `upload_test_cases` / `download_test_cases` — upload / download test cases CSV
-- `list_frame_spec_diffs` — compare a screen's spec with the immediately preceding revision
+- `upload_specs` / `download_specs` — upload/download spec CSVs to/from MoMorph; support managing 2 types of status: **spec completion** (`spec_progress`: `draft`/`completed`) and **lifecycle** (`active_status`: `active`/`archived`/`deleted`). Download always returns the `spec_progress` column; the `active_status` column only appears when using `include_deleted=true`. Upload accepts both fields — if not passed, the status is computed automatically from the content. An item with `active_status=archived` will be rejected if its content changes.
+- `upload_test_cases` / `download_test_cases` — upload/download test-case CSVs
+- `list_frame_spec_diffs` — compare a screen's spec with the previous revision
 
-**How to trigger these tools manually:**
+**How to trigger the above tools manually:**
 
-- **Upload** (specs / testcases): use the CLI (`momorph upload specs|testcases <file.csv>`), or right-click a `.csv` under `.momorph/` in the VSCode Explorer → "Upload to MoMorph" (see §7.2)
-- **Download** + **list_frame_spec_diffs**: only from an AI agent — a natural-language prompt in Claude Desktop / Code / Cursor, or the slash command `/downloadspecs` in the VSCode menu
+- **Upload** (specs/test cases): use the CLI (`momorph upload specs|testcases <file.csv>`) or right-click a `.csv` file in `.momorph/` in the VSCode Explorer → "Upload to MoMorph" (see §7.2)
+- **Download** + **list_frame_spec_diffs**: only via an AI agent — a natural-language prompt in Claude Desktop/Code/Cursor, or the `/downloadspecs` slash command in the VSCode menu
 
 ### Prerequisites
 
-- A GitHub account linked to MoMorph Web (required to use the CLI / MCP)
-- Access rights to the repo (Admin permission is required when linking a repo via the VSCode Extension / Plugin)
+- A GitHub account linked to MoMorph Web (for CLI / MCP)
+- Repo access (for the VSCode Extension / Plugin, if the account has Admin)
 
-### Method 1 — Quick setup via CLI
+### Option 1 — Quick setup via CLI
 
-(For Claude Desktop, use `.mcpb` — see §7.5)
+(Claude Desktop uses `.mcpb` — see §7.5)
 
 ```bash
 brew install momorph/tap/momorph-cli
@@ -493,7 +485,7 @@ momorph login
 momorph init . --ai <agent_name>
 ```
 
-### Method 2 — Manual configuration
+### Option 2 — Manual configuration
 
 ```json
 {
@@ -508,13 +500,11 @@ momorph init . --ai <agent_name>
 }
 ```
 
-Issue the PAT from GitHub's **Settings → Developer settings → Personal access tokens** with the scope set to `user`.
+Create a PAT with scope `user` at GitHub → Settings → Developer settings → Personal access tokens.
 
-### Tools List
+### Tools list
 
-For details (descriptions, parameters, return values, and usage examples) of all **31 tools**, see the dedicated reference distributed alongside this guide:
-
-📘 **MoMorph MCP Server — Tools Reference (English)** — filename: `momorph-mcp-tools-reference-en.pdf` (distributed in the Slack channel `#con_momorph-support_all`).
+For detailed descriptions, parameters, return types, and usage examples for all of the MCP server's tools, please refer to the detailed MCP Tools usage guide.
 
 ---
 
@@ -522,107 +512,107 @@ For details (descriptions, parameters, return values, and usage examples) of all
 
 ### 7.1 Overview
 
-| Agent                      | Init Command                   | Prompt Folder                         | Trigger                       | Recommended Use     |
-| -------------------------- | ------------------------------ | ------------------------------------- | ----------------------------- | ------------------- |
-| **Claude Code**            | `momorph init . --ai claude`   | `.claude/commands/`                   | Slash commands in the terminal | CLI, headless       |
-| **GitHub Copilot**         | `momorph init . --ai copilot`  | `.github/agents/`, `.github/prompts/` | Copilot Chat / VSCode Ext     | IDE-centric         |
-| **Cursor**                 | `momorph init . --ai cursor`   | `.cursor/commands/`                   | Cursor chat                   | All-in-one IDE      |
-| **Windsurf**               | `momorph init . --ai windsurf` | (follows the Windsurf convention)     | Windsurf chat                 | Codeium family      |
-| **Gemini**                 | `momorph init . --ai gemini`   | (follows the Gemini CLI convention)   | Gemini chat                   | Google stack        |
-| **Claude Desktop** (.mcpb) | See §7.5                       | n/a                                   | Natural-language prompt       | Casual / non-coding |
+| Agent                      | Init Command                   | Prompt Folder                         | Trigger                   | Best for            |
+| -------------------------- | ------------------------------ | ------------------------------------- | ------------------------- | ------------------- |
+| **Claude Code**            | `momorph init . --ai claude`   | `.claude/commands/`                   | Slash in the terminal     | CLI, headless       |
+| **GitHub Copilot**         | `momorph init . --ai copilot`  | `.github/agents/`, `.github/prompts/` | Copilot Chat / VSCode Ext | IDE-centric         |
+| **Cursor**                 | `momorph init . --ai cursor`   | `.cursor/commands/`                   | Cursor chat               | All-in-one IDE      |
+| **Windsurf**               | `momorph init . --ai windsurf` | (per Windsurf)                        | Windsurf chat             | Codeium             |
+| **Gemini**                 | `momorph init . --ai gemini`   | (per Gemini CLI)                      | Gemini chat               | Google stack        |
+| **Claude Desktop** (.mcpb) | see §7.5                       | n/a                                   | Natural-language prompt   | Casual / non-coding |
 
 ### 7.2 GitHub Copilot + VSCode Extension
 
-**Sun\* MoMorph VSCode Extension** (`sun-asterisk.vscode-momorph`): integrates the Figma Tree, slash commands, and MCP server registration for Copilot Chat into VS Code.
+**Sun\* MoMorph VSCode Extension** (`sun-asterisk.vscode-momorph`): Figma Tree, slash commands, and registering the MCP server for Copilot Chat.
 
-#### Operating Requirements
+#### Requirements
 
-- **View or edit** permission for the Figma file (not required if only generating unit tests)
+- **View or edit** access to the Figma file (not needed if you only generate unit tests)
 - **GitHub Copilot Business**
-- VS Code v1.105 or later
-- WSL required on Windows
+- VS Code ≥ v1.105
+- Windows: WSL
 
 #### Installation
 
-The VSCode Extension is distributed as a `.vsix` file. Contact Slack `#con_momorph-support_all` to obtain the latest version.
+The VSCode Extension is distributed as a `.vsix` file. Contact the MoMorph team to get the latest file.
 
-1. Open the `vscode-momorph-x.y.z.vsix` you obtained
-2. VSCode → **Extensions** tab → **`...`** → **Install from VSIX...**
-3. Specify the file
+1. Open the file `vscode-momorph-x.y.z.vsix`
+2. VSCode → the **Extensions** tab → **`...`** → **Install from VSIX...**
+3. Select the file
 
-#### Connection
+#### Connect
 
-Use the same GitHub account as the CLI. Make sure you have run `momorph login` beforehand.
+Use the same GitHub account as the CLI. Make sure you have run `momorph login`.
 
 1. Web → Settings → GitHub → connect repo
-2. Open the repo in VSCode → click the **MoMorph** icon in the Activity Bar
-3. Setup is complete once the screen list appears
+2. VSCode → open the repo → click the **MoMorph** icon in the Activity Bar
+3. The screen list appears → setup is OK
 
-#### Usage After Installation
+#### After installation
 
-You can use the following features directly within VSCode:
+Explore directly in VSCode:
 
-- **Sidebar — Figma view** (`momorph.figma`): displays screens grouped by **With Design / No Design / Archived**. Also displays **Screen Sets** and **Components**. Filter / search by **tag, page, status** (the 4 status fields: Design / Spec / Dev / Review). Filtered by `Spec Status = Done` by default.
-- **Sidebar — Contexts view** (`momorph.contexts`): displays endpoints from `.momorph/contexts/api-docs.yaml`. Auto-refreshes when the file changes.
-- **Right-click a screen** (supports multi-select):
+- **Sidebar — Figma view** (`momorph.figma`): browse screens grouped by **With Design / No Design / Archived**, plus **Screen Sets** and **Components**. Filter/Search by **tag, page, status** (4 status fields: Design / Spec / Dev / Review). Filters by `Spec Status = Done` by default
+- **Sidebar — Contexts view** (`momorph.contexts`): displays endpoints from `.momorph/contexts/api-docs.yaml`, auto-refreshing when the file changes
+- **Right-click a screen** (multi-select supported):
   - **Open on Web** / **Copy Screen Information**
-  - 15 slash commands generate prompts for AI agents — see the table below
-  - Detects the presence of `.github/agents/momorph.*.agent.md`: present → launches Copilot Chat with the prompt / absent → copies the prompt to the clipboard (paste into Claude / Cursor)
-- **Click a screen** → a web view displays the image preview and the specs panel (items / styles / variables / test cases) side by side
-- **Command Palette** (`Cmd/Ctrl+Shift+P` → `MoMorph:`): Sign In, Search/Filter Screens, Open MoMorph Web, OpenAPI Server (Start/Stop/Restart), and more
+  - 15 slash commands that generate ready-made prompts for the AI agent — see the table below
+  - Detect `.github/agents/momorph.*.agent.md` in the repo: present → open Copilot Chat with the prompt; absent → copy the prompt to the clipboard (paste into Claude/Cursor)
+- **Click a screen** → a web view with an image-preview panel + a specs panel (with items / styles / variables / test cases)
+- **Command Palette** (`Cmd/Ctrl+Shift+P` → `MoMorph:`): Sign In, Search/Filter Screens, Open MoMorph Web, OpenAPI Server (Start/Stop/Restart)…
 - **Settings** (`Cmd/Ctrl+,` → `momorph`):
   - `chat.language` & `chat.outputFileLanguage` (English / Vietnamese / Japanese)
   - `api.baseUrl`, `api.headers`, `mcpServers`, `github.remoteName`, `github.useEnterprise`
-- **Copilot Chat**: `/` for slash commands, `#` for the 7 Language Model Tools — `momorph_callMcpTool`, `momorph_compareScreenshots`, `momorph_downloadFigmaImage`, `momorph_getPreferenceInstructions`, `momorph_getUserPreferences`, `momorph_listApiEndpoints`, `momorph_getApiEndpoint`
-- **Explorer**: right-click a `.csv` under `.momorph/specs/` or `.momorph/testcases/` → **Upload to MoMorph**
-- **MCP servers** registered by default (keys in `momorph.mcpServers`): `morpheus`, `context7`, `testViewpoints`
+- **Copilot Chat**: `/` to see slash commands; `#` to see 7 Language Model Tools — `momorph_callMcpTool`, `momorph_compareScreenshots`, `momorph_downloadFigmaImage`, `momorph_getPreferenceInstructions`, `momorph_getUserPreferences`, `momorph_listApiEndpoints`, `momorph_getApiEndpoint`
+- **Explorer**: right-click a `.csv` in `.momorph/specs/` or `.momorph/testcases/` → **Upload to MoMorph**
+- **Pre-configured MCP servers** (in `momorph.mcpServers`): `momorph`, `context7`, `testViewpoints`
 
-#### Slash commands in the Context menu
+#### Slash commands in the context menu
 
-15 commands classified into 2 groups. The **Agent file** column indicates commands that have an independent prompt file (`.claude/commands/momorph.*.agent.md` or `.github/agents/momorph.*.agent.md`) — runnable in Claude Code / Cursor. Commands without an agent file work only via the VSCode menu (dynamic prompt).
+15 commands split into 2 groups. The **Agent file** column marks commands that have a standalone prompt file (`.claude/commands/momorph.*.agent.md` or `.github/agents/momorph.*.agent.md`) — they can run in Claude Code/Cursor; commands without an agent file only work through the VSCode menu (dynamically generated prompt).
 
-**Flow** — the spec → plan → implement workflow:
+**Flow** — the spec → plan → implement process:
 
-| Command          | Agent file | Action                                                       |
-| ---------------- | :--------: | ------------------------------------------------------------ |
-| `/constitution`  |     ✅     | Initialize / update the constitution (rules, stack)          |
+| Command          | Agent file | Action                                                        |
+| ---------------- | :--------: | ------------------------------------------------------------- |
+| `/constitution`  |     ✅     | Init/update the constitution (rules, stack)                   |
 | `/specify`       |     ✅     | Generate `spec.md` + `design-style.md` + assets from a screen |
-| `/reviewspecify` |     ❌     | Review / improve spec.md & design-style.md                   |
-| `/plan`          |     ✅     | Generate a plan from spec + design-style + constitution      |
-| `/reviewplan`    |     ❌     | Review / improve the plan                                    |
-| `/tasks`         |     ✅     | Break the plan down into `tasks.md`                          |
-| `/implement`     |     ✅     | Implement according to `tasks.md`                            |
+| `/reviewspecify` |     ❌     | Review/improve spec.md & design-style.md                      |
+| `/plan`          |     ✅     | Plan from spec + design-style + constitution                  |
+| `/reviewplan`    |     ❌     | Review/improve the plan                                       |
+| `/tasks`         |     ✅     | Break the plan down into `tasks.md`                           |
+| `/implement`     |     ✅     | Code per `tasks.md`                                           |
 
 **Context** — generate data from Figma:
 
-| Command            | Agent file | Action                                                           |
-| ------------------ | :--------: | ---------------------------------------------------------------- |
-| `/specs`           |     ✅     | Generate a 22-column CSV spec from a screen                      |
-| `/createtestcases` |     ✅     | Test cases (Accessing / GUI / Function), 1 CSV per screen        |
-| `/updatetestcases` |     ✅     | Update test cases when the spec changes                          |
-| `/apispec`         |   ✅ \*    | OpenAPI specs + backend test cases                               |
-| `/database`        |     ✅     | SQL Schema + Mermaid ERD                                         |
-| `/screenflow`      |     ✅     | Generate `SCREENFLOW.md`                                         |
-| `/downloadspecs`   |     ❌     | Download CSV spec from MoMorph (via MCP tool)                    |
-| `/convertspecs`    |     ❌     | Convert spec markdown → local CSV (no upload)                    |
+| Command            | Agent file | Action                                            |
+| ------------------ | :--------: | ------------------------------------------------- |
+| `/specs`           |     ✅     | A 22-column CSV spec from a screen                |
+| `/createtestcases` |     ✅     | Test cases (Accessing/GUI/Function), 1 CSV/screen |
+| `/updatetestcases` |     ✅     | Update test cases when the spec changes           |
+| `/apispec`         |   ✅ \*    | OpenAPI specs + backend test cases                |
+| `/database`        |     ✅     | SQL schema + Mermaid ERD                          |
+| `/screenflow`      |     ✅     | Generate `SCREENFLOW.md`                          |
+| `/downloadspecs`   |     ❌     | Download a spec CSV from MoMorph (via an MCP tool) |
+| `/convertspecs`    |     ❌     | Convert spec markdown → CSV locally (no upload)   |
 
-\* The agent file name is `momorph.apispecs.agent.md` (plural); in the VSCode menu it is triggered with `apispec` (singular).
+\* The agent file is named `momorph.apispecs.agent.md` (plural), while the VSCode menu triggers it under the name `apispec` (singular).
 
 #### Slash commands available only via agent file (not in the VSCode menu)
 
-Installed via `momorph init . --ai <agent>` (see §7.3-§7.4), typed directly in the terminal / chat:
+Installed via `momorph init . --ai <agent>` (see §7.3–§7.4), typed directly in the terminal/chat:
 
-| Command          | Action                                                  |
-| ---------------- | ------------------------------------------------------- |
-| `/commit`        | Commit following Conventional Commits                   |
-| `/prdescription` | PR description following the template                   |
-| `/ship`          | Commit + push + PR creation combined into one command   |
-| `/reviewcode`    | Review a PR against the ticket spec, reported by severity |
-| `/setupe2e`      | Initialize Playwright (once per repo)                   |
-| `/writee2e`      | Generate `.spec.ts` from a test plan                    |
-| `/reviewe2e`     | Review POM, locator, data, and performance              |
+| Command          | Action                                             |
+| ---------------- | -------------------------------------------------- |
+| `/commit`        | Commit following Conventional Commits              |
+| `/prdescription` | PR description per the template                    |
+| `/ship`          | Commit + push + create a PR in one command         |
+| `/reviewcode`    | Review a PR vs the ticket spec, report by severity |
+| `/setupe2e`      | Init Playwright (once per repo)                    |
+| `/writee2e`      | `.spec.ts` from a test plan                        |
+| `/reviewe2e`     | Review POM, locators, data, performance            |
 
-> If the Extension does not display data, click **`See Error`** in the notification to open the output channel and check it.
+> When the extension does not display data, click **`See Error`** on the notification to open the output channel.
 
 ### 7.3 Claude Code
 
@@ -630,7 +620,7 @@ Installed via `momorph init . --ai <agent>` (see §7.3-§7.4), typed directly in
 momorph init . --ai claude
 ```
 
-Generates `.claude/commands/momorph.*.agent.md`. Open the Claude Code terminal and simply type a slash command to use it. The MCP configuration is added to `~/.claude.json`.
+Generates `.claude/commands/momorph.*.agent.md`. Open the Claude Code terminal and type a slash command. The MCP config is added to `~/.claude.json`.
 
 ### 7.4 Cursor / Windsurf / Gemini
 
@@ -640,27 +630,27 @@ momorph init . --ai windsurf
 momorph init . --ai gemini
 ```
 
-Prompt files are placed according to each agent's convention. The MCP configuration is automatically merged into the corresponding config file.
+Prompt files follow each agent's convention. The MCP config is merged into the corresponding config file.
 
 ### 7.5 Claude Desktop Extension (.mcpb)
 
-A `.mcpb` bundle installs MoMorph MCP into your local Claude Desktop as a single file — connecting Claude Desktop with `mcp.momorph.ai/mcp`.
+The `.mcpb` bundle installs MoMorph MCP into Claude Desktop via a file — connecting the local Claude Desktop to `mcp.momorph.ai/mcp`.
 
 #### Compatibility
 
-- macOS / Windows / Linux · Node.js 18 or later · Claude Desktop with MCP v1.x support
+- macOS / Windows / Linux · Node.js ≥ 18 · Claude Desktop supporting MCP v1.x
 
 #### Installation
 
-1. Contact Slack `#con_momorph-support_all` to obtain the latest `momorph-mcp.mcpb`.
+1. Contact the MoMorph team to get the latest `momorph-mcp.mcpb` file.
 2. Claude Desktop → **Settings** → **Extensions** → **Advanced Settings** → **Install Extension**
-3. Specify the file → **Install** → enter the **GitHub PAT** (scope: `user`) → **Save** → **Enable**
+3. Select the file → **Install** → enter the **GitHub PAT** (scope `user`) → **Save** → **Enable**
 
-#### Verification
+#### Test
 
-Prompt: _"List all frames in this Figma file: {fileKey}"_ — Claude automatically calls `list_frames`. To check the MCP debug log, enable Developer Mode.
+Prompt: _"List all frames in this Figma file: {fileKey}"_ — Claude calls `list_frames` on its own. Enable Developer Mode to view the MCP debug log.
 
-> **`.mcpb` vs MCP Cloud:** `.mcpb` is for users who use only Claude Desktop. For a multi-IDE setup (VSCode + Claude Code + Cursor), use MCP Cloud via `momorph init` (§5).
+> **`.mcpb` vs MCP Cloud:** `.mcpb` is for users who only use Claude Desktop. For a multi-IDE setup (VSCode + Claude Code + Cursor) → use MCP Cloud via `momorph init` (§5).
 
 ---
 
@@ -668,93 +658,91 @@ Prompt: _"List all frames in this Figma file: {fileKey}"_ — Claude automatical
 
 ### 8.1 CLI
 
-**`momorph login` does not complete** — check whether a firewall / VPN is blocking `github.com/login/device`. You can also authenticate by entering the code directly at `https://github.com/login/device`.
+**`momorph login` does not complete** — check that a firewall/VPN is not blocking `github.com/login/device`. You can enter the code directly at `https://github.com/login/device`.
 
 ### 8.2 Web App
 
-**Figma login failure / popup blocked:**
+**Figma login fails / popup blocked:**
 
 - Allow popups from `momorph.ai`
-- Try the browser's private mode (extensions may interfere with the OAuth callback)
-- Make sure the Figma account is in an active state
+- Try the browser's private mode (extensions sometimes block the OAuth callback)
+- Make sure the Figma account is still active
 
-**Files do not appear after login** — enter the `fileKey` from the Figma URL in the popup. If you skipped it: `/` → "Add file" → paste the fileKey.
+**No files shown after login** — enter the `fileKey` from the Figma URL when prompted. If skipped: `/` → "Add file" → paste the fileKey.
 
 ### 8.3 Figma Plugin
 
-**Item not recognized** — check that the `mms_*` prefix is correctly set in the layer name (see §2.4).
+**Item not recognized** — check that the layer name has the correct `mms_*` prefix convention (see §2.4).
 
-**Plugin is blank / spinner never stops:**
+**Plugin blank / spinner forever:**
 
-- Check whether `momorph.ai` is accessible from Figma (network / VPN)
-- Log out of the Web → log in again → reload the plugin with `Cmd/Ctrl+Shift+P` → `Reload`
+- Can Figma reach `momorph.ai` (network/VPN)?
+- Log out of the Web → log back in → reload the plugin (`Cmd/Ctrl+Shift+P` → `Reload`)
 
 ### 8.4 VSCode Extension
 
-**Cannot connect to MCP** — you may not be logged in, or the token may have expired:
+**Cannot connect to MCP** — not logged in or the token has expired:
 
 ```bash
 momorph login
 momorph whoami
 ```
 
-Then run `Ctrl+Shift+P → Developer: Reload Window`.
+Then `Ctrl+Shift+P → Developer: Reload Window`.
 
 **Tree view does not show screens:**
 
-- Check that the repo is linked on the Web side (Settings → GitHub)
+- Has the repo been linked on the Web (Settings → GitHub)?
 - Click **Refresh** on the Figma Tree
-- If an error is shown → check the details via **`See Error`** in the notification
+- If there is an error → click **`See Error`** on the notification
 
-**Copilot Chat does not launch from the context menu** — the Extension determines a Copilot project by the presence of `.github/agents/momorph.*.agent.md`. If that file is absent (e.g., in a Claude Code project), the prompt is copied to the clipboard, so paste it manually into Claude or similar.
+**Context menu does not trigger Copilot Chat** — the Extension detects `.github/agents/momorph.*.agent.md` to know a project is a Copilot project. If it is missing (a Claude Code project), the prompt is copied to the clipboard — paste it manually into Claude.
 
-### 8.5 Syncer (Google Add-on)
+### 8.5 Syncer (Google Sheets Add-on)
 
-**MoMorph Syncer does not appear in the Extensions menu** — the add-on has not been deployed to that Sheets file. Contact Slack `#con_momorph-support_all`.
+**The MoMorph Syncer menu does not appear under Extensions** — the add-on has not been deployed by the operations team for this Sheets file. Contact the MoMorph team.
 
-**"Missing authentication token" when running an action** — the Google session has expired. Log back in to the Google account with a `@sun-asterisk.com` email, refresh the Sheets tab, and retry.
+**"Missing authentication token" when calling an action** — the Google session has expired. Re-login to your Google account (make sure to use the Sun\* company Google Workspace account), refresh the Sheets tab, and try again.
 
-**"Cannot access spreadsheet"** — insufficient file sharing permissions. Items to check:
+**"Cannot access spreadsheet"** — file share permissions are insufficient. Check:
 
-- Whether the Sheets file is under the Sun\* Workspace (personal private files are not supported).
-- Whether the current account has **Editor** permission (Viewer cannot sync to MoMorph).
+- Whether the Sheets file is inside the Sun\* Workspace (personal private files are not supported).
+- Whether the current account has **Editor** permission (Viewers cannot sync back to MoMorph).
 
-**"Invalid Figma URL"** — the URL format is invalid. Copy and paste the Figma link again from the browser's address bar (include the `node-id` as well when syncing a specific frame).
+**"Invalid Figma URL"** — you pasted a URL in the wrong format. Re-paste the Figma link from the browser address bar (including `node-id` if syncing a specific frame).
 
-**"Failed to sync data"** — a temporary failure of the MoMorph backend or network. Retry after a few minutes. If it recurs, contact team support.
+**"Failed to sync data"** — the MoMorph backend or network was interrupted. Wait a few minutes and try again; if it repeats many times, report to the support team.
 
-**Image does not appear in the cell after syncing** — converting the in-cell image runs in the background (fire-and-forget). Wait 10–30 seconds and then reload the sheet. If it still fails, run **Sync Image** again from the menu.
+**Images do not appear in the cell after syncing** — the in-cell image conversion runs in the background (fire-and-forget). Wait 10–30s then reload the sheet. If it still fails, click **Sync Image** in the menu again.
 
 ### 8.6 MCP / Slash Commands
 
-**"Frame not found" when uploading specs** — most often this is a missing `--screen-id`, or confusing a Figma node ID (e.g., `32355:420279`) with a MoMorph screenId. Address it with one of the following (see §5.3):
+**"Frame not found" when uploading specs** — a missing or wrong `--screen-id` (the Figma node ID `32355:420279` ≠ the MoMorph screenId). Fix it in one of 2 ways (see §5.3):
 
-- Use a filename that follows the convention `.momorph/{specs|testcases}/{fileKey}/{figmaFrameId}-{name}.csv` and upload without flags.
-- Or specify the `--screen-id` flag:
+- Name the file with the correct convention `.momorph/{specs|testcases}/{fileKey}/{figmaFrameId}-{name}.csv` then upload without the flag.
+- Or pass the `--screen-id` flag:
   ```bash
   momorph upload specs <file.csv> --screen-id <alphanumeric-screenId>
   ```
 
-**"Frame not found" when downloading specs** (when an AI agent calls MCP `download_specs`) — the agent is passing a Figma node ID as the screenId. Obtain the correct screenId from the Web URL `/screens/{screenId}/...` and redo the prompt.
+**Download specs "Frame not found"** (when the AI agent calls MCP `download_specs`) — the agent is using a Figma node ID instead of the MoMorph screenId. Get the screenId from the Web URL (`/screens/{screenId}/...`) and prompt again.
 
 **Claude Desktop Extension does not call tools:**
 
-- Whether MoMorph's status is `Enabled` in Settings → Extensions
-- Whether the GitHub PAT is valid (scope: `user`)
-- Enable Developer Mode and check the log
-- Whether the fileKey / screenId is clearly stated in the prompt
+- Settings → Extensions → MoMorph status `Enabled`
+- Is the GitHub PAT still valid (scope `user`)?
+- Enable Developer Mode to view the log
+- Make the prompt explicit and mention the fileKey/screenId
 
-**MCP timeout / slow response:**
+**MCP timeout / slow:**
 
-- Check the connection status to `mcp.momorph.ai`
-- Large slash commands (such as `/momorph.specs` on a screen with many items) may take 30–60 seconds
-- If it fails repeatedly, refresh the token with `momorph login`
+- Check the network to `mcp.momorph.ai`
+- A large slash command (`/momorph.specs` for a screen with many items) can take 30–60s — wait longer
+- Repeated failures → `momorph login` to refresh the token
 
 **`x-github-token` invalid / 401:**
 
-- The PAT has been revoked / expired → issue a new PAT (scope: `user`) and update the MCP config such as `~/.claude.json`
-- When using `momorph init`, running `momorph login` automatically merges the token into the config
+- The PAT was revoked/expired → create a new PAT (scope `user`), update it in the MCP config (`~/.claude.json`…)
+- Using `momorph init`: run `momorph login` → the token is merged into the config automatically
 
 ---
-
-_For any other inquiries, contact Slack `#con_momorph-support_all`._
