@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+<!-- Chặn search engine index site (project Pages: meta tag là cơ chế hiệu lực, không phải robots.txt) -->
+{% block extrahead %}
+  <meta name="robots" content="noindex, nofollow" />
+{% endblock %}

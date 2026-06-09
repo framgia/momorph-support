@@ -1,0 +1,65 @@
+site_name: MoMorph User Guide
+site_url: https://framgia.github.io/momorph-support/
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: ja
+  features:
+    - navigation.tabs # thanh tab điều hướng ngang trên cùng
+    - navigation.sections # nhóm menu sidebar trái
+    - navigation.top
+    - toc.integrate # gộp TOC trong trang vào sidebar trái, tắt cột TOC bên phải
+    - search.suggest
+    - content.code.copy # nút copy cho code block
+    - content.tabs.link
+  palette:
+    - scheme: default
+      primary: teal
+      accent: indigo
+      toggle: { icon: material/weather-night, name: Switch to dark mode }
+    - scheme: slate
+      primary: teal
+      accent: indigo
+      toggle: { icon: material/weather-sunny, name: Switch to light mode }
+
+plugins:
+  - search
+  - i18n:
+      docs_structure: suffix
+      fallback_to_default: true
+      languages:
+        - locale: ja
+          default: true
+          name: 日本語
+          build: true
+          nav_translations:
+            Home: ホーム
+            General User Guide: ユーザーガイド
+            MCP Tools Reference: MCPサーバーツール詳細
+            FAQ: よくある質問 (FAQ)
+        - locale: vi
+          name: Tiếng Việt
+          build: true
+          nav_translations:
+            Home: Trang chủ
+            General User Guide: Hướng dẫn sử dụng
+            MCP Tools Reference: Chi tiết công cụ MCP Server
+            FAQ: Câu hỏi thường gặp
+        - locale: en
+          name: English
+          build: true
+          nav_translations:
+            MCP Tools Reference: MCP Server Tools
+            FAQ: FAQs
+
+markdown_extensions:
+  - toc:
+      toc_depth: 3
+
+# nav tham chiếu tên base (không suffix); plugin i18n resolve theo từng locale + nav_translations
+nav:
+  - Home: index.md
+  - General User Guide: general-user-guide.md
+  - MCP Tools Reference: mcp-tools-reference.md
+  - FAQ: faq.md
