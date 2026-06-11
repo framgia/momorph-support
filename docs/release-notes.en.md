@@ -2,24 +2,38 @@
 
 The latest MoMorph updates across Plugin, Web, and MCP Server.
 
-## 2026-05-21
+## 2026-06-11
 
 **✨ New & Improved**
 
-- Smoother Screen Detail experience with refined title display, tag area layout, and frame navigation from Figma.
-- More control over AI spec generation — cancel individual items or entire batches, with summary reporting on completion.
-- Faster screen lookup with partial-match Screen ID search across Screen List and Screen Set.
-- [Pro account only] One-time Figma URL setup — plugin auto-remembers your file, resettable anytime.
+- **Maintenance pre-notice** — A heads-up modal now appears in Plugin & Web before a scheduled maintenance window, showing the time in your timezone.
+- **Generate spec with AI on Web** — Now available from the action menu on both Screen Spec and View All Specs, matching the Plugin.
+- **Figma Group layers** — Layers of type Group can now be linked, edited, and managed just like any normal design item.
+- **Flexible spec input** — Required-field restrictions removed (only a name or No. is required) so you can fill specs freely across diverse projects.
+- More consistent multilingual labels and new item-toolbar tooltips across Plugin & Web.
 
 **🐛 Fixes**
 
-- Improved reliability of Copy Specs, AI test case generation, GitHub integration, and Screen Set handling for deleted frames.
-- Various Screen Spec, preview, badge, and Screen List display fixes for a more consistent experience.
+- AI spec generation is more stable on production — no longer skips empty `Name` fields or overwrites `item type` in do-not-overwrite mode, and fixed the "items not found in frame" error after edit/reload.
+- Translation now covers long text segments that were previously left untranslated.
+- Fixed UI Part re-linking — reassigning a layer between items, and relinking after a designer replaces a layer.
+- Fixed errors when relinking a screen to a new design.
+- Item completion status now sticks — it stays `Completed` after Entry complete, and no longer reverts from `Completed` back to `AI completed`.
+- Other fixes: Save/Cancel buttons on AI-error items, duplicate text on Japanese/Vietnamese input, missing total count on the Web Screen List, the maintenance error toast no longer shown to users, and the Web now blocks AI spec generation for missing items (matching the Plugin).
+
+**🔌 MCP Server**
+
+- **Breaking — the legacy `status` field was removed** from `create_frame`, `get_frame`, and `list_frames`. Use the four `*_status` fields (`design_status`, `spec_status`, `dev_status`, `review_status`) instead, and update any agent or workflow that still reads or writes `status`.
+- **New `update_frame` tool** — patch screen metadata (name, overview, statuses, Figma node link) without recreating the frame.
+- **`figma_node_id` support** — `create_frame`, `update_frame`, `get_frame`, and `list_frames` now accept and return `figma_node_id` in canonical (`12318:23788`), hyphenated (`12318-23788`), or full Figma URL form.
+- `list_frames` no longer returns archived screens.
 
 ---
 
 ## Previous releases
 
+- [2026-05-28](release-archive.md#2026-05-28) — Maintenance mode, a new 3-state Screen Spec sort & reorder, and fixes for missing UI Part items and queued AI spec cancellation.
+- [2026-05-21](release-archive.md#2026-05-21) — Refined Screen Detail, batch AI spec cancellation, Screen ID search, one-time Figma URL setup, and wide-ranging fixes.
 - [2026-05-07](release-archive.md#2026-05-07) — Upgraded Filter Modal, faster Screen Detail loading, and fixes across Spec Upload, MM Syncer, and MCP/CLI re-upload.
 - [2026-04-24](release-archive.md#2026-04-24) — Fixed missing data for GitHub-signed-in users via VSCode Extension, MCP, and CLI; tightened repo connect/disconnect permissions.
 - [2026-04-23](release-archive.md#2026-04-23) — Always-editable Screen Spec, CSV download, bulk frame delete/undo, plus a wide range of sync, preview, and connectivity fixes.

@@ -2,6 +2,48 @@
 
 Các bản phát hành MoMorph trước đây. Xem bản mới nhất tại [Release Notes](release-notes.md).
 
+## 2026-05-28
+
+**✨ Mới & Cải tiến**
+
+- **Đổi mới logic sort & reorder Screen Spec** — Sort cycle 3-state (↕ → ASC → DESC → ↕); sort và drag-drop chỉ preview UI, phải dùng Save / Cancel chung của edit table mới ghi DB. `No` rỗng luôn xuống cuối; `No` dạng dotted sort theo lexical.
+- **Maintenance mode** — Hiển thị màn maintenance chuyên dụng trong các đợt release.
+
+**🐛 Sửa lỗi**
+
+- Item bị missing UI Part vẫn hiển thị đúng trên Item List sau khi Reload preview.
+- Cancel item AI gen spec đang ở trạng thái queued giờ trả về đúng `draft`, không còn tự revert về `generating`.
+
+---
+
+## 2026-05-21
+
+**✨ Mới**
+
+- **[Chỉ tài khoản Pro] Plugin tự nhớ Figma URL** — Sau lần nhập đầu tiên, plugin tự nhận diện file. Có thể reset bất cứ lúc nào trong Settings.
+- **Tìm kiếm theo Screen ID** — Ô search ở Screen List và Screen Set hỗ trợ partial match theo Screen ID (case-insensitive) bên cạnh tìm theo tên màn hình.
+- **Ẩn item archived (Web)** — Màn View All Spec mặc định chỉ hiển thị active items, ẩn toàn bộ item ở trạng thái archived.
+
+**🔧 Cải thiện**
+
+- **Tinh chỉnh hiển thị Screen Detail** — Giảm font size tiêu đề, tự mở rộng theo container, chỉ truncate khi thực sự hết chỗ. Nút Edit tag chuyển sang inline ngay sau tag cuối cùng, tránh khoảng trống thừa khi ít tag.
+- **Cancel AI gen spec** — Bổ sung nút Cancel cho từng item và cả batch (huỷ all hoặc chỉ queued). Hiển thị toast tổng kết X thành công · Y lỗi sau khi batch xong.
+- **Điều hướng khi chọn frame từ Figma** — Auto-scroll Screen List & tự động switch sang đúng status tab theo lựa chọn mượt hơn.
+- **Highlight 2 chiều giữa item và preview** — Click item ở list highlight label trên preview, và ngược lại.
+
+**🐛 Sửa lỗi**
+
+- **Copy Specs** — Giữ đúng thứ tự item, trạng thái archived, và UI Part references. Khắc phục lỗi flicker UI sau khi copy.
+- **Screen Set với frame đã xoá** — Sửa lỗi lag, status inconsistent, loading 6-7s, auto-link sai, screen biến mất khi xoá frame đã link trên Figma.
+- **AI Test Case Generation** — Sửa lỗi Gen TC button enable khi user chưa save status change (gây timeout). Gen TC hoạt động ổn định với cả màn không có design.
+- **GitHub integration** — Thông báo lỗi rõ ràng hơn khi connect repo không có admin privileges. Không còn tự tạo frame thừa [jp]/[en] khi tạo GitHub Issue có dịch.
+- **Screen Spec** — Sửa lỗi modal unsaved changes hiển thị sai trên frame mới có label. Sửa lỗi mất layer link khi navigate sang detail mà chưa save. Sửa lỗi nhận diện sai item khi 2 item trùng label/UI Part name gây xoá nhầm.
+- **Preview & badge** — Sửa lỗi image preview zoom sau translate, badge của UI Part type Text không hiển thị, cột UI Part bị blank sau khi Plugin refresh.
+- **Screen List** — Tab highlight không còn stuck ở Design & Specs sau khi upload GitHub. Status frame hiển thị đúng "In Progress" khi có overview.
+- **Item Spec (Web)** — Sửa pagination hiển thị sai trong Screen Set flow gây mất breadcrumb. Sửa lỗi frame mới trên Figma không sync sang Web.
+
+---
+
 ## 2026-05-07
 
 **✨ Tính năng mới**
@@ -17,6 +59,15 @@ Các bản phát hành MoMorph trước đây. Xem bản mới nhất tại [Rel
 **🐛 Sửa lỗi**
 
 - Sửa các lỗi liên quan Filter Modal, preview labels, tự sinh tên frame, Spec Upload (Web), MM Syncer, và MCP/CLI re-upload.
+
+---
+
+## 2026-04-24
+
+**🐛 Sửa lỗi quyền truy cập GitHub repository**
+
+- Sửa lỗi thiếu dữ liệu (tags, media, comments, ảnh đã bản địa hoá) đối với người dùng đăng nhập qua GitHub được gọi từ VSCode Extension, MCP, CLI.
+- Chỉ người dùng MoMorph có quyền Admin trên GitHub repository mới có thể kết nối/ngắt kết nối repo với Figma file.
 
 ---
 
@@ -110,7 +161,7 @@ Các bản phát hành MoMorph trước đây. Xem bản mới nhất tại [Rel
 
 【Cài đặt / Settings】
 
-- Sửa lỗi user không phải admin vẫn có thể unlink repo trong Settings / Github.
+- Sửa lỗi user không phải admin vẫn có thể unlink repo trong Settings / GitHub.
 
 【Khác】
 
@@ -133,8 +184,8 @@ Các bản phát hành MoMorph trước đây. Xem bản mới nhất tại [Rel
 - Có thể Archive các màn hình không cần thiết và khôi phục bất cứ lúc nào. Màn hình ẩn cũ sẽ tự động chuyển sang Archive.
 - Màn hình chưa hoàn thiện design (No UI / In Design) nay có thể click để xem chi tiết.
 - Trường mô tả trong thông số mục hỗ trợ Markdown. Sử dụng thanh công cụ mới để nhập in đậm, danh sách, code block… Đồng bộ giữa Plugin & Web.
-- Form thông số mục hỗ trợ nhập ID và liên kết trực tiếp đến Figma layer. Tên layer tự động thêm prefix "mms_".
-- Prefix liên kết Figma layer được thống nhất thành "mms_" trong toàn ứng dụng. Định dạng cũ tự động chuyển đổi.
+- Form thông số mục hỗ trợ nhập ID và liên kết trực tiếp đến Figma layer. Tên layer tự động thêm prefix "mms\_".
+- Prefix liên kết Figma layer được thống nhất thành "mms\_" trong toàn ứng dụng. Định dạng cũ tự động chuyển đổi.
 
 **✨ Cải tiến**
 
@@ -177,8 +228,8 @@ Các bản phát hành MoMorph trước đây. Xem bản mới nhất tại [Rel
 - Tùy chỉnh Xuất dữ liệu spec: Bạn hiện có thể chọn có đính kèm sheet i18n hay không.
 - AI generator: Cải thiện chất lượng spec được tạo bởi AI.
 - Tinh chỉnh UI/UX:
-  - Cập nhật UI cho modal xác nhận "Leave Page".
-  - Cải thiện văn bản nhãn trên màn hình Cài đặt Tích hợp GitHub Integration Settings screen.
+    - Cập nhật UI cho modal xác nhận "Leave Page".
+    - Cải thiện văn bản nhãn trên màn hình Cài đặt Tích hợp GitHub Integration Settings screen.
 
 **[Bug Fixes]**
 
@@ -205,3 +256,53 @@ Các bản phát hành MoMorph trước đây. Xem bản mới nhất tại [Rel
 **[Khác]**
 
 - Bảo mật: Tăng cường bảo mật cho URL hình ảnh khi export GitHub issue và google sheet.
+
+---
+
+## 2025-12-24
+
+**🚀 Tính năng mới & Cải tiến**
+
+- Tùy chỉnh style cho nhãn số thứ tự của item.
+- Liên kết linh hoạt: Có thể kết nối tài khoản GitHub/Google bằng bất kỳ địa chỉ email nào.
+- Đồng bộ Spec: Hỗ trợ đồng bộ spec của các design item mới thêm vào các sheet hiện có.
+- Cải thiện UX: Cải thiện nhận diện ngôn ngữ ban đầu và tinh chỉnh các thông báo toast.
+
+**🐛 Sửa lỗi**
+
+- Sửa logic Tag Filter (nay hoạt động theo "Partial Match" thay vì "Exact Match" đối với system tags).
+- Sửa lỗi Page Extraction hiển thị frame từ tất cả các page thay vì chỉ các page đã chọn.
+- Khắc phục các điểm chưa nhất quán về UI trong Tag List.
+
+**⚠️ Cần thực hiện:** Vui lòng reload tab Figma hoặc khởi động lại plugin để áp dụng các thay đổi này.
+
+---
+
+## 2025-12-11
+
+**[Cập nhật]**
+
+- **Cải thiện UI/UX:** Nâng cao thiết kế và khả năng sử dụng của màn hình upload, settings và các màn hình quan trọng khác.
+- **Hỗ trợ đa ngôn ngữ:** Bổ sung hỗ trợ tiếng Nhật và tiếng Việt ở màn hình đăng nhập và các màn hình khác.
+- **Tối ưu hóa:** Cải thiện cách đặt tên khi export spreadsheet và làm rõ các thông báo lỗi.
+
+**[Sửa lỗi]**
+
+- Cải thiện độ ổn định: Sửa nhiều lỗi liên quan đến AI sinh spec, đồng bộ hình ảnh và revision để hoạt động mượt mà hơn.
+
+---
+
+## 2025-11-27
+
+- **Hiệu năng:** Cải thiện độ ổn định và tốc độ khi xử lý các file Figma lớn.
+- **Hệ thống Tags:** Tối ưu logic lọc, lưu và hiển thị.
+- **Sửa lỗi & UI/UX:** Nâng cao độ tin cậy của tích hợp GitHub và khắc phục nhiều lỗi giao diện.
+- **Backend:** Tăng cường hạ tầng phân tích dữ liệu và độ ổn định của đồng bộ.
+
+---
+
+## 2025-11-13
+
+- **Cải tiến:** Tăng cường bảo mật, xử lý Figma API rate limit, thêm Điều khoản/Chính sách vào màn hình Welcome và triển khai trang 404.
+- **Sửa lỗi quan trọng:** Khắc phục lỗi không lưu được spec, sửa lỗi hiển thị sai dữ liệu cho "frame set" mới, và sửa lỗi trạng thái "Generate Test Case" bị kẹt ở "In Queue".
+- **Sửa lỗi khác:** Sửa nhiều lỗi UI/UX nhỏ.
