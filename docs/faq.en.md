@@ -93,6 +93,7 @@ How to fix: in the Preview area of the original screen (currently in the No UI s
 - **"Cannot access spreadsheet"**: the file must belong to the Sun\* company's Google Workspace, and your account must have **Editor** permission on that file (Viewer permission cannot sync back).
 - **"Missing authentication token"**: the Google login session has expired. Please log in again with an email on the Sun\* company domain and reload the Sheets tab.
 - **"Failed to sync data"**: this may be due to a network or system interruption. Please wait a few minutes and try again.
+- Or, when you installed MoMorph Syncer, you may not have granted the app enough permissions to interact with your data. Please uninstall and reinstall [MoMorph Syncer](https://workspace.google.com/marketplace/app/momorph_syncer/227419153527).
 
 ### <u>Error when exporting spec to GitHub</u>
 
