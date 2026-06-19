@@ -59,6 +59,10 @@ markdown_extensions:
   - toc:
       toc_depth: 3
 
+# Sinh llms.txt + llms-full.<lang>.txt (bản plain-text cho AI) mỗi lần build
+hooks:
+  - hooks/llms_txt.py
+
 # nav tham chiếu tên base (không suffix); plugin i18n resolve theo từng locale + nav_translations
 nav:
   - Home: index.md
