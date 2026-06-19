@@ -2,36 +2,17 @@
 
 Các cập nhật mới nhất của MoMorph (Plugin · Web · MCP Server).
 
-## 2026-06-11
+## 2026-06-19
 
-**✨ Mới & Cải tiến**
+**🔧 Cải tiến**
 
-- **Thông báo trước maintenance** — Plugin & Web hiển thị modal báo trước thời điểm bảo trì (theo timezone của bạn) khi có lịch maintenance.
-- **Generate spec bằng AI trên Web** — Đã có trong action menu của cả Screen Spec và View All Specs, đồng nhất với Plugin.
-- **Layer Group trên Figma** — Layer có type là Group nay có thể link, chỉnh sửa và quản lý như một design item thường.
-- **Nhập spec linh hoạt** — Bỏ ràng buộc bắt buộc cho các field (chỉ còn tên hoặc No. là bắt buộc) để nhập spec tự do hơn cho nhiều loại dự án.
-- Đồng bộ label đa ngôn ngữ và bổ sung tooltip cho toolbar bảng item trên Plugin & Web.
-
-**🐛 Sửa lỗi**
-
-- AI gen spec ổn định hơn trên production — không còn bỏ qua field `Name` rỗng, không ghi đè `item type` ở chế độ do-not-overwrite, và sửa lỗi "items không tồn tại trong frame" sau edit/reload.
-- Translate screen nay dịch cả các đoạn text dài trước đây bị bỏ sót.
-- Sửa lỗi relink UI Part — gán lại layer giữa các item, và relink sau khi designer replace layer.
-- Sửa lỗi khi relink screen sang design mới.
-- Trạng thái hoàn thành của item nay được giữ đúng — chuyển về `Completed` sau khi Entry complete, và không còn tự revert từ `Completed` về `AI completed`.
-- Sửa lỗi khác: nút Save/Cancel trên item AI-error, duplicate text khi nhập tiếng Nhật/Việt, thiếu total count trên Web Screen List, toast lỗi maintenance không còn hiển thị cho user, và Web nay chặn gen AI spec cho item bị missing (đồng nhất với Plugin).
-
-**🔌 MCP Server**
-
-- **Breaking — bỏ field `status` cũ** khỏi `create_frame`, `get_frame`, `list_frames`. Dùng 4 field `*_status` (`design_status`, `spec_status`, `dev_status`, `review_status`) thay thế, và cập nhật agent/workflow nào còn đọc/ghi `status`.
-- **Tool mới `update_frame`** — cập nhật metadata màn hình (name, overview, các status, link Figma node) mà không cần tạo lại frame.
-- **Hỗ trợ `figma_node_id`** — `create_frame`, `update_frame`, `get_frame`, `list_frames` nay nhận/trả `figma_node_id` ở dạng canonical (`12318:23788`), hyphen (`12318-23788`) hoặc full Figma URL.
-- `list_frames` không còn trả về các màn hình đã archive.
+- **Nhập spec cho màn hình linh hoạt hơn** — Người dùng chỉ cần nhập **một trong ba** trường `No`, `Item Name` hoặc `UI Part` là có thể lưu hoặc đổi status cho item. Áp dụng đồng bộ ở cả màn **Item List** và **Input Spec** trên Plugin và Web.
 
 ---
 
 ## Các bản phát hành trước
 
+- [2026-06-11](release-archive.md#2026-06-11) — Thông báo trước maintenance, generate spec bằng AI trên Web, hỗ trợ Layer Group, nhập spec linh hoạt và cập nhật MCP Server.
 - [2026-05-28](release-archive.md#2026-05-28) — Maintenance mode, sort & reorder 3-state cho Screen Spec, và sửa lỗi item missing UI Part cùng cancel AI gen spec ở trạng thái queued.
 - [2026-05-21](release-archive.md#2026-05-21) — Tinh chỉnh Screen Detail, cancel AI gen spec theo batch, tìm theo Screen ID, tự nhớ Figma URL và nhiều sửa lỗi.
 - [2026-05-07](release-archive.md#2026-05-07) — Nâng cấp Filter Modal, tăng tốc Screen Detail và cải thiện flow Screen Spec.

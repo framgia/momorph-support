@@ -2,6 +2,34 @@
 
 Past MoMorph releases. For the latest, see [Release Notes](release-notes.md).
 
+## 2026-06-11
+
+**✨ New & Improved**
+
+- **Maintenance pre-notice** — A heads-up modal now appears in Plugin & Web before a scheduled maintenance window, showing the time in your timezone.
+- **Generate spec with AI on Web** — Now available from the action menu on both Screen Spec and View All Specs, matching the Plugin.
+- **Figma Group layers** — Layers of type Group can now be linked, edited, and managed just like any normal design item.
+- **Flexible spec input** — Required-field restrictions removed (only a name or No. is required) so you can fill specs freely across diverse projects.
+- More consistent multilingual labels and new item-toolbar tooltips across Plugin & Web.
+
+**🐛 Fixes**
+
+- AI spec generation is more stable on production — no longer skips empty `Name` fields or overwrites `item type` in do-not-overwrite mode, and fixed the "items not found in frame" error after edit/reload.
+- Translation now covers long text segments that were previously left untranslated.
+- Fixed UI Part re-linking — reassigning a layer between items, and relinking after a designer replaces a layer.
+- Fixed errors when relinking a screen to a new design.
+- Item completion status now sticks — it stays `Completed` after Entry complete, and no longer reverts from `Completed` back to `AI completed`.
+- Other fixes: Save/Cancel buttons on AI-error items, duplicate text on Japanese/Vietnamese input, missing total count on the Web Screen List, the maintenance error toast no longer shown to users, and the Web now blocks AI spec generation for missing items (matching the Plugin).
+
+**🔌 MCP Server**
+
+- **Breaking — the legacy `status` field was removed** from `create_frame`, `get_frame`, and `list_frames`. Use the four `*_status` fields (`design_status`, `spec_status`, `dev_status`, `review_status`) instead, and update any agent or workflow that still reads or writes `status`.
+- **New `update_frame` tool** — patch screen metadata (name, overview, statuses, Figma node link) without recreating the frame.
+- **`figma_node_id` support** — `create_frame`, `update_frame`, `get_frame`, and `list_frames` now accept and return `figma_node_id` in canonical (`12318:23788`), hyphenated (`12318-23788`), or full Figma URL form.
+- `list_frames` no longer returns archived screens.
+
+---
+
 ## 2026-05-28
 
 **✨ New & Improved**

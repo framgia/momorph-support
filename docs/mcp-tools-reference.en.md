@@ -338,6 +338,8 @@ tableName, columnName, databaseNote, description,
 id?, section_link_id, extLink, is_reviewed
 ```
 
+> **Identity rule:** Each item must have **at least one** of `no`, `name`, `nameTrans`, or `node_link_id` (UI Part) filled in to be saved — you do **not** need to provide all of them. All other fields are optional.
+
 **Response (JSON):**
 
 ```ts
