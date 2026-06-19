@@ -338,6 +338,8 @@ tableName, columnName, databaseNote, description,
 id?, section_link_id, extLink, is_reviewed
 ```
 
+> **identity 条件:** 各 item は `no`・`name`・`nameTrans`・`node_link_id`（UI パーツ）のうち **いずれか 1 つ** に値があれば保存されます。すべてを入力する必要はありません。その他のフィールドは任意です。
+
 **Response (JSON):**
 
 ```ts

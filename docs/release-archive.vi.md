@@ -2,6 +2,34 @@
 
 Các bản phát hành MoMorph trước đây. Xem bản mới nhất tại [Release Notes](release-notes.md).
 
+## 2026-06-11
+
+**✨ Mới & Cải tiến**
+
+- **Thông báo trước maintenance** — Plugin & Web hiển thị modal báo trước thời điểm bảo trì (theo timezone của bạn) khi có lịch maintenance.
+- **Generate spec bằng AI trên Web** — Đã có trong action menu của cả Screen Spec và View All Specs, đồng nhất với Plugin.
+- **Layer Group trên Figma** — Layer có type là Group nay có thể link, chỉnh sửa và quản lý như một design item thường.
+- **Nhập spec linh hoạt** — Bỏ ràng buộc bắt buộc cho các field (chỉ còn tên hoặc No. là bắt buộc) để nhập spec tự do hơn cho nhiều loại dự án.
+- Đồng bộ label đa ngôn ngữ và bổ sung tooltip cho toolbar bảng item trên Plugin & Web.
+
+**🐛 Sửa lỗi**
+
+- AI gen spec ổn định hơn trên production — không còn bỏ qua field `Name` rỗng, không ghi đè `item type` ở chế độ do-not-overwrite, và sửa lỗi "items không tồn tại trong frame" sau edit/reload.
+- Translate screen nay dịch cả các đoạn text dài trước đây bị bỏ sót.
+- Sửa lỗi relink UI Part — gán lại layer giữa các item, và relink sau khi designer replace layer.
+- Sửa lỗi khi relink screen sang design mới.
+- Trạng thái hoàn thành của item nay được giữ đúng — chuyển về `Completed` sau khi Entry complete, và không còn tự revert từ `Completed` về `AI completed`.
+- Sửa lỗi khác: nút Save/Cancel trên item AI-error, duplicate text khi nhập tiếng Nhật/Việt, thiếu total count trên Web Screen List, toast lỗi maintenance không còn hiển thị cho user, và Web nay chặn gen AI spec cho item bị missing (đồng nhất với Plugin).
+
+**🔌 MCP Server**
+
+- **Breaking — bỏ field `status` cũ** khỏi `create_frame`, `get_frame`, `list_frames`. Dùng 4 field `*_status` (`design_status`, `spec_status`, `dev_status`, `review_status`) thay thế, và cập nhật agent/workflow nào còn đọc/ghi `status`.
+- **Tool mới `update_frame`** — cập nhật metadata màn hình (name, overview, các status, link Figma node) mà không cần tạo lại frame.
+- **Hỗ trợ `figma_node_id`** — `create_frame`, `update_frame`, `get_frame`, `list_frames` nay nhận/trả `figma_node_id` ở dạng canonical (`12318:23788`), hyphen (`12318-23788`) hoặc full Figma URL.
+- `list_frames` không còn trả về các màn hình đã archive.
+
+---
+
 ## 2026-05-28
 
 **✨ Mới & Cải tiến**
