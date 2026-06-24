@@ -2,6 +2,14 @@
 
 Các bản phát hành MoMorph trước đây. Xem bản mới nhất tại [Release Notes](release-notes.md).
 
+## 2026-06-19
+
+**🔧 Cải tiến**
+
+- **Nhập spec cho màn hình linh hoạt hơn** — Người dùng chỉ cần nhập **một trong ba** trường `No`, `Item Name` hoặc `UI Part` là có thể lưu hoặc đổi status cho item. Áp dụng đồng bộ ở cả màn **Item List** và **Input Spec** trên Plugin và Web.
+
+---
+
 ## 2026-06-11
 
 **✨ Mới & Cải tiến**

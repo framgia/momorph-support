@@ -2,6 +2,14 @@
 
 Past MoMorph releases. For the latest, see [Release Notes](release-notes.md).
 
+## 2026-06-19
+
+**🔧 Improved**
+
+- **More flexible screen spec input** — Users now only need to fill in **one of three** fields — `No`, `Item Name`, or `UI Part` — to save or change an item's status. Applies consistently on both the **Item List** and **Input Spec** screens, in Plugin and Web.
+
+---
+
 ## 2026-06-11
 
 **✨ New & Improved**
