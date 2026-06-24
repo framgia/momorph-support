@@ -2,16 +2,31 @@
 
 The latest MoMorph updates across Plugin, Web, and MCP Server.
 
-## 2026-06-19
+## 2026-06-25
 
-**🔧 Improved**
+**✨ New & Improved**
 
-- **More flexible screen spec input** — Users now only need to fill in **one of three** fields — `No`, `Item Name`, or `UI Part` — to save or change an item's status. Applies consistently on both the **Item List** and **Input Spec** screens, in Plugin and Web.
+- **Update reminder after maintenance** — When a maintenance window ends, a notification now prompts you to reload (the Figma file in Plugin, or the page on Web) to get the latest version. You can dismiss it and keep working.
+- **Smoother bulk AI spec generation** — Generating specs for many items at once is more stable (no more 502/503 errors on large batches); you'll see a notice that generation may take a little longer.
+- **More reliable frame sync on large files** — Syncing screens on large Figma files (200+ frames) is more robust, with batching and retries to avoid timeouts and data loss on flaky networks.
+
+**🐛 Fixes**
+
+- **Auto-numbering by layer hierarchy** — Numbering now follows the Figma layer order top-to-bottom, and drag-to-reorder is reliable.
+- **Screen Detail preview (Web)** — Fixed the preview image flickering when opening a screen.
+- **Back navigation (Plugin)** — Fixed the blank white screen when going back to the frame set list.
+- **Destination field (Spec Form)** — The dropdown no longer lists non-existent frames, and a required Destination can no longer be saved while empty.
+- **Item status after sync** — AI-generated items now correctly switch to **Done** after syncing to MoMorph.
+- **Item Type on sheet** — AI-generated button items now show `Button` (instead of `Button-Icon/Text`) when synced to the spreadsheet.
+- **Translation dictionary upload** — Fixed an error when uploading dictionary `.xlsx` files.
+- **Issue upload** — Fixed missing `No` and `Name` on items after uploading an issue to GitHub.
+- **Media upload** — Fixed media upload failures.
 
 ---
 
 ## Previous releases
 
+- [2026-06-19](release-archive.md#2026-06-19) — More flexible screen spec input (one of `No` / `Item Name` / `UI Part`).
 - [2026-06-11](release-archive.md#2026-06-11) — Maintenance pre-notice, AI spec generation on Web, Figma Group layer support, flexible spec input, and MCP Server updates.
 - [2026-05-28](release-archive.md#2026-05-28) — Maintenance mode, a new 3-state Screen Spec sort & reorder, and fixes for missing UI Part items and queued AI spec cancellation.
 - [2026-05-21](release-archive.md#2026-05-21) — Refined Screen Detail, batch AI spec cancellation, Screen ID search, one-time Figma URL setup, and wide-ranging fixes.
