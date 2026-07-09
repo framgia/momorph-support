@@ -2,6 +2,28 @@
 
 Past MoMorph releases. For the latest, see [Release Notes](release-notes.md).
 
+## 2026-06-25
+
+**✨ New & Improved**
+
+- **Update reminder after maintenance** — When a maintenance window ends, a notification now prompts you to reload (the Figma file in Plugin, or the page on Web) to get the latest version. You can dismiss it and keep working.
+- **Smoother bulk AI spec generation** — Generating specs for many items at once is more stable (no more 502/503 errors on large batches); you'll see a notice that generation may take a little longer.
+- **More reliable frame sync on large files** — Syncing screens on large Figma files (200+ frames) is more robust, with batching and retries to avoid timeouts and data loss on flaky networks.
+
+**🐛 Fixes**
+
+- **Auto-numbering by layer hierarchy** — Numbering now follows the Figma layer order top-to-bottom, and drag-to-reorder is reliable.
+- **Screen Detail preview (Web)** — Fixed the preview image flickering when opening a screen.
+- **Back navigation (Plugin)** — Fixed the blank white screen when going back to the frame set list.
+- **Destination field (Spec Form)** — The dropdown no longer lists non-existent frames, and a required Destination can no longer be saved while empty.
+- **Item status after sync** — AI-generated items now correctly switch to **Done** after syncing to MoMorph.
+- **Item Type on sheet** — AI-generated button items now show `Button` (instead of `Button-Icon/Text`) when synced to the spreadsheet.
+- **Translation dictionary upload** — Fixed an error when uploading dictionary `.xlsx` files.
+- **Issue upload** — Fixed missing `No` and `Name` on items after uploading an issue to GitHub.
+- **Media upload** — Fixed media upload failures.
+
+---
+
 ## 2026-06-19
 
 **🔧 Improved**
