@@ -2,30 +2,22 @@
 
 The latest MoMorph updates across Plugin, Web, and MCP Server.
 
-## 2026-06-25
+## 2026-07-09
 
 **✨ New & Improved**
 
-- **Update reminder after maintenance** — When a maintenance window ends, a notification now prompts you to reload (the Figma file in Plugin, or the page on Web) to get the latest version. You can dismiss it and keep working.
-- **Smoother bulk AI spec generation** — Generating specs for many items at once is more stable (no more 502/503 errors on large batches); you'll see a notice that generation may take a little longer.
-- **More reliable frame sync on large files** — Syncing screens on large Figma files (200+ frames) is more robust, with batching and retries to avoid timeouts and data loss on flaky networks.
+- **Filter the Item List (Plugin & Web)** — On the Screen Spec, the Item List (Active tab) now has filters on four columns: `No` and `Name` (single-select), plus `UI Part` and `Spec Status` (multi-select, covering `Generating` / `AI completed` / `Gen error` / `In Progress` / `Done`). Filters combine across columns and within a column, sorting by `No` keeps them applied, and an empty state appears when nothing matches. Drag-to-reorder is disabled while a filter is active.
 
 **🐛 Fixes**
 
-- **Auto-numbering by layer hierarchy** — Numbering now follows the Figma layer order top-to-bottom, and drag-to-reorder is reliable.
-- **Screen Detail preview (Web)** — Fixed the preview image flickering when opening a screen.
-- **Back navigation (Plugin)** — Fixed the blank white screen when going back to the frame set list.
-- **Destination field (Spec Form)** — The dropdown no longer lists non-existent frames, and a required Destination can no longer be saved while empty.
-- **Item status after sync** — AI-generated items now correctly switch to **Done** after syncing to MoMorph.
-- **Item Type on sheet** — AI-generated button items now show `Button` (instead of `Button-Icon/Text`) when synced to the spreadsheet.
-- **Translation dictionary upload** — Fixed an error when uploading dictionary `.xlsx` files.
-- **Issue upload** — Fixed missing `No` and `Name` on items after uploading an issue to GitHub.
-- **Media upload** — Fixed media upload failures.
+- **Preview number on synced sheet** — After you re-number items and re-sync MM → Google Sheet, the preview images now update to match the new numbering (previously the image kept the old number while the other fields were already correct).
+- **Layout blur / transparency (Plugin & Web)** — Blur effects (Layer Blur, Background Blur, glassmorphism) now render as designed in Figma, instead of showing a solid background on overlays and panels.
 
 ---
 
 ## Previous releases
 
+- [2026-06-25](release-archive.md#2026-06-25) — Update reminder after maintenance, steadier bulk AI spec generation, more reliable large-file sync, plus auto-numbering, sync, and upload fixes.
 - [2026-06-19](release-archive.md#2026-06-19) — More flexible screen spec input (one of `No` / `Item Name` / `UI Part`).
 - [2026-06-11](release-archive.md#2026-06-11) — Maintenance pre-notice, AI spec generation on Web, Figma Group layer support, flexible spec input, and MCP Server updates.
 - [2026-05-28](release-archive.md#2026-05-28) — Maintenance mode, a new 3-state Screen Spec sort & reorder, and fixes for missing UI Part items and queued AI spec cancellation.

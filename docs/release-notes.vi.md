@@ -2,30 +2,22 @@
 
 Các cập nhật mới nhất của MoMorph (Plugin · Web · MCP Server).
 
-## 2026-06-25
+## 2026-07-09
 
 **✨ Mới & Cải tiến**
 
-- **Nhắc cập nhật sau maintenance** — Khi kết thúc maintenance, hệ thống hiển thị thông báo nhắc reload (Figma file trên Plugin, hoặc trang trên Web) để nhận phiên bản mới nhất. Bạn có thể đóng và tiếp tục làm việc bình thường.
-- **Gen spec AI hàng loạt ổn định hơn** — Generate spec cho nhiều item cùng lúc ổn định hơn (hết lỗi 502/503 với batch lớn); có thông báo cho biết quá trình gen có thể lâu hơn một chút.
-- **Sync frame trên file lớn đáng tin cậy hơn** — Đồng bộ màn hình trên file Figma lớn (200+ frame) bền hơn nhờ chia batch và retry, tránh timeout và mất dữ liệu khi mạng chập chờn.
+- **Lọc Item List (Plugin & Web)** — Trên màn Screen Spec, bảng Item List (tab Active) nay có bộ lọc ở bốn cột: `No` và `Name` (chọn đơn), cùng `UI Part` và `Spec Status` (chọn nhiều, gồm `Generating` / `AI completed` / `Gen error` / `In Progress` / `Done`). Bộ lọc kết hợp giữa các cột và trong cùng một cột, sort theo `No` vẫn giữ filter, và có empty state khi không có item nào khớp. Kéo-thả đổi thứ tự bị tắt khi đang có filter.
 
 **🐛 Sửa lỗi**
 
-- **Đánh số tự động theo cấp lớp** — Đánh số nay theo đúng thứ tự layer trên Figma (trên xuống dưới); kéo-thả đổi thứ tự cũng ổn định.
-- **Preview Screen Detail (Web)** — Sửa ảnh preview bị nháy khi mở màn hình.
-- **Điều hướng Back (Plugin)** — Sửa màn hình trắng khi quay lại danh sách frame set.
-- **Trường Destination (Spec Form)** — Dropdown không còn liệt kê frame không tồn tại, và không cho lưu khi Destination (bắt buộc) đang rỗng.
-- **Trạng thái item sau khi sync** — Item do AI tạo nay chuyển đúng sang **Done** sau khi sync lên MoMorph.
-- **Item Type trên sheet** — Item dạng button do AI tạo nay hiển thị `Button` (thay vì `Button-Icon/Text`) khi sync lên spreadsheet.
-- **Upload file dictionary** — Sửa lỗi khi upload file dictionary `.xlsx`.
-- **Upload issue** — Sửa lỗi mất `No` và `Tên` của item sau khi upload issue lên GitHub.
-- **Upload media** — Sửa lỗi upload media thất bại.
+- **Số thứ tự trên ảnh preview khi sync sheet** — Sau khi đánh số lại item rồi sync MM → Google Sheet, ảnh preview nay cập nhật đúng theo số mới (trước đây ảnh vẫn giữ số cũ dù các trường khác đã đúng).
+- **Hiệu ứng làm mờ layout (Plugin & Web)** — Các hiệu ứng mờ (Layer Blur, Background Blur, glassmorphism) nay hiển thị đúng như thiết kế Figma, thay vì hiện nền đặc trên overlay/panel.
 
 ---
 
 ## Các bản phát hành trước
 
+- [2026-06-25](release-archive.md#2026-06-25) — Nhắc cập nhật sau maintenance, gen spec AI hàng loạt ổn định hơn, sync file lớn tin cậy hơn, cùng các sửa lỗi đánh số/sync/upload.
 - [2026-06-19](release-archive.md#2026-06-19) — Nhập spec cho màn hình linh hoạt hơn (một trong `No` / `Item Name` / `UI Part`).
 - [2026-06-11](release-archive.md#2026-06-11) — Thông báo trước maintenance, generate spec bằng AI trên Web, hỗ trợ Layer Group, nhập spec linh hoạt và cập nhật MCP Server.
 - [2026-05-28](release-archive.md#2026-05-28) — Maintenance mode, sort & reorder 3-state cho Screen Spec, và sửa lỗi item missing UI Part cùng cancel AI gen spec ở trạng thái queued.
