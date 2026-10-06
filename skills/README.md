@@ -4,7 +4,7 @@ Two Claude Code skills for writing a screen specification:
 
 | Skill | Produces |
 | --- | --- |
-| [`screen-detail-spec-excel`](screen-detail-spec-excel/SKILL.md) | A Japanese screen detail design document (画面詳細設計書) as Excel: metadata, item definitions, rules, states, permissions, errors, messages and open questions, from a fixed template |
+| [`screen-detail-spec-excel`](screen-detail-spec-excel/SKILL.md) | A Japanese screen detail design document (画面詳細設計書) as Excel: metadata, item definitions, rules, states, errors, messages and open questions, from a fixed template. It asks the spec writer every point the sources leave open before writing |
 | [`numbered-image-skill`](numbered-image-skill/SKILL.md) | A PNG of the screen with a number on every component, from a Figma frame or a screenshot |
 
 The two work together: the Excel spec cites each item by the number the image shows.

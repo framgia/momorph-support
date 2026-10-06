@@ -25,18 +25,14 @@ ITEM_COLS = {
     "trigger": "操作", "destination": "遷移先", "behavior": "操作時の動作", "data_type": "データ型",
     "required": "必須", "format": "形式", "max": "最大桁数", "min": "最小桁数", "default": "初期値",
     "validation": "入力チェック", "table": "テーブル名", "column": "カラム名", "db_note": "データベース備考",
-    "source": "出典",
 }
 TABLES = {
-    "rules": ("表示・業務ルール", {"id": "ルールID", "target": "対象項目No", "rule": "ルール", "source": "出典"}),
-    "states": ("状態定義", {"target": "対象項目No", "state": "状態", "condition": "条件", "behavior": "表示・動作",
-                         "source": "出典"}),
-    "permissions": ("権限", {"action": "操作", "target": "対象項目No", "admin": "管理者",
-                           "editor": "編集者", "viewer": "閲覧者", "note": "備考"}),
+    "rules": ("表示・業務ルール", {"id": "ルールID", "target": "対象項目No", "rule": "ルール"}),
+    "states": ("状態定義", {"target": "対象項目No", "state": "状態", "condition": "条件", "behavior": "表示・動作"}),
     "errors": ("エラー処理", {"no": "No", "target": "対象項目No", "case": "エラーケース", "condition": "発生条件",
                           "behavior": "システムの動作", "message_id": "メッセージID", "note": "備考"}),
-    "messages": ("メッセージ一覧", {"id": "メッセージID", "type": "種別", "ja": "文言（日本語）", "vi": "文言（ベトナム語）",
-                              "en": "文言（英語）", "display": "表示方法", "note": "備考"}),
+    "messages": ("メッセージ一覧", {"id": "メッセージID", "type": "種別", "text": "表示メッセージ",
+                              "display": "表示方法", "note": "備考"}),
     "open_questions": ("未決事項", {"no": "No", "target": "対象項目No", "question": "質問", "decision": "決定内容",
                                "decided_by": "決定者", "date": "決定日", "status": "状態"}),
 }
@@ -154,7 +150,7 @@ def fill_table(s, title, mapping, rows, first_col_header):
         spans = []
         for key, header in mapping.items():
             if header not in hdr:
-                continue  # the template dropped this column, e.g. 出典
+                continue  # the template does not have this column
             c1, c2 = hdr[header]
             spans.append((c1, c2))
             v = item.get(key)
