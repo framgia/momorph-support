@@ -11,7 +11,7 @@ real dates in the sheet.
 | `items` | 項目定義 | `no`, `name`, `label`, `type`, `description`, `trigger`, `destination`, `behavior`, `data_type`, `required`, `format`, `max`, `min`, `default`, `validation`, `table`, `column`, `db_note`, `source`, `new_db` |
 | `rules` | 表示・業務ルール | `id`, `target`, `rule`, `source` |
 | `states` | 状態定義 | `target`, `state`, `condition`, `behavior`, `source` |
-| `permissions` | 権限 | `action`, `target`, `project_admin`, `member`, `viewer`, `note` |
+| `permissions` | 権限 | `action`, `target`, `admin` (管理者), `editor` (編集者), `viewer` (閲覧者), `note`. Rename the three role columns in `build_template.py` to the roles of your product |
 | `errors` | エラー処理 | `no`, `target`, `case`, `condition`, `behavior`, `message_id`, `note` |
 | `messages` | メッセージ一覧 | `id`, `type`, `ja`, `vi`, `en`, `display`, `note` |
 | `open_questions` | 未決事項 | `no`, `target`, `question`, `decision`, `decided_by`, `date`, `status` (`未回答` / `回答済み`) |

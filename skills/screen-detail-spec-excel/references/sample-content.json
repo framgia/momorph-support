@@ -33,7 +33,7 @@
     { "target": "3", "state": "無効", "condition": "必須項目が未入力", "behavior": "ボタンを無効表示にする。" }
   ],
   "permissions": [
-    { "action": "ログイン", "target": "3", "project_admin": "○", "member": "○", "viewer": "○" }
+    { "action": "ログイン", "target": "3", "admin": "○", "editor": "○", "viewer": "○" }
   ],
   "errors": [
     { "no": "1", "target": "1", "case": "形式不正", "condition": "メールアドレスの形式が正しくない",
