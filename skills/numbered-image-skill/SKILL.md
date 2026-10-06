@@ -1,6 +1,6 @@
 ---
 name: numbered-image-skill
-description: "Renders an annotated PNG of a UI screen, from a Figma frame, from a spec CSV carrying UI Parts node ids, or from a plain screenshot with no Figma call at all: every spec item gets a red numbered badge placed right beside the element it names, so proximity alone says which number belongs to which component. Container items get a dashed bounding box with the badge at its top-left. Use when the user explicitly asks for an \"annotated image\", \"numbered design image\", \"draw numbered badges on the screen\", \"tạo ảnh đánh số cho màn\", \"番号付き画像\", or a visual companion to a spec CSV, or hands over a screenshot and asks for its components to be numbered. OPT-IN ONLY: never produce one as a side effect of writing a spec, and do NOT use for annotating an image that is not a UI screen."
+description: "Renders an annotated PNG of a UI screen, from a Figma frame, from a spec list (CSV) whose rows carry an item number and a layer node id, or from a plain screenshot with no Figma call at all: every spec item gets a red numbered badge placed right beside the element it names, so proximity alone says which number belongs to which component. Container items get a dashed bounding box with the badge at its top-left. Use when the user explicitly asks for an \"annotated image\", \"numbered design image\", \"draw numbered badges on the screen\", \"tạo ảnh đánh số cho màn\", \"番号付き画像\", or a visual companion to a spec list, or hands over a screenshot and asks for its components to be numbered. OPT-IN ONLY: never produce one as a side effect of writing a spec, and do NOT use for annotating an image that is not a UI screen."
 argument-hint: "[figma-url | screen-id | path/to/spec.csv | path/to/screenshot.png | path/to/cfg.json]"
 compatibility: "Runs a bundled Python 3 script; requires Pillow (PIL). Needs Figma MCP access to the design file for the screenshot and the layer tree."
 metadata:
@@ -27,7 +27,7 @@ without a leader line across the design.
    bbox itself, so the config stays in design units whatever size you rendered. Getting this wrong
    is the one failure the placement log cannot show you, which is why the renderer refuses the
    whole render instead (exit 2).
-5. **One badge per row.** When annotating an existing spec CSV, every row's `No` becomes exactly
+5. **One badge per row.** When annotating an existing spec list, every row's item number becomes exactly
    one badge, and every badge traces back to one row.
 6. **A badge belongs next to its element.** First free slot around it: left, above, right, below, then its own corner. Only when every slot is taken does the badge step away with a short leader, coming back `"adjacent": false`. That flag must reach the user.
 7. **The number is set at the screen's normal body text size.** `text_px` is mandatory. From Figma: the size of the screen's body text style (the regular weight text of the main content, read with `get_design_context`), multiplied by the render's scale. From a screenshot: the height of the body text measured on the image. Never a size smaller than that body text.
@@ -40,11 +40,11 @@ Pick one from what the user handed over, and say which one you picked.
 | Mode | Input | Which rows get a badge | Where each `bbox` comes from |
 | --- | --- | --- | --- |
 | **F** | A Figma screen: url or node id | The components you identify on the screen | Figma `get_metadata` (parent-relative, sum the ancestors down the tree) |
-| **C** | A spec CSV with a `UI Parts` column | **Exactly the CSV's rows**, labelled with that row's `No`, never a number you invent | Look the row's `UI Parts` node id up in the screen's layer tree from Figma `get_metadata` |
+| **C** | A spec list (CSV) with an item number and a layer node id per row | **Exactly the list's rows**, labelled with that row's item number, never a number you invent | Look the row's node id up in the screen's layer tree from Figma `get_metadata` |
 | **S** | A screenshot, with no Figma access asked for | The components you identify in the image | Read off the image itself. Nothing is fetched: no Figma call |
 
-**Mode C rules.** One row, one badge, the `No` column verbatim, order preserved. A row whose
-`UI Parts` is blank, or whose node id matches nothing in the geometry, gets **no badge**: name it in
+**Mode C rules.** One row, one badge, the item number verbatim, order preserved. A row whose
+node id is blank, or whose node id matches nothing in the geometry, gets **no badge**: name it in
 the report so the user knows which rows are unillustrated, and never guess its place. A row whose
 `Active status` is `archived` or `deleted` is skipped the same way.
 
@@ -133,12 +133,12 @@ Neither flag is inferred: set both explicitly, `box` included.
    become `design_size`. Mode S: the user's file is the image, and `design_size` is the coordinate
    system the bboxes were measured in.
 2. **Get the geometry.** Modes F and C: the layer tree from Figma `get_metadata`; mode C then keeps
-   only the rows the CSV lists, matched on `UI Parts`. Mode S: skip, there is nothing to fetch.
+   only the rows the list holds, matched on the node id. Mode S: skip, there is nothing to fetch.
 3. **Convert to frame-relative bboxes.** Figma `get_metadata` gives each node's offset from its own parent, so sum the
    ancestors down the tree. Mode S measures from the image's top-left, which is frame-relative by
    construction.
 4. **Build the config.** Put `design_size` in it. Set `box: true` on every row that has children in
-   the `No` hierarchy, whose `Item Type` is a framing element, or that fills a whole edge of the
+   the item number hierarchy, whose item type is a framing element, or that fills a whole edge of the
    screen such as a header bar or a full-height side column: left alone, a tall column takes the
    `below` slot and lands hundreds of pixels from what it names. Set `narrow: true` on centred or
    full-width text, never on left-aligned text.
@@ -198,7 +198,7 @@ when `min_item_px` fell under 28.
 | Every badge points at the wrong place | Absolute canvas coordinates were passed instead of frame-relative ones | Subtract the frame's `(x, y)` from all of them and re-run. See hard rule 3 |
 | Exit 2, `N bbox(es) fall outside the WxH image after a scale of 1.000` | `design_size` was left out while the bboxes are in design units, and the PNG is the scaled render | Add `design_size` from the screenshot response, or convert the bboxes to the PNG's pixels |
 | Exit 2, `design_size ... does not match the image` | The size belongs to a different node than the screenshot, so the two axes scale differently | Take both numbers from the same `get_screenshot` response |
-| Exit 2, `duplicate \`no\``  | Two items share a `No`, which would drop one badge and draw the other twice | Give every row its own `No` before rendering |
+| Exit 2, `duplicate \`no\``  | Two items share an item number, which would drop one badge and draw the other twice | Give every row its own number before rendering |
 | `items_displaced` above zero | Every slot around those elements was already taken by another badge | Re-render at a larger `maxDimension` first, since more room resolves most of them. Then name the survivors in the report; marking their parent `box: true` frees the slots the parent would otherwise have used |
 | The numbers look tiny against the screen's own text | The image is a 2x or 3x capture, so its text is 2 to 3 times the size the badge defaults to | Measure the body text on the PNG and pass it as `text_px` |
 | The numbers are legible but sit on top of small icons | The render is too small for the smallest badged elements | Re-render with `maxDimension` set to the `suggest_max_dimension` the log returned |

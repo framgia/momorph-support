@@ -16,7 +16,7 @@
       "description": "ログインに使うメールアドレスの入力欄。",
       "data_type": "文字列", "required": "必須", "format": "メールアドレス形式", "max": 254,
       "validation": "前後の空白を除いて判定する。形式が正しくない場合はMSG-01を表示する。",
-      "table": "users", "column": "email", "source": "spec-login.md" },
+      "table": "users", "column": "email" },
     { "no": "2", "name": "ログイン状態を保持", "label": "ログイン状態を保持する", "type": "チェックボックス",
       "description": "次回からログインを省略するかどうかの選択。",
       "data_type": "真偽値", "required": "任意", "default": "オフ",
@@ -27,23 +27,18 @@
       "behavior": "・クリックすると入力内容を検証し、成功時はダッシュボードへ遷移する\n・失敗時はMSG-02を表示する" }
   ],
   "rules": [
-    { "id": "BR-01", "target": "3", "rule": "連続5回失敗した場合、30分間ログインを受け付けない。", "source": "spec-login.md" }
+    { "id": "BR-01", "target": "3", "rule": "連続5回失敗した場合、30分間ログインを受け付けない。" }
   ],
   "states": [
     { "target": "3", "state": "無効", "condition": "必須項目が未入力", "behavior": "ボタンを無効表示にする。" }
-  ],
-  "permissions": [
-    { "action": "ログイン", "target": "3", "project_admin": "○", "member": "○", "viewer": "○" }
   ],
   "errors": [
     { "no": "1", "target": "1", "case": "形式不正", "condition": "メールアドレスの形式が正しくない",
       "behavior": "入力欄の下にエラーを表示する。", "message_id": "MSG-01" }
   ],
   "messages": [
-    { "id": "MSG-01", "type": "エラー", "ja": "メールアドレスの形式が正しくありません。",
-      "vi": "Địa chỉ email không đúng định dạng.", "en": "The email address is not valid.", "display": "インライン" },
-    { "id": "MSG-02", "type": "エラー", "ja": "メールアドレスまたはパスワードが正しくありません。",
-      "vi": "Email hoặc mật khẩu không đúng.", "en": "The email address or password is incorrect.", "display": "インライン" }
+    { "id": "MSG-01", "type": "エラー", "text": "メールアドレスの形式が正しくありません。", "display": "インライン" },
+    { "id": "MSG-02", "type": "エラー", "text": "メールアドレスまたはパスワードが正しくありません。", "display": "インライン" }
   ],
   "open_questions": [
     { "no": "1", "target": "2", "question": "ログイン状態の保持期間は何日か。", "status": "未回答" }
