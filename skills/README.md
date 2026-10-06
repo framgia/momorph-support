@@ -30,6 +30,8 @@ side by side.
 
 ## 2. Write a screen spec, step by step
 
+> **The template bundled with this skill (`screen-detail-spec-excel/assets/screen-detail-spec-template.xlsx`) is a reference. Adjust its columns, tables and labels to your project's requirements before you write specs with it (see section 5).**
+
 **Prepare before you start**
 
 - The screen: a Figma frame URL (right click the frame in Figma, Copy link to selection) or a
@@ -102,15 +104,33 @@ A tall screen extends below row 47: that is expected, the area below column B st
 
 ## 4. Number a screen image on its own
 
-The image skill also works without the spec, for example to annotate a screenshot for a review:
+The image skill also works without the spec, for example to annotate a design for a review.
 
-1. Ask Claude Code: "Tạo ảnh đánh số cho màn này" or 「この画面に番号を付けて」, with a Figma frame
-   URL or a screenshot.
-2. Claude puts a number next to every component, at the size of the screen's normal text. When the
-   components sit too close for that, it moves the numbers to the left and right margins and draws
-   a line from each number to its component.
+**Example prompt**
+
+<img src="images/prompt-example-numbering.png" alt="A prompt in Claude Code asking to number a Figma frame, with its four parts numbered" width="760">
+
+| No | Part of the prompt | What to write | Required |
+| --- | --- | --- | --- |
+| 1 | The request | What Claude must do: number the components of the screen | Yes |
+| 2 | The target | The Figma frame link, with its `node-id`. In Figma, right click the frame, then Copy link to selection. A screenshot path works too | Yes |
+| 3 | Conditions | How the numbers look: their size, and where they go when components are crowded. Leave it out to use the skill's rules: the size of the screen's normal text, beside each component, in the margins only when there is no room | No |
+| 4 | Output | Where to save the PNG. Leave it out and Claude asks | No |
+
+**Steps**
+
+1. Ask Claude Code as in the example above.
+2. Claude reads the frame from Figma, puts a number on every component, and saves the PNG.
 3. Claude checks the result and tells you about any number that could not stay next to its
    component.
+
+**Example result**
+
+The Screen List of MoMorph, numbered by the skill. Its rows are close together, so the numbers sit
+in the left and right margins, each with a line to its component. A container (dashed frame) gets
+the number of the group, its parts get `n.m`.
+
+<img src="images/numbered-image-example.png" alt="The MoMorph Screen List with numbered components" width="420">
 
 ## 5. Customise
 
