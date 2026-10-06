@@ -2,7 +2,7 @@
 name: numbered-image-skill
 description: "Renders an annotated PNG of a UI screen, from a Figma frame, from a spec CSV carrying UI Parts node ids, or from a plain screenshot with no Figma call at all: every spec item gets a red numbered badge placed right beside the element it names, so proximity alone says which number belongs to which component. Container items get a dashed bounding box with the badge at its top-left. Use when the user explicitly asks for an \"annotated image\", \"numbered design image\", \"draw numbered badges on the screen\", \"tạo ảnh đánh số cho màn\", \"番号付き画像\", or a visual companion to a spec CSV, or hands over a screenshot and asks for its components to be numbered. OPT-IN ONLY: never produce one as a side effect of writing a spec, and do NOT use for annotating an image that is not a UI screen."
 argument-hint: "[figma-url | screen-id | path/to/spec.csv | path/to/screenshot.png | path/to/cfg.json]"
-compatibility: "Runs a bundled Python 3 script; requires Pillow (PIL). Needs Figma MCP access to the design file for the screenshot and the layer tree; MoMorph MCP is optional and read-only."
+compatibility: "Runs a bundled Python 3 script; requires Pillow (PIL). Needs Figma MCP access to the design file for the screenshot and the layer tree."
 metadata:
   author: nguyen.thi.hien
   version: '1.3.0'
@@ -39,9 +39,9 @@ Pick one from what the user handed over, and say which one you picked.
 
 | Mode | Input | Which rows get a badge | Where each `bbox` comes from |
 | --- | --- | --- | --- |
-| **F** | A Figma screen: url, node id, or a momorph screen id | Every spec item of the screen, or the components you identify when it has none | momorph `list_screen_items` (`position` is already frame-relative, use it as is), else Figma `get_metadata` (parent-relative, sum the ancestors down the tree) |
-| **C** | A spec CSV with a `UI Parts` column | **Exactly the CSV's rows**, labelled with that row's `No`, never a number you invent | Look the row's `UI Parts` node id up in the screen's geometry: momorph items first, Figma `get_metadata` when the screen is not in momorph |
-| **S** | A screenshot, with no Figma access asked for | The components you identify in the image | Read off the image itself. Nothing is fetched: no Figma call, no momorph call |
+| **F** | A Figma screen: url or node id | The components you identify on the screen | Figma `get_metadata` (parent-relative, sum the ancestors down the tree) |
+| **C** | A spec CSV with a `UI Parts` column | **Exactly the CSV's rows**, labelled with that row's `No`, never a number you invent | Look the row's `UI Parts` node id up in the screen's layer tree from Figma `get_metadata` |
+| **S** | A screenshot, with no Figma access asked for | The components you identify in the image | Read off the image itself. Nothing is fetched: no Figma call |
 
 **Mode C rules.** One row, one badge, the `No` column verbatim, order preserved. A row whose
 `UI Parts` is blank, or whose node id matches nothing in the geometry, gets **no badge**: name it in
@@ -132,11 +132,9 @@ Neither flag is inferred: set both explicitly, `box` included.
    density calls for (above), keeping `original_width` / `original_height` from the response, which
    become `design_size`. Mode S: the user's file is the image, and `design_size` is the coordinate
    system the bboxes were measured in.
-2. **Get the geometry.** Modes F and C: the spec items from momorph `list_screen_items` when the
-   screen is specced, otherwise the layer tree from Figma `get_metadata`; mode C then keeps only the
-   rows the CSV lists, matched on `UI Parts`. Mode S: skip, there is nothing to fetch.
-3. **Convert to frame-relative bboxes.** momorph `position` is already frame-relative: use it
-   unchanged. Figma `get_metadata` gives each node's offset from its own parent, so sum the
+2. **Get the geometry.** Modes F and C: the layer tree from Figma `get_metadata`; mode C then keeps
+   only the rows the CSV lists, matched on `UI Parts`. Mode S: skip, there is nothing to fetch.
+3. **Convert to frame-relative bboxes.** Figma `get_metadata` gives each node's offset from its own parent, so sum the
    ancestors down the tree. Mode S measures from the image's top-left, which is frame-relative by
    construction.
 4. **Build the config.** Put `design_size` in it. Set `box: true` on every row that has children in
