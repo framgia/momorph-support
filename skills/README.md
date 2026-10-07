@@ -1,25 +1,29 @@
 # Claude Code Skills for Screen Specifications
 
-Three Claude Code skills for screen specifications. The first two write a screen specification
-together; the third writes the spec of a screen stored in MoMorph:
+Three Claude Code skills that write screen specifications in two ways:
 
-| Skill | Produces |
-| --- | --- |
-| [`screen-detail-spec-excel`](screen-detail-spec-excel/SKILL.md) | A screen detail design document (画面詳細設計書) in Japanese, as an Excel file: metadata, item definitions, rules, states, errors, messages and open questions, from a fixed template. It asks you every point the sources leave open before it writes |
-| [`numbered-image-skill`](numbered-image-skill/SKILL.md) | A PNG of the screen with a number on every component, from a Figma frame or a screenshot |
-| [`momorph-screen-spec-skill`](momorph-screen-spec-skill/SKILL.md) | The spec of one MoMorph screen, written on the screen's own MoMorph CSV template and uploaded to MoMorph after your approval. It runs only when your request names MoMorph |
+- **On your own Excel template.** The spec is an Excel file in your folder, which you open in
+  Excel or upload to Google Sheets. A numbered screen image goes with it.
+- **On the MoMorph template.** The spec is stored in the MoMorph database, on the CSV template of
+  your MoMorph project.
 
-The Excel spec refers to each component by the number the image shows, so the two files are read
-side by side.
+| Skill | Writes | Template | Saved to |
+| --- | --- | --- | --- |
+| [`screen-detail-spec-excel`](screen-detail-spec-excel/SKILL.md) | A screen detail design document (画面詳細設計書) in Japanese: metadata, item definitions, rules, states, errors, messages and open questions | Your Excel template; a reference template is bundled | An `.xlsx` file in your folder |
+| [`numbered-image-skill`](numbered-image-skill/SKILL.md) | A screen image with a number on every component, from a Figma frame or a screenshot | None | A `.png` file in your folder |
+| [`momorph-screen-spec-skill`](momorph-screen-spec-skill/SKILL.md) | The spec of one MoMorph screen, one row per component | The CSV template of your MoMorph project, downloaded from MoMorph | The MoMorph database, after your approval |
+
+Both spec skills ask you each point their sources leave open before they write. The Excel spec refers to
+each component by the number the image shows, so the two files are read side by side.
 
 ## Contents
 
 - [1. Set up (once)](#1-set-up-once)
-- [2. Write a screen detail design document, step by step](#2-write-a-screen-detail-design-document-step-by-step)
-- [3. Put the numbered image into the Excel spec](#3-put-the-numbered-image-into-the-excel-spec)
+- [2. Write a spec on your Excel template](#2-write-a-spec-on-your-excel-template)
+- [3. Add the numbered image to the Excel spec](#3-add-the-numbered-image-to-the-excel-spec)
 - [4. Number a screen image on its own](#4-number-a-screen-image-on-its-own)
-- [5. Write the spec of a MoMorph screen](#5-write-the-spec-of-a-momorph-screen)
-- [6. Customise](#6-customise)
+- [5. Write a spec on the MoMorph template](#5-write-a-spec-on-the-momorph-template)
+- [6. Customise the Excel template and the numbering](#6-customise-the-excel-template-and-the-numbering)
 
 ## 1. Set up (once)
 
@@ -43,9 +47,9 @@ side by side.
    write access.
 5. **Restart Claude Code** so it loads the new skills.
 
-## 2. Write a screen detail design document, step by step
+## 2. Write a spec on your Excel template
 
-> **The template bundled with this skill (`screen-detail-spec-excel/assets/screen-detail-spec-template.xlsx`) is a reference. Adjust its columns, tables and labels to your project's requirements before you write specs with it (see section 6).**
+> **The bundled template (`screen-detail-spec-excel/assets/screen-detail-spec-template.xlsx`) is a reference. Adapt its columns, tables and labels to your project before you write specs with it (section 6).**
 
 **Prepare before you start**
 
@@ -95,7 +99,7 @@ side by side.
 8. **Update the spec later.** Ask Claude to update the spec with what changed. It asks again about
    anything the change leaves open, and adds a row to the Revision history sheet (改訂履歴).
 
-## 3. Put the numbered image into the Excel spec
+## 3. Add the numbered image to the Excel spec
 
 The left column of the Screen detail design sheet (画面詳細設計) is the image area: column B, from
 row 7, marked "Paste the numbered screen image" (番号付き画面画像を貼り付ける). It is about 600 px
@@ -155,7 +159,7 @@ the number of the group, its parts get `n.m`.
 
 <img src="images/numbered-image-example.png" alt="The MoMorph Screen List with numbered components" width="420">
 
-## 5. Write the spec of a MoMorph screen
+## 5. Write a spec on the MoMorph template
 
 **Prepare before you start**
 
@@ -173,8 +177,7 @@ the number of the group, its parts get `n.m`.
    with no spec yet returns the header only, which is your project's template. Claude writes on
    exactly those columns.
 3. **Answer Claude's questions.** Every cell the design and the baseline do not answer comes back
-   as one list of questions, each with the item number, the column and the options seen. Claude
-   writes your decision, never a guess.
+   as one list of questions, each with the item number, the column and the options seen.
 4. **Review the file.** Claude tells you the file path and the rows added, changed and archived.
 5. **Approve the upload.** Claude uploads only after you say so, then downloads the spec again to
    verify it.
@@ -186,7 +189,7 @@ linked layer (UI Parts) and type; the preview on the left carries the same numbe
 
 <img src="images/momorph-screen-spec-example.png" alt="Mockup of a MoMorph screen: the spec table on the right, the numbered design preview on the left" width="760">
 
-## 6. Customise
+## 6. Customise the Excel template and the numbering
 
 - **Template columns and tables:** list the Item definitions (項目定義) columns (add, remove,
   rename, width) and the blank row count of each table in a `layout.json`, then rebuild the
