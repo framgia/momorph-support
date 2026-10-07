@@ -1,7 +1,7 @@
 # Question protocol: readiness before writing
 
 Reference for `screen-detail-spec-excel`, step 5 (Gate 1). The spec writer answers before a cell is
-written. A question asked costs one reply; a guess written as fact costs a defect found in test.
+written.
 
 ## 1. Classify every unknown and conflict
 
@@ -13,8 +13,8 @@ one cell rather than the shape of the screen?**
 | Class | When | What to do |
 | --- | --- | --- |
 | **Blocking** | No to the test: it decides a flow, a state, a data field, the scope, or what the user sees | Ask. Do not write the affected section until it is answered |
-| **Default** | Yes to the test: a limit, a label, a duration, a sort order | Propose the default in the question; write it only after the writer accepts it, and log it in 未決事項 as `回答済み` |
-| **Conflict** | Two sources disagree | Ask which wins, showing both values and both sources |
+| **Default** | Yes to the test: a limit, a label, a duration, a sort order | Propose the default in the question; write it only after the writer accepts it (§4) |
+| **Conflict** | Two sources disagree and the ranking cannot settle it (research-and-evidence.md §2) | Ask which wins, showing both values and both sources |
 | **Not a question** | The material answers it, but it was not read yet | Go back and read it. Never ask the writer what a document already says |
 
 ## 2. Ask in one round
@@ -25,7 +25,7 @@ one cell rather than the shape of the screen?**
 - Keep each question answerable with a choice or a number. Split a compound question.
 - Number the questions; the numbers carry over into 未決事項.
 - After the answers, ask a second round only for what is still open, and only once. What remains
-  open after that is written to 未決事項 as `未回答`, and the cells it governs cite it.
+  open after that is recorded per §4.
 
 Template for one question:
 
@@ -42,7 +42,6 @@ Run through these for every item. Skip a line only when the evidence map already
 **画面全体**
 - Who reaches this screen, from which screen, and with which data already loaded?
 - What does the screen show on first load, and in what order are the parts fetched?
-- What is in scope for this document, and which overlays or states belong to another document?
 
 **項目定義**
 - Label: the exact text and its key in the catalog; behaviour when the text is too long.

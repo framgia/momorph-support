@@ -1,10 +1,26 @@
+"""Build the 画面詳細設計書 template.
+
+Usage: python3 build_template.py <out.xlsx> [layout.json]
+
+layout.json is optional; every key is optional:
+  item_columns   [[header, width], ...]  the 項目定義 columns, in order (at least 10)
+  item_rows      blank rows of 項目定義
+  table_rows     {table title: blank rows} for the tables below 項目定義
+  revision_rows  blank rows of 改訂履歴
+Metadata and the tables below 項目定義 are laid out by position, so a removed, added or renamed
+column moves them instead of breaking the build.
+"""
+import json
 import sys
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter as L
 from openpyxl.worksheet.datavalidation import DataValidation
 
+if len(sys.argv) not in (2, 3):
+    raise SystemExit(__doc__)
 OUT = sys.argv[1]
+LAYOUT = json.load(open(sys.argv[2], encoding="utf-8")) if len(sys.argv) == 3 else {}
 wb = Workbook()
 
 thin = Side(style="thin", color="A6A6A6")
@@ -70,7 +86,7 @@ for col, w in zip("ABCDEF", (2, 8, 14, 20, 30, 70)):
 hist["B1"] = "改訂履歴"
 hist["B1"].font = Font(bold=True, size=16, color="1F4E78")
 end = table(hist, 3, [("版", 2, 2), ("改訂日", 3, 3), ("改訂者", 4, 4), ("改訂箇所", 5, 5),
-                      ("改訂内容", 6, 6)], 20)
+                      ("改訂内容", 6, 6)], LAYOUT.get("revision_rows", 20))
 for r in range(4, end):
     hist.cell(r, 3).number_format = "yyyy/mm/dd"
 
@@ -83,20 +99,41 @@ ws.column_dimensions["A"].width = 2
 ws.column_dimensions["B"].width = 85  # numbered image, about 600 px
 ws.column_dimensions["C"].width = 2
 
-DESC_COLS = [
+DEFAULT_COLS = [
     ("No", 6), ("項目名", 20), ("画面上表示ラベル", 20), ("項目種別", 14), ("説明", 40), ("操作", 14),
     ("遷移先", 18), ("操作時の動作", 36), ("データ型", 12), ("必須", 9), ("形式", 14), ("最大桁数", 9),
     ("最小桁数", 9), ("初期値", 14), ("入力チェック", 30), ("テーブル名", 18), ("カラム名", 18),
     ("データベース備考", 40),
 ]
+DESC_COLS = [tuple(x) for x in LAYOUT.get("item_columns", DEFAULT_COLS)]
+if len(DESC_COLS) < 10 or len({h for h, _ in DESC_COLS}) != len(DESC_COLS):
+    raise SystemExit("item_columns needs at least 10 columns with distinct headers")
 FIRST = 4  # column D
 LAST = FIRST + len(DESC_COLS) - 1
 for i, (_, w) in enumerate(DESC_COLS):
     ws.column_dimensions[L(FIRST + i)].width = w
 col = {h: FIRST + i for i, (h, _) in enumerate(DESC_COLS)}
-c = lambda h: col[h]
+DEFAULT_INDEX = {h: i for i, (h, _) in enumerate(DEFAULT_COLS)}
 
-ws.merge_cells(start_row=1, start_column=2, end_row=1, end_column=FIRST + 3)
+
+def c(h):
+    """Column of a default header, mapped by position onto the actual column list."""
+    i = DEFAULT_INDEX[h]
+    return FIRST + round(i * (len(DESC_COLS) - 1) / (len(DEFAULT_COLS) - 1))
+
+
+def spans(pairs):
+    """Map (first_header, last_header) pairs of one row onto non overlapping column spans."""
+    out, prev = [], FIRST - 1
+    for k, (a, b) in enumerate(pairs):
+        room = LAST - (len(pairs) - 1 - k)
+        c1 = min(max(c(a), prev + 1), room)
+        c2 = min(max(c(b), c1), room)
+        out.append((c1, c2))
+        prev = c2
+    return out
+
+ws.merge_cells(start_row=1, start_column=2, end_row=1, end_column=min(FIRST + 3, c("説明") - 1))
 ws["B1"] = "画面詳細設計書"
 ws["B1"].font = Font(bold=True, size=16, color="1F4E78")
 ws.row_dimensions[1].height = 30
@@ -110,45 +147,52 @@ for cc in range(c("説明"), LAST + 1):
 
 # Metadata in three rows: 2 = name, status, design link; 3 = overview; 4 = dates and people.
 lab = lambda r, col, text: box(ws, r, col, r, col, text, fill=LABEL, font=BOLD, align=Alignment(vertical="center", wrap_text=True))
+DATE = "yyyy/mm/dd"
 lab(2, 2, "画面名")
-box(ws, 2, c("No"), 2, c("説明"))
-lab(2, c("操作"), "ステータス")
-box(ws, 2, c("遷移先"), 2, c("遷移先"), "作成中", align=Alignment(vertical="center"))
-dv_list(ws, ["作成中", "確定"], f"{L(c('遷移先'))}2", True)
-lab(2, c("操作時の動作"), "デザイン参照")
-box(ws, 2, c("データ型"), 2, LAST)
 lab(3, 2, "画面概要")
-box(ws, 3, c("No"), 3, LAST)
-ws.row_dimensions[3].height = 45
 lab(4, 2, "作成日・作成者")
-box(ws, 4, c("No"), 4, c("項目名")).number_format = "yyyy/mm/dd"
-box(ws, 4, c("画面上表示ラベル"), 4, c("画面上表示ラベル"))
-lab(4, c("項目種別"), "最終更新")
-box(ws, 4, c("説明"), 4, c("説明")).number_format = "yyyy/mm/dd"
-box(ws, 4, c("操作"), 4, c("操作"))
-lab(4, c("遷移先"), "レビュー")
-box(ws, 4, c("操作時の動作"), 4, c("操作時の動作")).number_format = "yyyy/mm/dd"
-box(ws, 4, c("データ型"), 4, c("必須"))
-lab(4, c("形式"), "デザイン確認")
-box(ws, 4, c("最大桁数"), 4, c("最小桁数")).number_format = "yyyy/mm/dd"
+# (first header, last header, label text or None for a value cell, number format)
+ROW2 = [("No", "説明", None, None), ("操作", "操作", "ステータス", None), ("遷移先", "遷移先", None, None),
+        ("操作時の動作", "操作時の動作", "デザイン参照", None), ("データ型", "データベース備考", None, None)]
+ROW4 = [("No", "項目名", None, DATE), ("画面上表示ラベル", "画面上表示ラベル", None, None),
+        ("項目種別", "項目種別", "最終更新", None), ("説明", "説明", None, DATE), ("操作", "操作", None, None),
+        ("遷移先", "遷移先", "レビュー", None), ("操作時の動作", "操作時の動作", None, DATE),
+        ("データ型", "必須", None, None), ("形式", "形式", "デザイン確認", None),
+        ("最大桁数", "最小桁数", None, DATE)]
+for r, cells in ((2, ROW2), (4, ROW4)):
+    for (c1, c2), (_, _, label, fmt) in zip(spans([(a, b) for a, b, _, _ in cells]), cells):
+        if label:
+            lab(r, c1, label)
+        else:
+            cell = box(ws, r, c1, r, c2, align=Alignment(vertical="center", wrap_text=True))
+            if fmt:
+                cell.number_format = fmt
+status_col = spans([(a, b) for a, b, _, _ in ROW2])[2][0]
+ws.cell(2, status_col).value = "作成中"
+dv_list(ws, ["作成中", "確定"], f"{L(status_col)}2", True)
+box(ws, 3, FIRST, 3, LAST)
+ws.row_dimensions[3].height = 45
 
 # ── 画面イメージ (left) and 項目定義 (right) ─────────────────────
 TOP = 6
 section(ws, TOP, 2, "画面イメージ", 2)
 section(ws, TOP, FIRST, "項目定義", LAST)
 desc_head = TOP + 1
-desc_end = table(ws, desc_head, [(h, n, n) for h, n in col.items()], 40)
+desc_end = table(ws, desc_head, [(h, n, n) for h, n in col.items()], LAYOUT.get("item_rows", 40))
 box(ws, desc_head, 2, desc_end - 1, 2, "番号付き画面画像を貼り付ける",
     align=Alignment(horizontal="center", vertical="center", wrap_text=True))
 ws.cell(desc_head, 2).font = Font(italic=True, color="808080")
 rng = lambda h, a=desc_head + 1, b=desc_end - 1: f"{L(col[h])}{a}:{L(col[h])}{b}"
-dv_list(ws, ["ボタン", "チェックボックス", "ラジオボタン", "ドロップダウン", "テキスト入力", "テキストエリア",
-             "日付選択", "ファイル・画像", "動画", "ページネーション", "ポップアップ", "ラベル", "その他"],
-        rng("項目種別"), False)
-dv_list(ws, ["クリック時", "ホバー時", "キー操作時", "一定時間後"], rng("操作"), False)
-dv_list(ws, ["文字列", "整数", "小数", "日付", "日時", "真偽値", "配列", "ファイル", "なし"], rng("データ型"), False)
-dv_list(ws, ["必須", "任意"], rng("必須"), False)
-for h in ("最大桁数", "最小桁数"):
+ITEM_LISTS = [("項目種別", ["ボタン", "チェックボックス", "ラジオボタン", "ドロップダウン", "テキスト入力", "テキストエリア",
+             "日付選択", "ファイル・画像", "動画", "ページネーション", "ポップアップ", "ラベル", "その他"]),
+              ("操作", ["クリック時", "ホバー時", "キー操作時", "一定時間後"]),
+              ("データ型", ["文字列", "整数", "小数", "日付", "日時", "真偽値", "配列", "ファイル", "なし"]),
+              ("必須", ["必須", "任意"])]
+# Suggestion lists and number checks apply only to the columns the layout keeps under their default name.
+for h, values in ITEM_LISTS:
+    if h in col:
+        dv_list(ws, values, rng(h), False)
+for h in (x for x in ("最大桁数", "最小桁数") if x in col):
     dv = DataValidation(type="whole", operator="greaterThanOrEqual", formula1="0", allow_blank=True)
     ws.add_data_validation(dv)
     dv.add(rng(h))
@@ -175,10 +219,13 @@ TABLES = [
 row = desc_end + 1
 anchors = {}
 for title, cols, n in TABLES:
+    n = LAYOUT.get("table_rows", {}).get(title, n)
     section(ws, row, FIRST, title, LAST)
     head = row + 1
-    end = table(ws, head, [(h, c(a), c(b)) for h, a, b in cols], n)
-    anchors[title] = (head, end - 1, {h: c(a) for h, a, _ in cols})
+    mapped = spans([(a, b) for _, a, b in cols])
+    mapped[-1] = (mapped[-1][0], LAST)
+    end = table(ws, head, [(h, c1, c2) for (h, _, _), (c1, c2) in zip(cols, mapped)], n)
+    anchors[title] = (head, end - 1, {h: c1 for (h, _, _), (c1, _) in zip(cols, mapped)})
     row = end + 1
 
 h0, h1, cm = anchors["メッセージ一覧"]
