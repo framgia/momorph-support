@@ -104,6 +104,12 @@ each component by the number the image shows, so the two files are read side by 
 
 ### 1.3 Sample outputs
 
+**The spec in Excel.** The Screen detail design sheet (画面詳細設計): metadata in rows 2 to 4, the
+numbered screen image on the left, and the Item definitions table (項目定義) on the right, one row
+per numbered component.
+
+<img src="images/screen-detail-spec-example.png" alt="A screen detail design document in Excel: the numbered screen image on the left, the item definitions table on the right" width="760">
+
 **The numbered screen image.** The Screen List of MoMorph, numbered by the skill. Its rows are
 close together, so the numbers sit in the left and right margins, each with a line to its
 component. A container (dashed frame) gets the number of the group, its parts get `n.m`.
