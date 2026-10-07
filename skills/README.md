@@ -12,6 +12,15 @@ together; the third writes the spec of a screen stored in MoMorph:
 The Excel spec refers to each component by the number the image shows, so the two files are read
 side by side.
 
+## Contents
+
+- [1. Set up (once)](#1-set-up-once)
+- [2. Write a screen detail design document, step by step](#2-write-a-screen-detail-design-document-step-by-step)
+- [3. Put the numbered image into the Excel spec](#3-put-the-numbered-image-into-the-excel-spec)
+- [4. Number a screen image on its own](#4-number-a-screen-image-on-its-own)
+- [5. Write the spec of a MoMorph screen](#5-write-the-spec-of-a-momorph-screen)
+- [6. Customise](#6-customise)
+
 ## 1. Set up (once)
 
 1. **Get the skills.** Clone this repository, then copy the folders you need into your Claude Code
