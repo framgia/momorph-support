@@ -19,20 +19,34 @@ each component by the number the image shows, so the two files are read side by 
 ## Contents
 
 - [1. Write a spec on your Excel template](#1-write-a-spec-on-your-excel-template)
-  - [1.1 Set up](#11-set-up)
-  - [1.2 Write the spec](#12-write-the-spec)
-  - [1.3 Sample outputs](#13-sample-outputs)
+  - [1.1 Sample outputs](#11-sample-outputs)
+  - [1.2 Set up](#12-set-up)
+  - [1.3 Write the spec](#13-write-the-spec)
   - [1.4 Add the numbered image to the Excel spec](#14-add-the-numbered-image-to-the-excel-spec)
   - [1.5 Number a screen image on its own](#15-number-a-screen-image-on-its-own)
   - [1.6 Customise the Excel template and the numbering](#16-customise-the-excel-template-and-the-numbering)
 - [2. Write a spec on the MoMorph template](#2-write-a-spec-on-the-momorph-template)
-  - [2.1 Set up](#21-set-up)
-  - [2.2 Write the spec](#22-write-the-spec)
-  - [2.3 Sample output](#23-sample-output)
+  - [2.1 Sample output](#21-sample-output)
+  - [2.2 Set up](#22-set-up)
+  - [2.3 Write the spec](#23-write-the-spec)
 
 ## 1. Write a spec on your Excel template
 
-### 1.1 Set up
+### 1.1 Sample outputs
+
+**The spec in Excel.** The Screen detail design sheet (画面詳細設計): metadata in rows 2 to 4, the
+numbered screen image on the left, and the Item definitions table (項目定義) on the right, one row
+per numbered component.
+
+<img src="images/screen-detail-spec-example.png" alt="A screen detail design document in Excel: the numbered screen image on the left, the item definitions table on the right" width="760">
+
+**The numbered screen image.** The Screen List of MoMorph, numbered by the skill. Its rows are
+close together, so the numbers sit in the left and right margins, each with a line to its
+component. A container (dashed frame) gets the number of the group, its parts get `n.m`.
+
+<img src="images/numbered-image-example.png" alt="The MoMorph Screen List with numbered components" width="420">
+
+### 1.2 Set up
 
 1. **Get the skills.** Clone this repository, then copy the two folders into your Claude Code
    skills directory:
@@ -50,7 +64,7 @@ each component by the number the image shows, so the two files are read side by 
    and check that `/mcp` lists it as connected. A screenshot as the source needs no Figma access.
 4. **Restart Claude Code** so it loads the new skills.
 
-### 1.2 Write the spec
+### 1.3 Write the spec
 
 > **The bundled template (`screen-detail-spec-excel/assets/screen-detail-spec-template.xlsx`) is a reference. Adapt its columns, tables and labels to your project before you write specs with it (section 1.6).**
 
@@ -101,20 +115,6 @@ each component by the number the image shows, so the two files are read side by 
      (ステータス) to Confirmed (確定) once the spec is approved.
 8. **Update the spec later.** Ask Claude to update the spec with what changed. It asks again about
    anything the change leaves open, and adds a row to the Revision history sheet (改訂履歴).
-
-### 1.3 Sample outputs
-
-**The spec in Excel.** The Screen detail design sheet (画面詳細設計): metadata in rows 2 to 4, the
-numbered screen image on the left, and the Item definitions table (項目定義) on the right, one row
-per numbered component.
-
-<img src="images/screen-detail-spec-example.png" alt="A screen detail design document in Excel: the numbered screen image on the left, the item definitions table on the right" width="760">
-
-**The numbered screen image.** The Screen List of MoMorph, numbered by the skill. Its rows are
-close together, so the numbers sit in the left and right margins, each with a line to its
-component. A container (dashed frame) gets the number of the group, its parts get `n.m`.
-
-<img src="images/numbered-image-example.png" alt="The MoMorph Screen List with numbered components" width="420">
 
 ### 1.4 Add the numbered image to the Excel spec
 
@@ -168,7 +168,7 @@ The image skill also works without the spec, for example to annotate a design fo
 When you number several images of the same screen in one session (its states), each component gets
 its number once, on the first image that shows it.
 
-A sample result is in section 1.3.
+A sample result is in section 1.1.
 
 ### 1.6 Customise the Excel template and the numbering
 
@@ -189,7 +189,14 @@ A sample result is in section 1.3.
 
 ## 2. Write a spec on the MoMorph template
 
-### 2.1 Set up
+### 2.1 Sample output
+
+A screen's spec in MoMorph. The Specs tab lists one row per item, with its number, name,
+linked layer (UI Parts) and type; the preview on the left carries the same numbers on the design.
+
+<img src="images/momorph-screen-spec-example.png" alt="A MoMorph screen: the spec table on the right, the numbered design preview on the left" width="760">
+
+### 2.2 Set up
 
 1. **Get the skill.** Clone this repository, then copy the folder into your Claude Code skills
    directory:
@@ -202,7 +209,7 @@ A sample result is in section 1.3.
    the states of its components.
 4. **Restart Claude Code** so it loads the new skill.
 
-### 2.2 Write the spec
+### 2.3 Write the spec
 
 **Prepare**
 
@@ -224,10 +231,3 @@ A sample result is in section 1.3.
 4. **Review the file.** Claude tells you the file path and the rows added, changed and archived.
 5. **Approve the upload.** Claude uploads only after you say so, then downloads the spec again to
    verify it.
-
-### 2.3 Sample output
-
-A screen's spec in MoMorph. The Specs tab lists one row per item, with its number, name,
-linked layer (UI Parts) and type; the preview on the left carries the same numbers on the design.
-
-<img src="images/momorph-screen-spec-example.png" alt="A MoMorph screen: the spec table on the right, the numbered design preview on the left" width="760">
