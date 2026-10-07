@@ -3,14 +3,16 @@
 
 Usage: python3 fill_spec.py <template.xlsx> <content.json> <out.xlsx>
 
-The tables are located by their Japanese titles and header cells, so a template whose rows were
-moved still fills correctly. The JSON format is described in references/content-format.md.
+Metadata labels, tables and columns are located by their text, so a template whose rows or
+columns were moved, removed or renamed still fills. What the template lacks is skipped and listed
+under "skipped" on stdout. The JSON format is described in references/content-format.md.
 """
 import datetime
 import json
 import math
 import sys
 import unicodedata
+import zipfile
 
 from openpyxl import load_workbook
 from openpyxl.styles import Alignment, Font
@@ -18,6 +20,20 @@ from openpyxl.utils import get_column_letter
 
 WRAP = Alignment(wrap_text=True, vertical="top")
 RED = "FF0000"
+SKIPPED = []
+# An .xlsx never declares a DTD, so a part that does is refused before openpyxl parses it.
+MAX_UNZIPPED = 50 * 1024 * 1024
+
+
+def check_xlsx(path):
+    with zipfile.ZipFile(path) as z:
+        if sum(i.file_size for i in z.infolist()) > MAX_UNZIPPED:
+            raise SystemExit(f"{path}: refused, unzips to more than {MAX_UNZIPPED // 2**20} MB")
+        for info in z.infolist():
+            if info.filename.endswith((".xml", ".rels")):
+                head = z.read(info)[:4096].upper()
+                if b"<!DOCTYPE" in head or b"<!ENTITY" in head:
+                    raise SystemExit(f"{path}: refused, {info.filename} declares a DTD")
 
 # JSON key -> header text, per table.
 ITEM_COLS = {
@@ -26,6 +42,7 @@ ITEM_COLS = {
     "required": "必須", "format": "形式", "max": "最大桁数", "min": "最小桁数", "default": "初期値",
     "validation": "入力チェック", "table": "テーブル名", "column": "カラム名", "db_note": "データベース備考",
 }
+REVISION_COLS = {"version": "版", "date": "改訂日", "by": "改訂者", "where": "改訂箇所", "what": "改訂内容"}
 TABLES = {
     "rules": ("表示・業務ルール", {"id": "ルールID", "target": "対象項目No", "rule": "ルール"}),
     "states": ("状態定義", {"target": "対象項目No", "state": "状態", "condition": "条件", "behavior": "表示・動作"}),
@@ -89,6 +106,8 @@ class Sheet:
 
     def write(self, row, col, value, red=False):
         cell = self.ws.cell(row, col, as_value(value))
+        if isinstance(cell.value, str):
+            cell.data_type = "s"  # text starting with "=" stays text, never a formula
         cell.alignment = WRAP
         if red:
             cell.font = Font(color=RED)
@@ -110,7 +129,8 @@ def fill_meta(s, meta):
     def after(label, n=1):
         pos = s.find(label, rows=(1, 12))
         if not pos:
-            raise SystemExit(f"template has no metadata label {label!r}")
+            SKIPPED.append(f"meta {label!r}: no such label")
+            return None
         row, col = pos
         narrow = lambda c: (s.ws.column_dimensions[get_column_letter(c)].width or 10) < 4
         cells, c = [], s.span(row, col)[1] + 1
@@ -124,76 +144,87 @@ def fill_meta(s, meta):
     simple = {"screen_name": "画面名", "overview": "画面概要", "status": "ステータス", "design_ref": "デザイン参照",
               "design_confirmed": "デザイン確認"}
     for key, label in simple.items():
-        if key in meta:
-            (r, c), = after(label)
+        cells = after(label) if key in meta else None
+        if cells:
+            (r, c), = cells
             s.write(r, c, meta[key])
     pairs = {"created": "作成日・作成者", "updated": "最終更新", "reviewed": "レビュー"}
     for key, label in pairs.items():
-        if key in meta:
-            (r1, c1), (r2, c2) = after(label, 2)
+        cells = after(label, 2) if key in meta else None
+        if cells:
+            (r1, c1), (r2, c2) = cells
             s.write(r1, c1, meta[key].get("date"))
             s.write(r2, c2, meta[key].get("by"))
 
 
-def fill_table(s, title, mapping, rows, first_col_header):
-    pos = s.find(title)
-    if not pos:
-        raise SystemExit(f"template has no table titled {title!r}")
-    head_row = pos[0] + 1
+def fill_rows(s, where, head_row, mapping, rows):
+    """Write rows under a header row; `extra` writes {header: value} for columns beyond the mapping."""
     hdr = s.headers(head_row)
-    if first_col_header not in hdr:
-        raise SystemExit(f"table {title!r}: header {first_col_header!r} not found")
     if len(rows) > s.capacity(head_row):
-        raise SystemExit(f"table {title!r} holds {s.capacity(head_row)} rows, the content has {len(rows)}: add rows to the template")
+        raise SystemExit(f"{where} holds {s.capacity(head_row)} rows, the content has {len(rows)}: "
+                         "raise its row count in the layout and rebuild the template")
+    missing = {header for header in mapping.values() if header not in hdr}
     for i, item in enumerate(rows):
         r = head_row + 1 + i
+        cells = [(key, header) for key, header in mapping.items() if header in hdr]
+        cells += [(None, header) for header in (item.get("extra") or {})]
         spans = []
-        for key, header in mapping.items():
+        for key, header in cells:
             if header not in hdr:
-                continue  # the template does not have this column
+                missing.add(header)
+                continue
             c1, c2 = hdr[header]
             spans.append((c1, c2))
-            v = item.get(key)
+            v = item.get(key) if key else item["extra"][header]
             if v not in (None, ""):
                 s.write(r, c1, v, red=item.get("new_db") and key in ("table", "column", "db_note"))
         s.fit(r, spans)
-    return head_row
+    used = {h for item in rows for h in (item.get("extra") or {})}
+    for header in sorted(missing):
+        key = next((k for k, h in mapping.items() if h == header), None)
+        if header in used or any(item.get(key) not in (None, "") for item in rows):
+            SKIPPED.append(f"{where}: column {header!r} not in the template")
+
+
+def fill_table(s, title, mapping, rows):
+    pos = s.find(title)
+    if not pos:
+        SKIPPED.append(f"table {title!r}: not in the template, {len(rows)} row(s) not written")
+        return
+    head_row = pos[0] + 1
+    if not set(mapping.values()) & set(s.headers(head_row)):
+        SKIPPED.append(f"table {title!r}: no known header, {len(rows)} row(s) not written")
+        return
+    fill_rows(s, title, head_row, mapping, rows)
 
 
 def main(template, content, out):
     data = json.load(open(content, encoding="utf-8"))
+    check_xlsx(template)
     wb = load_workbook(template)
     s = Sheet(wb["画面詳細設計"])
     fill_meta(s, data.get("meta", {}))
-    head = s.find("No", col=None, rows=(1, 40))
-    item_head = next(r for r in range(1, 60) if s.ws.cell(r, head[1]).value == "No"
-                     and "項目名" in s.headers(r))
-    hdr = s.headers(item_head)
-    if len(data.get("items", [])) > s.capacity(item_head):
-        raise SystemExit(f"項目定義 holds {s.capacity(item_head)} rows, the content has {len(data['items'])}: add rows to the template")
-    for i, item in enumerate(data.get("items", [])):
-        r = item_head + 1 + i
-        spans = []
-        for key, header in ITEM_COLS.items():
-            if header not in hdr:
-                continue
-            c1, c2 = hdr[header]
-            spans.append((c1, c2))
-            v = item.get(key)
-            if v not in (None, ""):
-                s.write(r, c1, v, red=item.get("new_db") and key in ("table", "column", "db_note"))
-        s.fit(r, spans)
+    items = data.get("items", [])
+    item_head = next((r for r in range(1, 60) if {"No", "項目名"} <= set(s.headers(r))), None)
+    if item_head is None:
+        SKIPPED.append(f"項目定義: header row with No and 項目名 not found, {len(items)} item(s) not written")
+    elif items:
+        fill_rows(s, "項目定義", item_head, ITEM_COLS, items)
     for key, (title, mapping) in TABLES.items():
         if data.get(key):
-            fill_table(s, title, mapping, data[key], next(iter(mapping.values())))
-    if data.get("revisions") and "改訂履歴" in wb.sheetnames:
-        h = wb["改訂履歴"]
-        for i, rev in enumerate(data["revisions"]):
-            for col, key in zip(range(2, 7), ("version", "date", "by", "where", "what")):
-                cell = h.cell(4 + i, col, as_value(rev.get(key)))
-                cell.alignment = WRAP
+            fill_table(s, title, mapping, data[key])
+    revisions = data.get("revisions") or []
+    if revisions and "改訂履歴" not in wb.sheetnames:
+        SKIPPED.append(f"改訂履歴: no such sheet, {len(revisions)} revision(s) not written")
+    elif revisions:
+        h = Sheet(wb["改訂履歴"])
+        head = h.find("版")
+        if not head:
+            SKIPPED.append(f"改訂履歴: header 版 not found, {len(revisions)} revision(s) not written")
+        else:
+            fill_rows(h, "改訂履歴", head[0], REVISION_COLS, revisions)
     wb.save(out)
-    print(f"saved {out}: {len(data.get('items', []))} items")
+    print(json.dumps({"saved": out, "items": len(items), "skipped": SKIPPED}, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

@@ -1,11 +1,11 @@
 # Research and evidence
 
-Reference for `screen-detail-spec-excel`, steps 2 to 4. The aim is an evidence map: for every item
-and every column, either a value with its source, or an explicit unknown.
+Reference for `screen-detail-spec-excel`, steps 2 to 4.
 
 ## 1. Project context to collect first
 
-Ask the spec writer where each of these lives. A missing one is itself a finding to report.
+Ask the spec writer where each of these lives; never assume one does not exist. A missing one is
+itself a finding to report.
 
 | Material | What it gives the spec | What to extract |
 | --- | --- | --- |
@@ -20,7 +20,16 @@ Ask the spec writer where each of these lives. A missing one is itself a finding
 
 ## 2. Source ranking
 
-When two sources say different things, the higher one wins, and the conflict is still reported.
+When two sources say different things, the higher one wins: write its value and list the conflict
+in the report, with both values and both sources. Ask the spec writer instead (question-protocol.md
+§1, Conflict) in two cases only:
+
+- the two sources sit at the same rank;
+- the lower ranked source carries a later date than the higher one (a design revised after the
+  approved spec).
+
+Ranks 3 to 5 each win only on the aspect named; on any other aspect they rank below 2.
+
 
 1. A decision the spec writer confirmed in this session.
 2. The approved requirements or feature spec.

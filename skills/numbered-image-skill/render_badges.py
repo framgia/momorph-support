@@ -14,11 +14,16 @@ Pipeline
 3. Every other item takes the first free slot from an ordered candidate list:
    left, above, right, below, then inside its own top-left / top-right corner.
    Smaller elements pick first, so a big parent never steals a child's slot.
-4. A badge that found no free slot is pushed outward step by step until it is
-   clear, and gets a short straight leader back to the element edge.
+4. A badge that found no free slot steps left until it is clear, and gets a
+   short dotted leader back to the element edge.
 """
-import sys, json, math
+import sys, json, math, warnings
 from PIL import Image, ImageDraw, ImageFont
+
+# Larger images are refused rather than decoded; Pillow alone only warns below twice its limit.
+MAX_PIXELS = 60_000_000
+Image.MAX_IMAGE_PIXELS = MAX_PIXELS
+warnings.simplefilter("error", Image.DecompressionBombWarning)
 
 # Margin around the design. Only has to hold a badge sitting outside an edge
 # element, so it is far thinner than the old gutter columns.
@@ -41,9 +46,14 @@ FONT_DOTTED = 11
 # Dashed container outline: dash then gap, and the stroke width of every red line.
 DASH, DASH_GAP, STROKE = 6, 4, 1
 # The body-text size every constant above was tuned against. `text_px` in the config is the
-# body-text size of the image at hand, and the ratio of the two rescales the whole style: a
-# badge on a 2x screenshot has to grow with the screenshot or it reads as a speck.
+# body-text size of the image at hand, and the ratio of the two rescales the whole style.
 TEXT_PX_BASE = 13
+# Badge diameter as a fraction of the image's longer edge: the default when `text_px` is
+# absent, and the bounds a `text_px` sized badge is clamped to. `badge_range` overrides the bounds.
+BADGE_DEFAULT_FRAC = 0.027
+BADGE_RANGE = (0.018, 0.045)
+# Smallest diameter a two digit label stays legible at.
+BADGE_MIN_PX = 20
 
 BADGE_BG = (255, 59, 48, 255)
 BADGE_BORDER = (255, 255, 255, 255)
@@ -147,13 +157,38 @@ def prepare_items(cfg, iw, ih):
     return out, s
 
 
-def apply_text_scale(k):
-    """Rescale every pixel constant by `k`, once, before any measuring or drawing.
+def badge_scale(cfg, iw, ih):
+    """Return (k, source, clamped): the factor applied to every pixel constant.
 
-    Globals rather than a style object on purpose: placement and drawing both read these by
-    name from a dozen places, and threading a style through all of them would be a bigger
-    change than the feature. `k` is 1.0 unless the caller says the image's text is bigger.
+    The diameter comes from `text_px` when given, else from BADGE_DEFAULT_FRAC of the
+    image's longer edge, then is clamped to `badge_range` of that edge and BADGE_MIN_PX.
     """
+    longer = max(iw, ih)
+    rng = cfg.get("badge_range", BADGE_RANGE)
+    if not (isinstance(rng, (list, tuple)) and len(rng) == 2 and 0 < rng[0] <= rng[1]):
+        die("badge_range must be [min_fraction, max_fraction] with 0 < min <= max")
+    base_d = 2 * BADGE_R
+    text_px = cfg.get("text_px")
+    if text_px:
+        try:
+            d = base_d * float(text_px) / TEXT_PX_BASE
+        except (TypeError, ValueError):
+            die("text_px must be a number")
+        source = "text_px"
+    else:
+        d = BADGE_DEFAULT_FRAC * longer
+        source = "image"
+    lo, hi = max(BADGE_MIN_PX, rng[0] * longer), max(BADGE_MIN_PX, rng[1] * longer)
+    clamped = None
+    if d < lo:
+        d, clamped = lo, "min"
+    elif d > hi:
+        d, clamped = hi, "max"
+    return d / base_d, source, clamped
+
+
+def apply_text_scale(k):
+    """Rescale every pixel constant by `k`, once, before any measuring or drawing."""
     global MARGIN, BADGE_R, PILL_PAD, ADJ_GAP, MIN_SEP, NUDGE_STEP, CHAR_W
     global FONT_DIGIT, FONT_DOTTED, DASH, DASH_GAP, STROKE, BADGE_D
     r = lambda v: max(1, int(round(v * k)))
@@ -386,15 +421,17 @@ def draw_badge(draw, cx, cy, label, font_digit, font_dotted):
 
 def render(cfg):
     """Draw the badges and report what the caller needs to judge the render size."""
-    src = Image.open(cfg["img"]).convert("RGBA")
+    try:
+        src = Image.open(cfg["img"]).convert("RGBA")
+    except (Image.DecompressionBombWarning, Image.DecompressionBombError):
+        die("image is over %d pixels" % MAX_PIXELS)
     iw, ih = src.size
     items, scale = prepare_items(cfg, iw, ih)
-    # A badge should read like a word of the screen's own body text. Absent a measurement, the
-    # render's own scale is the best guess: a 2x render carries 2x text.
-    text_px = float(cfg.get("text_px") or TEXT_PX_BASE * scale)
-    apply_text_scale(text_px / TEXT_PX_BASE)
+    k, source, clamped = badge_scale(cfg, iw, ih)
+    apply_text_scale(k)
+    size = {"badge_source": source, "badge_clamped": clamped}
     if cfg.get("layout") == "gutter":
-        return render_gutter(cfg, src, items, scale, text_px)
+        return render_gutter(cfg, src, items, scale, size)
     positions, W, H = place(items, iw, ih)
     canvas = Image.new("RGBA", (W, H), GUTTER_BG)
     canvas.paste(src, (MARGIN, MARGIN), src)
@@ -425,26 +462,19 @@ def render(cfg):
         })
 
     canvas.convert("RGB").save(cfg["out"], "PNG")
-
-    # The render size is the caller's to choose, per screen: a dense screen needs a
-    # big PNG for the numbers to sit apart and stay readable, a sparse one does not.
-    # `min_item_px` is the smallest badged element in this render, measured on its
-    # longer edge, and it is what says the choice was too small.
-    min_item_px = min(max(it["bbox"][2], it["bbox"][3]) for it in items)
     stats = {
         "scale": round(scale, 4),
-        "text_px": round(text_px, 1),
         "badge_r": BADGE_R,
+        **size,
         "image_size": [iw, ih],
-        "min_item_px": round(min_item_px, 1),
+        # Elements whose longer edge is under a badge's diameter: their badge is wider than they are.
+        "items_under_badge": [it["no"] for it in items
+                              if max(it["bbox"][2], it["bbox"][3]) < BADGE_D],
     }
-    if min_item_px < BADGE_D:
-        # Same longest edge, grown until that smallest element clears a badge.
-        stats["suggest_max_dimension"] = int(math.ceil(max(iw, ih) * BADGE_D / min_item_px))
     return log, stats
 
 
-def render_gutter(cfg, src, items, scale, text_px):
+def render_gutter(cfg, src, items, scale, size):
     """Gutter layout: every label at the full body-text size, the pill hugging it."""
     global BADGE_R
     font = load_font(FONT_DIGIT)
@@ -479,8 +509,8 @@ def render_gutter(cfg, src, items, scale, text_px):
     stats = {
         "layout": "gutter",
         "scale": round(scale, 4),
-        "text_px": round(text_px, 1),
         "badge_r": BADGE_R,
+        **size,
         "image_size": [iw, ih],
         "max_shift": round(max(abs(p["shift"]) for p in log), 1),
     }
