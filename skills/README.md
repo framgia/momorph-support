@@ -18,40 +18,43 @@ each component by the number the image shows, so the two files are read side by 
 
 ## Contents
 
-- [1. Set up (once)](#1-set-up-once)
-- [2. Write a spec on your Excel template](#2-write-a-spec-on-your-excel-template)
-- [3. Add the numbered image to the Excel spec](#3-add-the-numbered-image-to-the-excel-spec)
-- [4. Number a screen image on its own](#4-number-a-screen-image-on-its-own)
-- [5. Write a spec on the MoMorph template](#5-write-a-spec-on-the-momorph-template)
-- [6. Customise the Excel template and the numbering](#6-customise-the-excel-template-and-the-numbering)
+- [1. Write a spec on your Excel template](#1-write-a-spec-on-your-excel-template)
+  - [1.1 Set up](#11-set-up)
+  - [1.2 Write the spec](#12-write-the-spec)
+  - [1.3 Sample outputs](#13-sample-outputs)
+  - [1.4 Add the numbered image to the Excel spec](#14-add-the-numbered-image-to-the-excel-spec)
+  - [1.5 Number a screen image on its own](#15-number-a-screen-image-on-its-own)
+  - [1.6 Customise the Excel template and the numbering](#16-customise-the-excel-template-and-the-numbering)
+- [2. Write a spec on the MoMorph template](#2-write-a-spec-on-the-momorph-template)
+  - [2.1 Set up](#21-set-up)
+  - [2.2 Write the spec](#22-write-the-spec)
+  - [2.3 Sample output](#23-sample-output)
 
-## 1. Set up (once)
+## 1. Write a spec on your Excel template
 
-1. **Get the skills.** Clone this repository, then copy the folders you need into your Claude Code
+### 1.1 Set up
+
+1. **Get the skills.** Clone this repository, then copy the two folders into your Claude Code
    skills directory:
    ```sh
-   cp -R skills/screen-detail-spec-excel skills/numbered-image-skill skills/momorph-screen-spec-skill ~/.claude/skills/
+   cp -R skills/screen-detail-spec-excel skills/numbered-image-skill ~/.claude/skills/
    ```
    To share them with one project's team only, copy them into that project's `.claude/skills/`
    instead.
-2. **Check Python.** The Excel and image skills run small Python scripts. This command must print
-   `ok`:
+2. **Check Python.** Both skills run small Python scripts. This command must print `ok`:
    ```sh
    python3 -c "import openpyxl, PIL; print('ok')"
    ```
    When it fails, install the missing package: `pip install openpyxl Pillow`.
 3. **Connect Figma** (only when your screens are in Figma). Add the Figma MCP server to Claude Code
    and check that `/mcp` lists it as connected. A screenshot as the source needs no Figma access.
-4. **Connect MoMorph** (only for `momorph-screen-spec-skill`). Add the MoMorph MCP server with your
-   project's API key, and check that `/mcp` lists it as connected. Uploading a spec needs a key with
-   write access.
-5. **Restart Claude Code** so it loads the new skills.
+4. **Restart Claude Code** so it loads the new skills.
 
-## 2. Write a spec on your Excel template
+### 1.2 Write the spec
 
-> **The bundled template (`screen-detail-spec-excel/assets/screen-detail-spec-template.xlsx`) is a reference. Adapt its columns, tables and labels to your project before you write specs with it (section 6).**
+> **The bundled template (`screen-detail-spec-excel/assets/screen-detail-spec-template.xlsx`) is a reference. Adapt its columns, tables and labels to your project before you write specs with it (section 1.6).**
 
-**Prepare before you start**
+**Prepare**
 
 - The screen: a Figma frame URL (right click the frame in Figma, Copy link to selection) or a
   screenshot file.
@@ -89,7 +92,7 @@ each component by the number the image shows, so the two files are read side by 
 
    Claude also reports the defaults it took, the questions still open, the conflicts between
    sources and how each was settled, and any content the template had no place for.
-6. **Put the numbered image into the spec.** See section 3.
+6. **Put the numbered image into the spec.** See section 1.4.
 7. **Review the spec.**
    - Check the Open questions table (未決事項) first: every row marked Unanswered (未回答) still
      needs a decision.
@@ -99,7 +102,15 @@ each component by the number the image shows, so the two files are read side by 
 8. **Update the spec later.** Ask Claude to update the spec with what changed. It asks again about
    anything the change leaves open, and adds a row to the Revision history sheet (改訂履歴).
 
-## 3. Add the numbered image to the Excel spec
+### 1.3 Sample outputs
+
+**The numbered screen image.** The Screen List of MoMorph, numbered by the skill. Its rows are
+close together, so the numbers sit in the left and right margins, each with a line to its
+component. A container (dashed frame) gets the number of the group, its parts get `n.m`.
+
+<img src="images/numbered-image-example.png" alt="The MoMorph Screen List with numbered components" width="420">
+
+### 1.4 Add the numbered image to the Excel spec
 
 The left column of the Screen detail design sheet (画面詳細設計) is the image area: column B, from
 row 7, marked "Paste the numbered screen image" (番号付き画面画像を貼り付ける). It is about 600 px
@@ -126,7 +137,7 @@ A tall screen extends below row 47: that is expected, the area below column B st
 2. Click cell **B7**, then **Insert > Image > Image over cells**, and upload the PNG.
 3. Drag a corner to fit the width of column B, then download the file as `.xlsx` if you need Excel.
 
-## 4. Number a screen image on its own
+### 1.5 Number a screen image on its own
 
 The image skill also works without the spec, for example to annotate a design for a review.
 
@@ -151,17 +162,43 @@ The image skill also works without the spec, for example to annotate a design fo
 When you number several images of the same screen in one session (its states), each component gets
 its number once, on the first image that shows it.
 
-**Example result**
+A sample result is in section 1.3.
 
-The Screen List of MoMorph, numbered by the skill. Its rows are close together, so the numbers sit
-in the left and right margins, each with a line to its component. A container (dashed frame) gets
-the number of the group, its parts get `n.m`.
+### 1.6 Customise the Excel template and the numbering
 
-<img src="images/numbered-image-example.png" alt="The MoMorph Screen List with numbered components" width="420">
+- **Template columns and tables:** list the Item definitions (項目定義) columns (add, remove,
+  rename, width) and the blank row count of each table in a `layout.json`, then rebuild the
+  template. Its keys are in the header of `build_template.py`:
+  ```sh
+  python3 screen-detail-spec-excel/scripts/build_template.py screen-detail-spec-excel/assets/screen-detail-spec-template.xlsx layout.json
+  ```
+  `fill_spec.py` lists under `skipped` any content the template has no place for.
+- **Filling the template without Claude:** write the content as JSON in the format of
+  `screen-detail-spec-excel/references/content-format.md`, then run
+  `python3 screen-detail-spec-excel/scripts/fill_spec.py <template.xlsx> <content.json> <out.xlsx>`.
+- **Number size and placement:** the badge follows the screen's body text size, kept between 1.8%
+  and 4.5% of the image's longer edge. Change those bounds per image with `"badge_range"` in the
+  config; the other constants sit at the top of `numbered-image-skill/render_badges.py`,
+  documented in `numbered-image-skill/references/renderer.md`.
 
-## 5. Write a spec on the MoMorph template
+## 2. Write a spec on the MoMorph template
 
-**Prepare before you start**
+### 2.1 Set up
+
+1. **Get the skill.** Clone this repository, then copy the folder into your Claude Code skills
+   directory:
+   ```sh
+   cp -R skills/momorph-screen-spec-skill ~/.claude/skills/
+   ```
+2. **Connect MoMorph.** Add the MoMorph MCP server with your project's API key, and check that
+   `/mcp` lists it as connected. Uploading a spec needs a key with write access.
+3. **Connect Figma.** Add the Figma MCP server, which the skill uses to read the screen's design and
+   the states of its components.
+4. **Restart Claude Code** so it loads the new skill.
+
+### 2.2 Write the spec
+
+**Prepare**
 
 - The screen's 10 character screen ID (shown on the MoMorph Figma plugin's screen panel), or the
   link to its Figma frame. The screen must already exist in MoMorph and be synced from the plugin.
@@ -182,26 +219,9 @@ the number of the group, its parts get `n.m`.
 5. **Approve the upload.** Claude uploads only after you say so, then downloads the spec again to
    verify it.
 
-**Example result**
+### 2.3 Sample output
 
 A screen's spec in MoMorph. The Specs tab lists one row per item, with its number, name,
 linked layer (UI Parts) and type; the preview on the left carries the same numbers on the design.
 
 <img src="images/momorph-screen-spec-example.png" alt="A MoMorph screen: the spec table on the right, the numbered design preview on the left" width="760">
-
-## 6. Customise the Excel template and the numbering
-
-- **Template columns and tables:** list the Item definitions (項目定義) columns (add, remove,
-  rename, width) and the blank row count of each table in a `layout.json`, then rebuild the
-  template. Its keys are in the header of `build_template.py`:
-  ```sh
-  python3 screen-detail-spec-excel/scripts/build_template.py screen-detail-spec-excel/assets/screen-detail-spec-template.xlsx layout.json
-  ```
-  `fill_spec.py` lists under `skipped` any content the template has no place for.
-- **Filling the template without Claude:** write the content as JSON in the format of
-  `screen-detail-spec-excel/references/content-format.md`, then run
-  `python3 screen-detail-spec-excel/scripts/fill_spec.py <template.xlsx> <content.json> <out.xlsx>`.
-- **Number size and placement:** the badge follows the screen's body text size, kept between 1.8%
-  and 4.5% of the image's longer edge. Change those bounds per image with `"badge_range"` in the
-  config; the other constants sit at the top of `numbered-image-skill/render_badges.py`,
-  documented in `numbered-image-skill/references/renderer.md`.
