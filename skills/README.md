@@ -170,6 +170,13 @@ the number of the group, its parts get `n.m`.
 5. **Approve the upload.** Claude uploads only after you say so, then downloads the spec again to
    verify it.
 
+**Example result**
+
+A mockup of a screen's spec in MoMorph. The Specs tab lists one row per item, with its number, name,
+linked layer (UI Parts) and type; the preview on the left carries the same numbers on the design.
+
+<img src="images/momorph-screen-spec-example.png" alt="Mockup of a MoMorph screen: the spec table on the right, the numbered design preview on the left" width="760">
+
 ## 6. Customise
 
 - **Template columns and tables:** list the Item definitions (項目定義) columns (add, remove,
