@@ -36,7 +36,6 @@ PAGES = [
 LANGS = [
     ("ja", "日本語", ""),
     ("vi", "Tiếng Việt", "vi/"),
-    ("en", "English", "en/"),
 ]
 
 

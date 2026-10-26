@@ -1,6 +1,6 @@
 # Hướng dẫn sử dụng MoMorph V2
 
-MoMorph V2 quản lý thiết kế Figma và đặc tả màn hình ở một chỗ. MoMorph Web, MoMorph Figma Plugin và AI dùng chung dữ liệu của một dự án, nên nội dung viết ở đâu cũng xem được ngay ở nơi khác.
+MoMorph V2 là công cụ giúp các thành viên dự án cùng quản lý và rà soát đặc tả, ý tưởng ở một nơi. MoMorph Web, MoMorph Figma Plugin và AI dùng chung dữ liệu của một dự án, nên nội dung viết ở đâu cũng xem được ngay ở nơi khác.
 
 ```mermaid
 flowchart LR

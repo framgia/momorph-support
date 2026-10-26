@@ -23,4 +23,4 @@ MoMorphの利用方法に関するドキュメントです。右上のメニュ�
 | MoMorph V2 | V2の使い方と、V1からV2への移行 | [📥 llms-v2.ja.txt](https://framgia.github.io/momorph-support/llms-v2.ja.txt) |
 | すべて | V2のドキュメントと、アーカイブしたV1のドキュメント | [📥 llms-full.ja.txt](https://framgia.github.io/momorph-support/llms-full.ja.txt) |
 
-3言語の一覧：[llms.txt](https://framgia.github.io/momorph-support/llms.txt)
+2言語の一覧：[llms.txt](https://framgia.github.io/momorph-support/llms.txt)

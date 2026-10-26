@@ -1,6 +1,6 @@
 # MoMorph V2の使い方
 
-MoMorph V2は、Figmaのデザインと画面の仕様を1か所で管理するサービスです。MoMorph Web、MoMorph Figma Plugin、AIは同じプロジェクトのデータを使います。どこで書いた内容も、すぐにほかの場所で確認できます。
+MoMorph V2は、プロジェクトのメンバーが仕様やアイデアを1か所で一緒に管理し、レビューするためのツールです。MoMorph Web、MoMorph Figma Plugin、AIは同じプロジェクトのデータを使います。どこで書いた内容も、すぐにほかの場所で確認できます。
 
 ```mermaid
 flowchart LR
