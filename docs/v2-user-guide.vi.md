@@ -76,8 +76,10 @@ Mở dự án, bấm biểu tượng bánh răng ở góc phải trên để và
 
 Liên kết này cho MoMorph nhận dữ liệu màn hình từ file Figma.
 
-- Ở mục **"Figma"** trong **"Cài đặt dự án"**, dán đường dẫn file Figma.
-- Mỗi dự án liên kết tối đa **3 file**.
+1. Ở mục **"Figma"** trong **"Cài đặt dự án"**, bấm **"＋ Thêm"**.
+2. Nhập **"Tên"** và **"URL Figma file"**, rồi bấm **"Thêm"**.
+
+Mỗi dự án liên kết tối đa **3 file**.
 
 ![Hộp thoại nhập đường dẫn file Figma](images/v2/web-settings-figma-url.png){ width="720" }
 
@@ -87,9 +89,9 @@ API key cho phép trợ lý AI đọc và ghi dữ liệu bảng làm việc và
 
 1. Mở mục **"API Key"** trong **"Cài đặt dự án"**, bấm **"＋ Phát hành"**.
 2. Nhập **"Tên key"**, chọn **"Hạn sử dụng"** và **"Quyền"**:
-    - `read`: chỉ đọc.
-    - `write`: đọc và ghi. Trợ lý AI phải có quyền `write` để ghi kết quả lên bảng làm việc.
-3. Sao chép key ngay. Key chỉ hiện **một lần**.
+    - **"Chỉ đọc"**: trợ lý AI chỉ đọc dữ liệu.
+    - **"Đọc và chỉnh sửa"**: trợ lý AI đọc và ghi dữ liệu. Muốn trợ lý AI ghi kết quả lên bảng làm việc thì phải chọn quyền này.
+3. Bấm **"Phát hành"** rồi sao chép key ngay. Key chỉ hiện **một lần**.
 
 ![Hộp thoại nhập tên key, hạn sử dụng và quyền](images/v2/web-settings-api-key-dialog.png){ width="720" }
 
@@ -100,7 +102,7 @@ API key cho phép trợ lý AI đọc và ghi dữ liệu bảng làm việc và
 
 ```mermaid
 flowchart LR
-  K["API key quyền write<br>(bước 1.5)"] --> Q{"Dùng công cụ nào?"}
+  K["API key quyền<br>Đọc và chỉnh sửa (bước 1.5)"] --> Q{"Dùng công cụ nào?"}
   Q -- "Claude Desktop" --> D["Dán đoạn cấu hình<br>rồi khởi động lại"]
   Q -- "Claude Code" --> C["Chạy 3 lệnh<br>trong thư mục làm việc"]
   D --> W["Nhờ trợ lý AI gọi whoami<br>để xác nhận dự án"]
@@ -193,7 +195,7 @@ flowchart LR
 2. Trợ lý AI ghi kết quả thẳng lên bảng làm việc của MoMorph.
 3. Kết quả hiện trên trang được chỉ định. Cả nhóm xem và bình luận được.
 
-![Kết quả Claude Code ghi lên bảng làm việc qua MoMorph MCP](images/v2/ai-result-on-canvas.png)
+![Kết quả trợ lý AI ghi lên bảng làm việc qua MoMorph MCP](images/v2/ai-result-on-canvas.png)
 
 ### 2.2 Kỹ năng cho trợ lý AI {#skills}
 
@@ -213,6 +215,8 @@ momorph CLI cài 6 kỹ năng vào Claude Code. Kỹ năng phù hợp với yêu
 ### 2.3 Web Canvas {#canvas}
 
 Web Canvas là bảng làm việc để cả nhóm rà soát đặc tả theo thời gian thực.
+
+![Web Canvas với dữ liệu mẫu](images/v2/web-canvas.png)
 
 | Vùng | Chức năng |
 |---|---|

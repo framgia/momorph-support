@@ -1,7 +1,5 @@
 # Hướng dẫn chuyển từ V1 sang V2
 
-![Ảnh giới thiệu MoMorph 2.0, ra mắt ngày 4/11/2026](images/v2/momorph-2-launch-banner.webp)
-
 MoMorph mới (V2) ra mắt ngày 4/11/2026. MoMorph cũ (V1) ngừng cung cấp ngày 30/11/2026. Trang này nêu những điểm thay đổi so với MoMorph cũ, dữ liệu được chuyển, và việc người đang dùng MoMorph cũ phải làm.
 
 ## 1. Lịch chuyển đổi {#schedule}
@@ -59,7 +57,7 @@ Cách dùng từng sản phẩm: [Hướng dẫn sử dụng MoMorph V2](v2-user
 | Liên kết GitHub | Hiện tài liệu trên GitHub lên bảng làm việc, xem khác biệt so với file gốc |
 | Nhập CSV trực tiếp | Nhập file CSV thẳng vào bảng đặc tả trên plugin và Web |
 
-![Kết quả Claude Code ghi lên bảng làm việc qua MoMorph MCP](images/v2/ai-result-on-canvas.png)
+![Kết quả trợ lý AI ghi lên bảng làm việc qua MoMorph MCP](images/v2/ai-result-on-canvas.png)
 
 ## 5. Dữ liệu được chuyển {#migrated-data}
 
@@ -133,7 +131,7 @@ Plugin của MoMorph cũ không kết nối được với MoMorph mới. Cài "
 
 Cấu hình MCP của MoMorph cũ không dùng được cho MoMorph mới.
 
-1. Tạo API key quyền `write` theo [1.5 Tạo API key](v2-user-guide.md#api-key).
+1. Tạo API key quyền **"Đọc và chỉnh sửa"** theo [1.5 Tạo API key](v2-user-guide.md#api-key).
 2. Kết nối Claude Desktop hoặc Claude Code theo [1.6 Kết nối trợ lý AI qua MCP](v2-user-guide.md#connect-ai).
 
 ## 7. Tài liệu MoMorph cũ {#v1-docs}

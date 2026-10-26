@@ -133,7 +133,7 @@ flowchart TD
 
 旧MoMorphのMCP設定は、新MoMorphでは使えません。
 
-1. [1.5 APIキーの発行](v2-user-guide.md#api-key)の手順で、`write`権限のAPIキーを発行します。
+1. [1.5 APIキーの発行](v2-user-guide.md#api-key)の手順で、**「読み取り・編集」**の権限のAPIキーを発行します。
 2. [1.6 MCPでAIと接続](v2-user-guide.md#connect-ai)の手順で、Claude DesktopまたはClaude Codeを接続します。
 
 ## 7. 旧MoMorphのドキュメント {#v1-docs}
