@@ -54,12 +54,6 @@ plugins:
             MCP Tools Reference: Chi tiết công cụ MCP Server
             FAQ: Câu hỏi thường gặp
             Release Notes: Ghi chú phát hành
-        - locale: en
-          name: English
-          build: true
-          nav_translations:
-            MCP Tools Reference: MCP Server Tools
-            FAQ: FAQs
 
 markdown_extensions:
   - attr_list # cho phép gán id tường minh {#id} cho heading (anchor ổn định cho JA)

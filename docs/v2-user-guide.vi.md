@@ -1,6 +1,6 @@
 # Hướng dẫn sử dụng MoMorph V2
 
-MoMorph V2 quản lý thiết kế Figma và đặc tả màn hình ở một chỗ. MoMorph Web, MoMorph Figma Plugin và AI dùng chung dữ liệu của một dự án, nên nội dung viết ở đâu cũng xem được ngay ở nơi khác.
+MoMorph V2 là công cụ giúp các thành viên dự án cùng quản lý và rà soát đặc tả, ý tưởng ở một nơi. MoMorph Web, MoMorph Figma Plugin và trợ lý AI dùng chung dữ liệu của dự án. Nội dung viết ở một nơi sẽ hiện ngay ở các nơi khác.
 
 ```mermaid
 flowchart LR
@@ -38,26 +38,26 @@ Bước 1.1 đến 1.3 là bắt buộc. Bước 1.4 đến 1.8 chỉ làm khi c
 
 ![Màn hình đăng nhập có nút Google và GitHub](images/v2/web-login.png){ width="720" }
 
-3. Lần đăng nhập đầu tiên, hướng dẫn sử dụng 5 bước hiện ra. Mở lại bằng nút **"?"** (**"Xem hướng dẫn sử dụng"**).
+3. Ở lần đăng nhập đầu tiên, màn hình hướng dẫn sử dụng gồm 5 bước sẽ hiện ra. Muốn xem lại, bấm nút **"?"** (**"Xem hướng dẫn sử dụng"**).
 
 ![Hướng dẫn sử dụng hiện ra ở lần đăng nhập đầu tiên](images/v2/web-onboarding-guide.png){ width="720" }
 
 ### 1.2 Tạo dự án {#create-project}
 
-Dự án là đơn vị quản lý chung màn hình, đặc tả và bảng làm việc.
+Dự án là đơn vị dùng để quản lý chung màn hình, đặc tả và bảng làm việc.
 
 1. Ở **"Danh sách project"**, bấm **"＋ Tạo project mới"**.
 2. Nhập tên dự án, bấm **"Tạo"**.
-3. Dự án mới hiện thành thẻ trong danh sách. Bấm vào thẻ để mở dự án.
+3. Dự án mới hiện ra dưới dạng thẻ trong danh sách. Bấm vào thẻ để mở dự án.
 
 ![Hộp thoại nhập tên dự án](images/v2/web-create-project-dialog.png){ width="720" }
 
 !!! note "Điều kiện"
-    Chỉ tài khoản email `@sun-asterisk.com` tạo được dự án. Người dùng khác chỉ vào được dự án mà họ được mời.
+    Chỉ tài khoản email `@sun-asterisk.com` mới tạo được dự án. Người dùng khác chỉ truy cập được dự án mình được mời.
 
 ### 1.3 Mời thành viên {#invite-members}
 
-Mở dự án, bấm biểu tượng bánh răng ở góc phải trên để vào **"Cài đặt dự án"**.
+Mở dự án, bấm biểu tượng bánh răng ở góc trên bên phải để mở **"Cài đặt dự án"**.
 
 1. Mở mục **"Quản lý thành viên"**.
 2. Nhập địa chỉ email, chọn **"Vai trò"**, rồi bấm **"Mời"**.
@@ -68,13 +68,13 @@ Mở dự án, bấm biểu tượng bánh răng ở góc phải trên để và
     | Thành viên | Xem và sửa nội dung |
     | Người xem | Chỉ xem |
 
-3. Người được mời hiện trạng thái **"(Chờ duyệt)"** cho đến lần đăng nhập đầu tiên.
+3. Người được mời có trạng thái **"(Chờ duyệt)"** cho đến khi đăng nhập lần đầu.
 
 ![Màn hình quản lý thành viên sau khi mời](images/v2/web-settings-members.png){ width="720" }
 
 ### 1.4 Liên kết file Figma (tuỳ chọn) {#link-figma}
 
-Liên kết này cho MoMorph nhận dữ liệu màn hình từ file Figma.
+Liên kết này giúp MoMorph nhận dữ liệu màn hình từ file Figma.
 
 1. Ở mục **"Figma"** trong **"Cài đặt dự án"**, bấm **"＋ Thêm"**.
 2. Nhập **"Tên"** và **"URL Figma file"**, rồi bấm **"Thêm"**.
@@ -85,18 +85,18 @@ Mỗi dự án liên kết tối đa **3 file**.
 
 ### 1.5 Tạo API key {#api-key}
 
-API key cho phép trợ lý AI đọc và ghi dữ liệu bảng làm việc và đặc tả của dự án.
+API key cho phép trợ lý AI đọc và ghi dữ liệu trên bảng làm việc và đặc tả của dự án.
 
 1. Mở mục **"API Key"** trong **"Cài đặt dự án"**, bấm **"＋ Phát hành"**.
 2. Nhập **"Tên key"**, chọn **"Hạn sử dụng"** và **"Quyền"**:
     - **"Chỉ đọc"**: trợ lý AI chỉ đọc dữ liệu.
-    - **"Đọc và chỉnh sửa"**: trợ lý AI đọc và ghi dữ liệu. Muốn trợ lý AI ghi kết quả lên bảng làm việc thì phải chọn quyền này.
+    - **"Đọc và chỉnh sửa"**: trợ lý AI đọc và ghi dữ liệu. Chọn quyền này khi cần trợ lý AI ghi kết quả lên bảng làm việc.
 3. Bấm **"Phát hành"** rồi sao chép key ngay. Key chỉ hiện **một lần**.
 
 ![Hộp thoại nhập tên key, hạn sử dụng và quyền](images/v2/web-settings-api-key-dialog.png){ width="720" }
 
 !!! warning "Lưu ý"
-    Giữ API key như mật khẩu. Không dán key vào tin nhắn, phiếu công việc hoặc kho mã nguồn.
+    Bảo quản API key như mật khẩu. Không dán key vào tin nhắn, phiếu công việc hoặc kho mã nguồn.
 
 ### 1.6 Kết nối trợ lý AI qua MCP (tuỳ chọn) {#connect-ai}
 
@@ -147,7 +147,7 @@ Plugin của MoMorph V2 có tên **momoneo**.
 
 - Người dùng Sun*: cài từ [Figma Community](https://www.figma.com/community/plugin/1671823699581407862/momoneo).
 - Người dùng khác: liên hệ nhóm MoMorph để nhận file cài đặt.
-- Chỉ người có **quyền sửa** file Figma dùng được plugin. Đây là giới hạn của Figma.
+- Do giới hạn của Figma, chỉ người có **quyền sửa** file Figma mới dùng được plugin.
 
 ```mermaid
 flowchart TD
@@ -163,13 +163,13 @@ flowchart TD
 
 ### 1.8 Giới hạn IP (tuỳ chọn, chỉ quản trị viên) {#ip-restriction}
 
-Giới hạn địa chỉ IP được mở dự án. Chỉ quản trị viên của dự án cài đặt được.
+Tính năng này giới hạn những địa chỉ IP được phép mở dự án. Chỉ quản trị viên của dự án cài đặt được.
 
 ![Mục Giới hạn IP trong Cài đặt dự án](images/v2/web-settings-ip-restriction.png){ width="720" }
 
 1. Mở mục **"Giới hạn IP"** trong **"Cài đặt dự án"**. Xem **"Địa chỉ IP hiện tại của bạn"**.
-2. Ở ô **"Địa chỉ IP được phép"**, nhập địa chỉ IP hoặc dải CIDR (ví dụ `203.0.113.0/24`), mỗi dòng một mục, tối đa **100 mục**. Mạng có IPv6 phải đăng ký thêm dải IPv6, ví dụ `/64`.
-3. Bật **"Áp dụng cả cho API key (CLI, MCP)"** để áp cùng giới hạn cho CLI và MCP.
+2. Ở ô **"Địa chỉ IP được phép"**, nhập địa chỉ IP hoặc dải CIDR (ví dụ `203.0.113.0/24`), mỗi dòng một mục, tối đa **100 mục**. Với mạng dùng IPv6, đăng ký thêm cả dải IPv6, ví dụ `/64`.
+3. Bật **"Áp dụng cả cho API key (CLI, MCP)"** để áp dụng cùng giới hạn cho CLI và MCP.
 4. Bấm **"Lưu"**.
 
 | Trường hợp | Kết quả |
@@ -188,10 +188,10 @@ Giới hạn địa chỉ IP được mở dự án. Chỉ quản trị viên c�
 
 ```mermaid
 flowchart LR
-  U["1. Ra yêu cầu bằng<br>lời nói thông thường"] --> A["2. Trợ lý AI ghi lên<br>bảng làm việc qua MoMorph MCP"] --> R["3. Xem kết quả<br>trên trang"] --> T["Cả nhóm bình luận<br>và duyệt"]
+  U["1. Đưa yêu cầu bằng<br>ngôn ngữ thông thường"] --> A["2. Trợ lý AI ghi lên<br>bảng làm việc qua MoMorph MCP"] --> R["3. Xem kết quả<br>trên trang"] --> T["Cả nhóm bình luận<br>và duyệt"]
 ```
 
-1. Ra yêu cầu cho trợ lý AI, ví dụ: "Thêm luồng người dùng cho chức năng đăng nhập".
+1. Đưa yêu cầu cho trợ lý AI bằng ngôn ngữ thông thường, ví dụ: "Thêm luồng người dùng cho chức năng đăng nhập".
 2. Trợ lý AI ghi kết quả thẳng lên bảng làm việc của MoMorph.
 3. Kết quả hiện trên trang được chỉ định. Cả nhóm xem và bình luận được.
 
@@ -199,7 +199,7 @@ flowchart LR
 
 ### 2.2 Kỹ năng cho trợ lý AI {#skills}
 
-momorph CLI cài 6 kỹ năng vào Claude Code. Kỹ năng phù hợp với yêu cầu được nạp tự động. Có thể gọi trực tiếp bằng lệnh, ví dụ `/mm:help`.
+Khi cài momorph CLI, Claude Code có thêm 6 kỹ năng. Claude Code tự nạp kỹ năng phù hợp với yêu cầu. Bạn cũng có thể gọi trực tiếp bằng lệnh, ví dụ `/mm:help`.
 
 | Kỹ năng | Lệnh | Vai trò | Ví dụ yêu cầu |
 |---|---|---|---|
@@ -242,14 +242,14 @@ flowchart LR
 |---|---|
 | ![Danh sách màn hình trên plugin](images/v2/plugin-screen-list.png){ width="260" } | ![Chi tiết màn hình Login và thẻ Specs](images/v2/plugin-screen-detail-spec.png) |
 
-- **Danh sách màn hình**: trạng thái tiến độ của từng màn hình.
-- **Xem trước**: đánh số từng mục trên thiết kế.
+- **Danh sách màn hình**: hiện trạng thái tiến độ của từng màn hình.
+- **Xem trước**: hiện số của từng mục trên thiết kế.
 - **Bảng đặc tả** (thẻ **"Specs"**): mỗi thành phần của màn hình viết trên một dòng.
-- Đặc tả viết trên plugin lưu vào cùng dữ liệu dự án, nên MoMorph Web cũng thấy.
+- Đặc tả viết trên plugin được lưu vào dữ liệu dự án và cũng hiện trên MoMorph Web.
 
 ### 3.2 Liên kết frame Figma với màn hình {#link-frame}
 
-Mỗi màn hình liên kết được từ 1 đến **10 frame**.
+Mỗi màn hình liên kết được tối đa **10 frame**.
 
 ![Danh sách frame chưa lưu và nút liên kết vào màn hình](images/v2/plugin-link-frame-to-screen.png){ width="560" }
 
