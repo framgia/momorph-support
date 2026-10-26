@@ -1,6 +1,6 @@
 # Hướng dẫn sử dụng MoMorph
 
-Tài liệu hướng dẫn sử dụng MoMorph. Đổi ngôn ngữ ở menu góc trên bên phải.
+Tài liệu hướng dẫn sử dụng MoMorph. Đổi ngôn ngữ bằng menu ở góc trên bên phải.
 
 ## MoMorph V2
 

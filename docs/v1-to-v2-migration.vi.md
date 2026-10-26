@@ -1,6 +1,6 @@
 # Hướng dẫn chuyển từ V1 sang V2
 
-MoMorph mới (V2) ra mắt ngày 4/11/2026. MoMorph cũ (V1) ngừng cung cấp ngày 30/11/2026. Trang này nêu những điểm thay đổi so với MoMorph cũ, dữ liệu được chuyển, và việc người đang dùng MoMorph cũ phải làm. Cách dùng MoMorph mới: [Hướng dẫn sử dụng MoMorph V2](v2-user-guide.md).
+MoMorph mới (V2) ra mắt ngày 4/11/2026. MoMorph cũ (V1) ngừng cung cấp ngày 30/11/2026. Trang này nêu những điểm thay đổi so với MoMorph cũ, dữ liệu được chuyển, và việc người đang dùng MoMorph cũ phải làm. Cách dùng MoMorph mới xem tại [Hướng dẫn sử dụng MoMorph V2](v2-user-guide.md).
 
 ## 1. Lịch chuyển đổi {#schedule}
 
@@ -62,7 +62,7 @@ flowchart LR
 
 | Nhóm | Dữ liệu | Cách xử lý |
 |---|---|---|
-| Ảnh xem trước | Ảnh xem trước của màn hình | Mở MoMorph Figma Plugin, ảnh được lưu lại |
+| Ảnh xem trước | Ảnh xem trước của màn hình | Ảnh được lưu lại khi mở MoMorph Figma Plugin |
 | Tính năng chưa phát triển | Lịch sử đặc tả, xuất ra bảng tính, đăng ký GitHub Issue | Dự kiến phát triển trong tháng 12 |
 | Tính năng ngừng cung cấp | Dịch màn hình, bình luận trên màn hình, nhóm màn hình, ca kiểm thử của màn hình, câu lệnh AI đã đăng ký, từ điển đã tải lên, lịch sử thao tác, nhãn màn hình | Không chuyển |
 
@@ -75,7 +75,7 @@ flowchart LR
 
 ### 4.1 Đăng nhập bằng đúng email đã dùng ở MoMorph cũ {#login-same-email}
 
-Đăng nhập bằng **cùng email** đã dùng ở MoMorph cũ thì dữ liệu đã chuyển mới hiện ra.
+Dữ liệu đã chuyển chỉ hiện ra khi đăng nhập bằng **đúng email** đã dùng ở MoMorph cũ.
 
 ```mermaid
 flowchart TD
