@@ -2,12 +2,17 @@
 
 MoMorph の利用方法に関するドキュメントです。右上のメニューから言語を切り替えられます。
 
-## ドキュメント一覧
+## MoMorph V2
 
-- [総合ユーザーガイド](general-user-guide.md)
-- [MCP ツールリファレンス](mcp-tools-reference.md)
-- [よくある質問 (FAQ)](faq.md)
-- [リリースノート](release-notes.md)
+- [MoMorph V2の使い方](v2-user-guide.md)
+- [V1からV2への移行](v1-to-v2-migration.md)
+
+## アーカイブ（V1）
+
+- [総合ユーザーガイド](archived/general-user-guide.md)
+- [MCP ツールリファレンス](archived/mcp-tools-reference.md)
+- [よくある質問 (FAQ)](archived/faq.md)
+- [リリースノート](archived/release-notes.md)
 
 ## 🤖 AIで素早く調べる
 

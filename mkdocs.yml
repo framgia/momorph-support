@@ -35,6 +35,9 @@ plugins:
           build: true
           nav_translations:
             Home: ホーム
+            MoMorph V2 User Guide: MoMorph V2の使い方
+            Migrating from V1 to V2: V1からV2への移行
+            Archived (V1): アーカイブ（V1）
             General User Guide: ユーザーガイド
             MCP Tools Reference: MCPサーバーツール詳細
             FAQ: よくある質問 (FAQ)
@@ -44,6 +47,9 @@ plugins:
           build: true
           nav_translations:
             Home: Trang chủ
+            MoMorph V2 User Guide: Hướng dẫn sử dụng MoMorph V2
+            Migrating from V1 to V2: Hướng dẫn chuyển từ V1 sang V2
+            Archived (V1): Lưu trữ (V1)
             General User Guide: Hướng dẫn sử dụng
             MCP Tools Reference: Chi tiết công cụ MCP Server
             FAQ: Câu hỏi thường gặp
@@ -58,6 +64,14 @@ markdown_extensions:
   - attr_list # cho phép gán id tường minh {#id} cho heading (anchor ổn định cho JA)
   - toc:
       toc_depth: 3
+  - admonition
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 # Sinh llms.txt + llms-full.<lang>.txt (bản plain-text cho AI) mỗi lần build
 hooks:
@@ -66,7 +80,10 @@ hooks:
 # nav tham chiếu tên base (không suffix); plugin i18n resolve theo từng locale + nav_translations
 nav:
   - Home: index.md
-  - General User Guide: general-user-guide.md
-  - MCP Tools Reference: mcp-tools-reference.md
-  - FAQ: faq.md
-  - Release Notes: release-notes.md
+  - MoMorph V2 User Guide: v2-user-guide.md
+  - Migrating from V1 to V2: v1-to-v2-migration.md
+  - Archived (V1):
+      - General User Guide: archived/general-user-guide.md
+      - MCP Tools Reference: archived/mcp-tools-reference.md
+      - FAQ: archived/faq.md
+      - Release Notes: archived/release-notes.md

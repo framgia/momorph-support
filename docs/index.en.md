@@ -2,12 +2,19 @@
 
 Documentation for using MoMorph. Switch language from the menu in the top-right.
 
-## Documents
+## MoMorph V2
 
-- [General User Guide](general-user-guide.md)
-- [MCP Tools Reference](mcp-tools-reference.md)
-- [FAQ](faq.md)
-- [Release Notes](release-notes.md)
+The V2 pages are available in Japanese and Vietnamese. This language shows the Japanese version.
+
+- [MoMorph V2 User Guide](v2-user-guide.md)
+- [Migrating from V1 to V2](v1-to-v2-migration.md)
+
+## Archived (V1)
+
+- [General User Guide](archived/general-user-guide.md)
+- [MCP Tools Reference](archived/mcp-tools-reference.md)
+- [FAQ](archived/faq.md)
+- [Release Notes](archived/release-notes.md)
 
 ## 🤖 Ask AI quickly
 

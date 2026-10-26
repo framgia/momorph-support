@@ -2,12 +2,17 @@
 
 Tài liệu hướng dẫn sử dụng MoMorph. Đổi ngôn ngữ ở menu góc trên bên phải.
 
-## Danh sách tài liệu
+## MoMorph V2
 
-- [Hướng dẫn sử dụng tổng quát](general-user-guide.md)
-- [Tham chiếu công cụ MCP](mcp-tools-reference.md)
-- [Câu hỏi thường gặp (FAQ)](faq.md)
-- [Release Notes](release-notes.md)
+- [Hướng dẫn sử dụng MoMorph V2](v2-user-guide.md)
+- [Hướng dẫn chuyển từ V1 sang V2](v1-to-v2-migration.md)
+
+## Lưu trữ (V1)
+
+- [Hướng dẫn sử dụng tổng quát](archived/general-user-guide.md)
+- [Tham chiếu công cụ MCP](archived/mcp-tools-reference.md)
+- [Câu hỏi thường gặp (FAQ)](archived/faq.md)
+- [Release Notes](archived/release-notes.md)
 
 ## 🤖 Tra cứu nhanh bằng AI
 

@@ -15,18 +15,21 @@ SITE_TITLE = "MoMorph User Guide"
 SITE_URL = "https://framgia.github.io/momorph-support/"
 
 SUMMARY = (
-    "Official support site for MoMorph: usage guide, MCP tools reference, FAQ, "
-    "and release notes. The plain-text bundles below are provided for AI assistants."
+    "Official support site for MoMorph: the V2 usage guide, the V1 to V2 migration guide, "
+    "and the archived V1 docs (usage guide, MCP tools reference, FAQ, release notes). "
+    "The plain-text bundles below are provided for AI assistants."
 )
 
 # base name -> human label; order = reading order inside each bundle
 PAGES = [
     ("index", "Home"),
-    ("general-user-guide", "General User Guide"),
-    ("mcp-tools-reference", "MCP Tools Reference"),
-    ("faq", "FAQ"),
-    ("release-notes", "Release Notes"),
-    ("release-archive", "Release Archive"),
+    ("v2-user-guide", "MoMorph V2 User Guide"),
+    ("v1-to-v2-migration", "Migrating from V1 to V2"),
+    ("archived/general-user-guide", "V1 General User Guide (archived)"),
+    ("archived/mcp-tools-reference", "V1 MCP Tools Reference (archived)"),
+    ("archived/faq", "V1 FAQ (archived)"),
+    ("archived/release-notes", "V1 Release Notes (archived)"),
+    ("archived/release-archive", "V1 Release Archive (archived)"),
 ]
 
 # locale -> (display label, URL path prefix); ja is default → served at root
