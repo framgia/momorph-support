@@ -5,7 +5,7 @@ MoMorph V2は、プロジェクトのメンバーが仕様やアイデアを1か
 ```mermaid
 flowchart LR
   Web["MoMorph Web<br>app.momorph.ai"] <--> Data[("プロジェクトのデータ<br>画面、仕様、キャンバス")]
-  Plugin["MoMorph Figma Plugin<br>「momoneo」"] <--> Data
+  Plugin["MoMorph Figma Plugin<br>「MoMorph」"] <--> Data
   AI["AIアシスタント<br>Claude Desktop、Claude Code"] <-- "MoMorph MCP" --> Data
 ```
 
@@ -87,11 +87,11 @@ Figmaファイルの画面データを、MoMorphで受け取るための連携�
 
 APIキーは、AIアシスタントにキャンバスや仕様データを読み書きさせるための鍵です。
 
-1. **「プロジェクト設定」**の**「APIキー」**を開き、**「＋ 生成」**を押します。
+1. **「プロジェクト設定」**の**「APIキー」**を開き、**「＋ 発行」**を押します。
 2. **「キー名」**を入力し、**「有効期限」**と**「権限」**を選びます。
     - **「読み取り専用」**：AIアシスタントはデータを読むだけです。
     - **「読み取り・編集」**：AIアシスタントがデータを読み書きします。キャンバスに書き込ませる場合は、この権限を選びます。
-3. **「生成」**を押し、表示されたキーをすぐにコピーします。キーは**一度しか**表示されません。
+3. **「発行」**を押し、表示されたキーをすぐにコピーします。キーは**一度しか**表示されません。
 
 ![キー名、有効期限、権限を入力するダイアログ](images/v2/web-settings-api-key-dialog.png){ width="720" }
 
@@ -143,23 +143,48 @@ Webで**「AI接続手順を見る」**を押すと、**「AIアシスタント�
 
 ### 1.7 Figma Pluginにログイン（任意） {#login-plugin}
 
-MoMorph V2のプラグイン名は**「momoneo」**です。
+MoMorph V2のプラグイン名は**「MoMorph」**です。
 
-- Sun*の方：[Figma Community](https://www.figma.com/community/plugin/1671823699581407862/momoneo)からインストールします。
-- それ以外の方：MoMorphチームに連絡し、インストール用のファイルを受け取ります。
+- Sun*の方：[Figma Community](https://www.figma.com/community/plugin/1699748365690303636/momorph)からインストールします。
+- 他の組織の方：manifestファイルでインストールします。[manifestファイルでプラグインをインストールする](#install-manifest)を参照してください。
 - Figmaの仕様により、プラグインを使えるのは、Figmaファイルの**編集権限を持つ方だけ**です。
 
-```mermaid
-flowchart TD
-  A["1. Figmaでプラグイン<br>「momoneo」を開く"] --> B["2. 「Figma ファイル URL」に<br>URLを貼り付け、<br>「ログイン」を押す"]
-  B --> C["3. ブラウザが開く。<br>「接続する」を押す"]
-  C --> D["4. GoogleまたはGitHubで<br>ログインする"]
-  D --> E["5. Figmaに戻る。<br>画面一覧が表示される"]
-```
+1. Figmaでプラグイン**「MoMorph」**を開きます。この手順は2通りです。
 
-| 1. URLを貼り付ける | 2. 「接続する」を押す | 3. ログインする | 4. 画面一覧 |
-|---|---|---|---|
-| ![URLを入力するプラグインのログイン画面](images/v2/plugin-login-figma-url.png) | ![ブラウザの接続確認画面](images/v2/plugin-browser-connect-confirm.png) | ![Webとプラグイン共通のログイン画面](images/v2/plugin-browser-login.png) | ![プラグインの画面一覧](images/v2/plugin-screen-list.png) |
+    - **初めてプラグインを接続する場合：**「Figma ファイル URL」の欄にFigmaファイルのURLを貼り付け、**「ログイン」**を押します。
+
+        ![FigmaファイルのURLを入力するプラグインのログイン画面](images/v2/plugin-login-figma-url.png){ width="280" }
+
+    - **以前に接続したことがある場合**（ログアウト後に開き直したときなど）：この欄は表示されません。**「ログイン」**を押すだけです。
+
+        ![「ログイン」ボタンがあるプラグインの最初の画面](images/v2/plugin-login-welcome.png){ width="280" }
+
+2. ブラウザが開き、プラグインにコードが表示されます。次の手順の間、プラグインは開いたままにしてください。
+
+    ![接続待ちでコードが表示されたプラグイン](images/v2/plugin-login-waiting-code.png){ width="280" }
+
+3. ブラウザでログインしていない場合は、GoogleまたはGitHubでログインします。その後、プラグインに表示されたコードを入力し、**「接続する」**を押します。
+
+    ![ブラウザのコード入力画面](images/v2/plugin-browser-enter-code.png){ width="560" }
+
+4. ブラウザに接続完了と表示されたら、Figmaに戻ります。画面一覧が表示されます。
+
+    ![ブラウザに表示される、プラグインの接続完了画面](images/v2/plugin-browser-connected.png){ width="560" }
+
+    ![プラグインの画面一覧](images/v2/plugin-screen-list.png){ width="280" }
+
+#### manifestファイルでプラグインをインストールする（他の組織のプロジェクト） {#install-manifest}
+
+セキュリティと著作権の要件により、MoMorphプラグインはSun*組織内のPrivate状態になっています。他の組織のプロジェクトでは、manifestファイルでプラグインをインストールします。プラグインが更新されるたびに、MoMorphチームから新しい`.zip`ファイルをお送りします。その都度、新しいファイルで入れ直してください。
+
+!!! note "ご注意"
+    **Figmaデスクトップアプリ**でのみ実施できます。Web版は、manifestのインポートに未対応です。
+
+1. MoMorphチームから届いた最新の`.zip`ファイルをダウンロードし、解凍します。
+2. Figmaデスクトップで、メニュー（Figmaのアイコン）→ **Plugins** → **Development** → **Import plugin from manifest...** を選びます。
+3. 解凍した`manifest.json`を選びます。
+
+エラーが出た場合は、MoMorphチームにご連絡ください。
 
 ### 1.8 IP制限（任意、プロジェクト管理者のみ） {#ip-restriction}
 
@@ -199,7 +224,7 @@ flowchart LR
 
 ### 2.2 AIエージェント用スキル {#skills}
 
-momorph CLIを使うと、Claude Codeに6つのスキルが追加されます。依頼の内容に合うスキルが自動で読み込まれます。`/mm:help`のように、名前で直接呼ぶこともできます。
+momorph CLIを使うと、Claude Codeに次のスキルが追加されます。依頼の内容に合うスキルが自動で読み込まれます。`/mm:help`のように、名前で直接呼ぶこともできます。
 
 | スキル | コマンド | 役割 | 依頼の例 |
 |---|---|---|---|
@@ -209,6 +234,7 @@ momorph CLIを使うと、Claude Codeに6つのスキルが追加されます。
 | `mm-tidy-board` | `/mm:tidy-board` | ボードの配置、整列、セクション分けを整える | 「レイアウトを整えて」 |
 | `mm-add-mockup` | `/mm:add-mockup` | 仕様からモックアップの下書きを作り、承認を待つ | 「この仕様からモックアップを作って」 |
 | `mm-build-figma` | `/mm:build-figma` | 承認済みの下書きから、Figmaのデザインを作る | 「Figma版を作って」 |
+| `mm-send-artifact` | `/mm:send-artifact` | Claudeで作ったHTMLページを、プロジェクトのリンクアプリに新しいバージョンとして送信 | 「このアーティファクトをmomorphに送って」 |
 
 `mm-add-mockup`と`mm-build-figma`には、Figma MCPサーバーも必要です。
 
@@ -299,7 +325,7 @@ flowchart LR
 | サービス | リンク |
 |---|---|
 | MoMorph Web | [app.momorph.ai](https://app.momorph.ai) |
-| MoMorph Figma Plugin「momoneo」 | [Figma Community](https://www.figma.com/community/plugin/1671823699581407862/momoneo)（Sun*の方のみ）。それ以外の方はMoMorphチームに連絡 |
+| MoMorph Figma Plugin | [Figma Community](https://www.figma.com/community/plugin/1699748365690303636/momorph)（Sun*の方のみ）。他の組織の方は[manifestでのインストール](#install-manifest)を参照 |
 | momorph CLI（Claude Code向け） | [@momorph/cli](https://www.npmjs.com/package/@momorph/cli) |
 | momorph MCP（Claude Desktop向け） | [@momorph/mcp](https://www.npmjs.com/package/@momorph/mcp) |
 | お問い合わせ | Slackの`#con_momorph-support_all`にあるフォームから送信 |

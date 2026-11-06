@@ -16,7 +16,7 @@ SITE_URL = "https://framgia.github.io/momorph-support/"
 
 SUMMARY = (
     "Official support site for MoMorph: the V2 usage guide, the V1 to V2 migration guide, "
-    "and the archived V1 docs (usage guide, MCP tools reference, FAQ, release notes). "
+    "the V2 release notes, and the archived V1 docs (usage guide, MCP tools reference, FAQ, release notes). "
     "The plain-text bundles below are provided for AI assistants."
 )
 
@@ -25,6 +25,7 @@ PAGES = [
     ("index", "Home"),
     ("v2-user-guide", "MoMorph V2 User Guide"),
     ("v1-to-v2-migration", "Migrating from V1 to V2"),
+    ("v2-release-notes", "MoMorph V2 Release Notes"),
     ("archived/general-user-guide", "V1 General User Guide (archived)"),
     ("archived/mcp-tools-reference", "V1 MCP Tools Reference (archived)"),
     ("archived/faq", "V1 FAQ (archived)"),
@@ -39,8 +40,8 @@ LANGS = [
 ]
 
 
-V2_PAGES = PAGES[1:3]
-V2_SUMMARY = "MoMorph V2 only: the usage guide and the V1 to V2 migration guide."
+V2_PAGES = PAGES[1:4]
+V2_SUMMARY = "MoMorph V2 only: the usage guide, the V1 to V2 migration guide and the release notes."
 
 
 def _read(docs_dir, base, lang):
