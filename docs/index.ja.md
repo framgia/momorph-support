@@ -6,6 +6,7 @@ MoMorphの利用方法に関するドキュメントです。右上のメニュ�
 
 - [MoMorph V2の使い方](v2-user-guide.md)
 - [V1からV2への移行](v1-to-v2-migration.md)
+- [MoMorph V2のリリースノート](v2-release-notes.md)
 
 ## アーカイブ（V1）
 
@@ -20,7 +21,7 @@ MoMorphの利用方法に関するドキュメントです。右上のメニュ�
 
 | 種類 | 内容 | ダウンロード |
 |---|---|---|
-| MoMorph V2 | V2の使い方と、V1からV2への移行 | [📥 llms-v2.ja.txt](https://framgia.github.io/momorph-support/llms-v2.ja.txt) |
+| MoMorph V2 | V2の使い方、V1からV2への移行、V2のリリースノート | [📥 llms-v2.ja.txt](https://framgia.github.io/momorph-support/llms-v2.ja.txt) |
 | すべて | V2のドキュメントと、アーカイブしたV1のドキュメント | [📥 llms-full.ja.txt](https://framgia.github.io/momorph-support/llms-full.ja.txt) |
 
 2言語の一覧：[llms.txt](https://framgia.github.io/momorph-support/llms.txt)

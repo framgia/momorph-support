@@ -37,6 +37,7 @@ plugins:
             Home: ホーム
             MoMorph V2 User Guide: MoMorph V2の使い方
             Migrating from V1 to V2: V1からV2への移行
+            MoMorph V2 Release Notes: MoMorph V2のリリースノート
             Archived (V1): アーカイブ（V1）
             General User Guide: ユーザーガイド
             MCP Tools Reference: MCPサーバーツール詳細
@@ -49,6 +50,7 @@ plugins:
             Home: Trang chủ
             MoMorph V2 User Guide: Hướng dẫn sử dụng MoMorph V2
             Migrating from V1 to V2: Hướng dẫn chuyển từ V1 sang V2
+            MoMorph V2 Release Notes: Ghi chú phát hành MoMorph V2
             Archived (V1): Lưu trữ (V1)
             General User Guide: Hướng dẫn sử dụng
             MCP Tools Reference: Chi tiết công cụ MCP Server
@@ -77,6 +79,7 @@ nav:
   - Home: index.md
   - MoMorph V2 User Guide: v2-user-guide.md
   - Migrating from V1 to V2: v1-to-v2-migration.md
+  - MoMorph V2 Release Notes: v2-release-notes.md
   - Archived (V1):
       - General User Guide: archived/general-user-guide.md
       - MCP Tools Reference: archived/mcp-tools-reference.md

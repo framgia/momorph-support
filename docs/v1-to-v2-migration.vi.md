@@ -70,7 +70,7 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-  A["1. Lưu đặc tả nháp<br>trước 1/11"] --> B["2. Từ 4/11, đăng nhập<br>bằng email đã dùng ở bản cũ"] --> C["3. Kiểm tra<br>dữ liệu đã chuyển"] --> D["4. Cài plugin momoneo,<br>kết nối lại trợ lý AI"]
+  A["1. Lưu đặc tả nháp<br>trước 1/11"] --> B["2. Từ 4/11, đăng nhập<br>bằng email đã dùng ở bản cũ"] --> C["3. Kiểm tra<br>dữ liệu đã chuyển"] --> D["4. Cài plugin MoMorph,<br>kết nối lại trợ lý AI"]
 ```
 
 ### 4.1 Đăng nhập bằng đúng email đã dùng ở MoMorph cũ {#login-same-email}
@@ -94,7 +94,7 @@ flowchart TD
 
 Plugin và cấu hình MCP của MoMorph cũ không dùng được cho MoMorph mới. Cài đặt lại theo các bước sau:
 
-- Plugin "momoneo": [1.7 Đăng nhập Figma Plugin](v2-user-guide.md#login-plugin)
+- Plugin "MoMorph": [1.7 Đăng nhập Figma Plugin](v2-user-guide.md#login-plugin)
 - API key và kết nối trợ lý AI: [1.5 Tạo API key](v2-user-guide.md#api-key), [1.6 Kết nối trợ lý AI qua MCP](v2-user-guide.md#connect-ai)
 
 ## 5. Tài liệu MoMorph cũ {#v1-docs}

@@ -5,7 +5,7 @@ MoMorph V2 là công cụ giúp các thành viên dự án cùng quản lý và 
 ```mermaid
 flowchart LR
   Web["MoMorph Web<br>app.momorph.ai"] <--> Data[("Dữ liệu dự án<br>màn hình, đặc tả, bảng làm việc")]
-  Plugin["MoMorph Figma Plugin<br>momoneo"] <--> Data
+  Plugin["MoMorph Figma Plugin<br>MoMorph"] <--> Data
   AI["Trợ lý AI<br>Claude Desktop, Claude Code"] <-- "MoMorph MCP" --> Data
 ```
 
@@ -143,23 +143,48 @@ Trên Web, bấm **"Xem lại hướng dẫn kết nối AI"** để mở màn h
 
 ### 1.7 Đăng nhập Figma Plugin (tuỳ chọn) {#login-plugin}
 
-Plugin của MoMorph V2 có tên **momoneo**.
+Plugin của MoMorph V2 có tên **MoMorph**.
 
-- Người dùng Sun*: cài từ [Figma Community](https://www.figma.com/community/plugin/1671823699581407862/momoneo).
-- Người dùng khác: liên hệ nhóm MoMorph để nhận file cài đặt.
+- Người dùng Sun*: cài từ [Figma Community](https://www.figma.com/community/plugin/1699748365690303636/momorph).
+- Người dùng thuộc tổ chức khác: cài bằng file manifest, xem [Cài plugin bằng file manifest](#install-manifest).
 - Do giới hạn của Figma, chỉ người có **quyền sửa** file Figma mới dùng được plugin.
 
-```mermaid
-flowchart TD
-  A["1. Mở plugin momoneo trong Figma"] --> B["2. Dán đường dẫn file Figma<br>vào ô 'URL file Figma',<br>bấm 'Đăng nhập'"]
-  B --> C["3. Trình duyệt mở ra.<br>Bấm 'Kết nối'"]
-  C --> D["4. Đăng nhập bằng<br>Google hoặc GitHub"]
-  D --> E["5. Quay lại Figma.<br>Danh sách màn hình hiện ra"]
-```
+1. Mở plugin **MoMorph** trong Figma. Bước này có hai trường hợp:
 
-| 1. Dán đường dẫn file Figma | 2. Bấm "Kết nối" | 3. Đăng nhập | 4. Danh sách màn hình |
-|---|---|---|---|
-| ![Màn hình đăng nhập của plugin có ô nhập đường dẫn](images/v2/plugin-login-figma-url.png) | ![Màn hình xác nhận kết nối trên trình duyệt](images/v2/plugin-browser-connect-confirm.png) | ![Màn hình đăng nhập dùng chung cho Web và plugin](images/v2/plugin-browser-login.png) | ![Danh sách màn hình trên plugin](images/v2/plugin-screen-list.png) |
+    - **Lần đầu kết nối plugin:** dán đường dẫn file Figma vào ô "URL file Figma", rồi bấm **Đăng nhập**.
+
+        ![Màn hình đăng nhập của plugin có ô nhập đường dẫn file Figma](images/v2/plugin-login-figma-url.png){ width="280" }
+
+    - **Đã từng kết nối plugin** (ví dụ đã đăng xuất rồi vào lại): plugin không hiện ô này, chỉ cần bấm **Đăng nhập**.
+
+        ![Màn hình chào của plugin có nút Đăng nhập](images/v2/plugin-login-welcome.png){ width="280" }
+
+2. Trình duyệt mở ra. Plugin hiện một mã, giữ plugin mở trong lúc làm bước tiếp theo.
+
+    ![Plugin đang chờ và hiện mã kết nối](images/v2/plugin-login-waiting-code.png){ width="280" }
+
+3. Trên trình duyệt, nếu chưa đăng nhập thì đăng nhập bằng Google hoặc GitHub. Sau đó nhập mã hiện trong plugin và bấm **Kết nối**.
+
+    ![Màn hình nhập mã trên trình duyệt](images/v2/plugin-browser-enter-code.png){ width="560" }
+
+4. Khi trình duyệt báo đã kết nối, quay lại Figma. Danh sách màn hình hiện ra.
+
+    ![Trình duyệt báo đã kết nối Figma Plugin](images/v2/plugin-browser-connected.png){ width="560" }
+
+    ![Danh sách màn hình trên plugin](images/v2/plugin-screen-list.png){ width="280" }
+
+#### Cài plugin bằng file manifest (dự án thuộc tổ chức khác) {#install-manifest}
+
+Do yêu cầu về bảo mật và bản quyền, plugin MoMorph ở trạng thái Private trong tổ chức Sun*. Dự án thuộc tổ chức khác cài plugin bằng file manifest. Mỗi lần plugin có bản cập nhật, nhóm MoMorph gửi file `.zip` mới, và bạn cần cài lại bằng file mới đó.
+
+!!! note "Lưu ý"
+    Chỉ làm được trên **Figma Desktop App**. Bản Web chưa hỗ trợ import manifest.
+
+1. Tải file `.zip` mới nhất do nhóm MoMorph gửi, rồi giải nén.
+2. Trong Figma Desktop, chọn menu (biểu tượng Figma) → **Plugins** → **Development** → **Import plugin from manifest...**.
+3. Chọn file `manifest.json` vừa giải nén.
+
+Nếu gặp lỗi, hãy nhắn cho nhóm MoMorph để được hỗ trợ.
 
 ### 1.8 Giới hạn IP (tuỳ chọn, chỉ quản trị viên) {#ip-restriction}
 
@@ -199,7 +224,7 @@ flowchart LR
 
 ### 2.2 Kỹ năng cho trợ lý AI {#skills}
 
-Khi cài momorph CLI, Claude Code có thêm 6 kỹ năng. Claude Code tự nạp kỹ năng phù hợp với yêu cầu. Bạn cũng có thể gọi trực tiếp bằng lệnh, ví dụ `/mm:help`.
+Khi cài momorph CLI, Claude Code có thêm các kỹ năng sau. Claude Code tự nạp kỹ năng phù hợp với yêu cầu. Bạn cũng có thể gọi trực tiếp bằng lệnh, ví dụ `/mm:help`.
 
 | Kỹ năng | Lệnh | Vai trò | Ví dụ yêu cầu |
 |---|---|---|---|
@@ -209,6 +234,7 @@ Khi cài momorph CLI, Claude Code có thêm 6 kỹ năng. Claude Code tự nạp
 | `mm-tidy-board` | `/mm:tidy-board` | Sắp xếp vị trí, căn hàng, chia vùng trên bảng | "Sắp xếp lại bố cục" |
 | `mm-add-mockup` | `/mm:add-mockup` | Tạo bản nháp giao diện từ đặc tả, chờ duyệt | "Tạo bản nháp giao diện từ đặc tả này" |
 | `mm-build-figma` | `/mm:build-figma` | Tạo thiết kế Figma từ bản nháp đã duyệt | "Tạo bản Figma" |
+| `mm-send-artifact` | `/mm:send-artifact` | Gửi trang HTML do Claude tạo lên linked app của dự án, thành một version mới | "Gửi artifact này lên momorph" |
 
 `mm-add-mockup` và `mm-build-figma` cần thêm Figma MCP server.
 
@@ -301,7 +327,7 @@ File nhập phải ở định dạng `.csv`, dưới 5MB, tối đa 500 dòng.
 | Dịch vụ | Đường dẫn |
 |---|---|
 | MoMorph Web | [app.momorph.ai](https://app.momorph.ai) |
-| MoMorph Figma Plugin momoneo | [Figma Community](https://www.figma.com/community/plugin/1671823699581407862/momoneo) (người dùng Sun*). Người dùng khác liên hệ nhóm MoMorph |
+| MoMorph Figma Plugin | [Figma Community](https://www.figma.com/community/plugin/1699748365690303636/momorph) (người dùng Sun*). Tổ chức khác: [cài bằng file manifest](#install-manifest) |
 | momorph CLI (Claude Code) | [@momorph/cli](https://www.npmjs.com/package/@momorph/cli) |
 | momorph MCP (Claude Desktop) | [@momorph/mcp](https://www.npmjs.com/package/@momorph/mcp) |
 | Hỗ trợ | Gửi qua biểu mẫu trong kênh Slack `#con_momorph-support_all` |

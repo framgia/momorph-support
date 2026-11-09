@@ -72,7 +72,7 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-  A["1. 11/1までに<br>下書きを保存"] --> B["2. 11/4以降、旧と同じ<br>メールアドレスでログイン"] --> C["3. 移行された<br>データを確認"] --> D["4. momoneoを<br>インストールし、<br>AIを接続し直す"]
+  A["1. 11/1までに<br>下書きを保存"] --> B["2. 11/4以降、旧と同じ<br>メールアドレスでログイン"] --> C["3. 移行された<br>データを確認"] --> D["4. MoMorphプラグインを<br>インストールし、<br>AIを接続し直す"]
 ```
 
 ### 4.1 旧MoMorphと同じメールアドレスでログインする {#login-same-email}
@@ -96,7 +96,7 @@ flowchart TD
 
 旧MoMorphのプラグインとMCP設定は、新MoMorphでは使えません。次の手順で設定し直します。
 
-- プラグイン「momoneo」：[1.7 Figma Pluginにログイン](v2-user-guide.md#login-plugin)
+- プラグイン「MoMorph」：[1.7 Figma Pluginにログイン](v2-user-guide.md#login-plugin)
 - APIキーとAIの接続：[1.5 APIキーの発行](v2-user-guide.md#api-key)、[1.6 MCPでAIアシスタントと接続](v2-user-guide.md#connect-ai)
 
 ## 5. 旧MoMorphのドキュメント {#v1-docs}
