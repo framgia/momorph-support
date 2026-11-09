@@ -2,13 +2,13 @@
 
 Các cập nhật của MoMorph V2 (Web · Figma Plugin · MCP/API). Bản phát hành mới nhất nằm ở trên cùng.
 
-<!-- Mỗi lần release: thêm khối "## ngày {#ngày}" mới lên trên cùng (cả bản ja). -->
+<!-- Chỉ sửa file này ở sun-asterisk-internal/momorph docs/release-notes/; workflow sync-release-notes.yml copy sang đây, sửa ở momorph-support sẽ bị ghi đè. Mỗi lần release: thêm khối "## ngày {#ngày}" mới lên trên cùng (cả bản ja). -->
 
 ## 2026-11-05 {#2026-11-05}
 
 !!! warning "Sau khi cập nhật, vui lòng"
-    - Tải lại trang web đang mở và mở lại Figma Plugin.
-    - Khi kết nối plugin, nhập mã hiện trong plugin vào trình duyệt. Nếu web báo "Cần cập nhật plugin Figma", đóng rồi mở lại plugin. Xem [Đăng nhập Figma Plugin](v2-user-guide.md#login-plugin).
+    - Tải lại trang web đang mở, đóng file Figma rồi mở lại file đó, sau đó mới mở Figma Plugin. Chỉ mở lại plugin thì chưa đủ.
+    - Khi kết nối plugin, nhập mã hiện trong plugin vào trình duyệt. Nếu web báo "Cần cập nhật plugin Figma", đóng file Figma rồi mở lại file đó, sau đó mở lại plugin. Xem [Đăng nhập Figma Plugin](v2-user-guide.md#login-plugin).
     - Dự án thuộc tổ chức khác: cài lại plugin bằng file manifest. Xem [Cài plugin bằng file manifest](v2-user-guide.md#install-manifest).
 
 **🕘 Lịch sử version: làm mới giao diện**
