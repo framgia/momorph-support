@@ -4,6 +4,53 @@ Các cập nhật của MoMorph V2 (Web · Figma Plugin · MCP/API). Bản phát
 
 <!-- Chỉ sửa file này ở sun-asterisk-internal/momorph docs/release-notes/; workflow sync-release-notes.yml copy sang đây, sửa ở momorph-support sẽ bị ghi đè. Mỗi lần release: thêm khối "## ngày {#ngày}" mới lên trên cùng (cả bản ja). -->
 
+## 2026-11-26 {#2026-11-26}
+
+!!! warning "Sau khi cập nhật, vui lòng"
+    - Tải lại trang web đang mở, đóng file Figma rồi mở lại file đó, sau đó mới mở Figma Plugin.
+    - Dự án thuộc tổ chức khác: cài lại plugin bằng file manifest. Xem [Cài plugin bằng file manifest](v2-user-guide.md#install-manifest).
+    - Nếu dùng MCP: cập nhật `@momorph/mcp` lên 7.1.0. `check_drift` giờ chỉ trả về `jobId`; đọc kết quả bằng tool mới `get_drift_check`. Agent đang đọc kết quả trực tiếp từ `check_drift` hoặc gửi `cursor` cần đổi sang `get_drift_check`.
+    - Nếu gọi API v1: `GET /api/v1/projects/{projectId}/figma-frames` không còn trả `status`. Hãy đọc `designStatus`, `specStatus`, `devStatus`, `reviewStatus`.
+
+**🕘 Lịch sử phiên bản bảng spec**
+
+- **Xem lịch sử (Web)** — mỗi lần lưu bảng spec của một màn tạo một version, ghi người thực hiện và nguồn ghi (Web, Plugin, MCP, Import CSV, Sync Figma, Khôi phục). Các lần lưu liền nhau của cùng một người gộp thành một version.
+- **Xem version cũ (Web)** — mở một version ở chế độ chỉ đọc: ô đã đổi được tô màu, giá trị cũ bị gạch, dòng không đổi được ẩn (bật "Show unchanged rows" để hiện lại).
+- **Đặt tên version (Web)** — đặt tên cho version quan trọng và lọc danh sách chỉ còn version đã đặt tên.
+- **Khôi phục (Web)** — khôi phục một ô về giá trị cũ trong lịch sử của ô, hoặc khôi phục cả bảng của màn về một version.
+- Thành viên và admin xem và khôi phục được; người xem (viewer) không thấy lịch sử. Màn đã archive không khôi phục được.
+- Lịch sử được giữ 45 ngày, kể cả version đã đặt tên. Lịch sử bắt đầu ghi từ ngày 2026-11-26, nên thay đổi trước ngày này không có trong lịch sử.
+
+**🔒 Giới hạn IP của project**
+
+- **Bật, tắt giới hạn IP (Web)** — admin bật hoặc tắt giới hạn IP mà không phải xoá danh sách IP. Màn cài đặt hiện IP hiện tại của bạn và hỏi xác nhận trước khi áp dụng.
+- **Màn bị chặn (Web)** — truy cập project từ IP ngoài danh sách sẽ thấy màn báo bị chặn. Danh sách project cũng đánh dấu các project đang chặn IP của bạn.
+
+**✏️ Sửa node**
+
+- **Xem trước khi sửa (Web)** — Markdown note và Mermaid có tab xem trước ngay trong lúc sửa, và khung sửa rộng hơn.
+- **Hỏi trước khi bỏ bản nháp (Web)** — bấm Esc hoặc bấm ra ngoài khi đang sửa Mermaid sẽ hỏi lại trước khi bỏ bản nháp.
+
+**🔗 Kết nối GitHub**
+
+- **Trạng thái nguồn rõ hơn (Web)** — popover nguồn GitHub trên node ghi tên trạng thái và lý do lệch.
+- Màn cài đặt GitHub và badge nguồn được chỉnh theo thiết kế. Kết nối bằng PAT chuyển sang trạng thái hết hạn khi GitHub từ chối token.
+
+**📄 Tab Spec**
+
+- Tên màn trong danh sách màn hiện tối đa 2 dòng.
+- Kéo một dòng của bảng spec thẳng xuống không còn làm mất dòng đó. Ô để trống được tải đúng như khi xoá nội dung ô.
+
+**🧩 Figma Plugin**
+
+- Thông báo chỉ dành cho admin trên trang nguồn hiện ngay trên màn, không còn nằm trong tooltip.
+
+**🤖 MCP và API**
+
+- **`check_drift`, `get_drift_check`** — kiểm tra lệch chạy nền trên server, agent đọc kết quả bằng `get_drift_check` (xem phần lưu ý ở trên).
+- **`batchId`** — các tool ghi lên board nhận `batchId`. Gửi cùng một giá trị cho một lần sync thì Lịch sử version gộp cả lần sync thành một nhóm.
+- API v1 bỏ trường `status` của màn (xem phần lưu ý ở trên).
+
 ## 2026-11-12 {#2026-11-12}
 
 !!! warning "Sau khi cập nhật, vui lòng"
